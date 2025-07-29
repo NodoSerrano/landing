@@ -1,6 +1,13 @@
 import { neon } from "@neondatabase/serverless"
 
-export const sql = neon(process.env.DATABASE_URL!)
+// Create database connection only when DATABASE_URL is available
+// This prevents build errors when the env var is not set during build
+export const sql = process.env.DATABASE_URL 
+  ? neon(process.env.DATABASE_URL)
+  : (() => { 
+      console.warn('DATABASE_URL not set, database operations will fail');
+      return async () => { throw new Error('Database not configured') };
+    })() as any
 
 export async function addSubscriber(email: string) {
   try {

@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
 import { sql } from "@/lib/db"
 
+// Ensure this route is not statically analyzed during build
+export const dynamic = 'force-dynamic'
+
 // Simple API key protection - set ADMIN_API_KEY in environment variables
 const ADMIN_API_KEY = process.env.ADMIN_API_KEY
 

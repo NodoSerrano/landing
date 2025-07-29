@@ -2,6 +2,9 @@ import { NextResponse } from "next/server"
 import { subscribeToNewsletter } from "@/app/actions"
 import { sql } from "@/lib/db"
 
+// Ensure this route is not statically analyzed during build
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   try {
     // Get subscriber count directly
