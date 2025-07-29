@@ -1,0 +1,382 @@
+"use client"
+
+import type React from "react"
+
+import { useEffect, useRef } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { Instagram, Twitter, MessageCircle, Mail } from "lucide-react"
+import { motion, useAnimation, useInView } from "framer-motion"
+
+import { Button } from "@/components/ui/button"
+import MobileMenu from "@/components/mobile-menu"
+import NewsletterForm from "@/components/newsletter-form"
+
+// Variants for animations
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+}
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+}
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+}
+
+const itemFadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+}
+
+// Custom hook for scroll animations
+function useScrollAnimation() {
+  const controls = useAnimation()
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, threshold: 0.2 })
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible")
+    }
+  }, [controls, inView])
+
+  return { ref, controls, variants: fadeIn }
+}
+
+export default function Home() {
+  const heroAnimation = useScrollAnimation()
+  const featuresAnimation = useScrollAnimation()
+  const aboutAnimation = useScrollAnimation()
+  const signupAnimation = useScrollAnimation()
+
+  return (
+    <div className="min-h-screen bg-[#051030] text-white flex flex-col">
+      <motion.header
+        className="sticky top-0 z-50 w-full border-b border-cyan-900/30 bg-[#051030]/95 backdrop-blur supports-[backdrop-filter]:bg-[#051030]/60"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="container mx-auto py-4 px-4 flex justify-between items-center">
+          <motion.div
+            className="text-2xl font-bold bg-gradient-to-r from-cyan-300 to-blue-500 bg-clip-text text-transparent"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            NODO SERRANO
+          </motion.div>
+          <div className="hidden md:flex space-x-8">
+            <NavLink href="#about">Nosotros</NavLink>
+            <NavLink href="#features">Características</NavLink>
+            <NavLink href="#signup">Registro</NavLink>
+          </div>
+          <div className="flex items-center gap-4">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700">
+                Suscribirse
+              </Button>
+            </motion.div>
+            <MobileMenu />
+          </div>
+        </div>
+      </motion.header>
+
+      <main className="flex-grow">
+        {/* Hero Section with the Image */}
+        <section className="relative w-full h-[70vh] md:h-[80vh] overflow-hidden">
+          <div className="absolute inset-0">
+            <Image
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Coming%20soon-NZ17XlfHL3Ra5vWAyypCGA0DyDmn9T.jpeg"
+              alt="Próximamente - Mundo de cristal con OVNI y cristales azules"
+              fill
+              priority
+              className="object-contain md:object-cover object-center"
+              sizes="100vw"
+              style={{ objectPosition: "center 30%" }}
+            />
+            <div className="absolute inset-0 bg-black/40" />
+          </div>
+          <motion.div
+            className="relative h-full flex flex-col items-center justify-end text-center p-4 pb-12 md:pb-16"
+            {...heroAnimation}
+          >
+            <h1 className="sr-only">PRÓXIMAMENTE</h1>
+            <div className="space-y-4">
+              <motion.h2
+                className="text-3xl md:text-4xl lg:text-5xl font-bold text-white drop-shadow-lg"
+                variants={fadeInUp}
+              >
+                Una Nueva Aventura Espera
+              </motion.h2>
+              <motion.p
+                className="text-lg md:text-xl text-cyan-100 max-w-2xl mx-auto drop-shadow-md"
+                variants={fadeInUp}
+              >
+                Investigación y educación en la tecnología de Ethereum en la ciudad de Tandil.
+              </motion.p>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* Email Signup Section */}
+        <section className="py-12 md:py-16 bg-gradient-to-b from-[#051030] to-[#0a1f4d]">
+          <div className="container mx-auto px-4 text-center">
+            <motion.div initial="hidden" animate="visible" variants={fadeIn}>
+              <h2 className="text-2xl md:text-3xl font-bold mb-8">Mantente Informado</h2>
+              <div className="max-w-md mx-auto">
+                <NewsletterForm />
+                <p className="text-sm text-cyan-200/70 mt-3">
+                  Sé el primero en saber cuando lancemos. Sin spam, solo actualizaciones.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section id="features" className="py-16 md:py-20 bg-[#0a1f4d]">
+          <div className="container mx-auto px-4">
+            <motion.div
+              ref={featuresAnimation.ref}
+              initial="hidden"
+              animate={featuresAnimation.controls}
+              variants={staggerContainer}
+              className="space-y-12"
+            >
+              <motion.h2 className="text-2xl md:text-3xl font-bold text-center" variants={itemFadeIn}>
+                Qué se viene
+              </motion.h2>
+              <div className="grid md:grid-cols-3 gap-8">
+                <FeatureCard
+                  title="Hub"
+                  description="Un espacio físico para compartir, hackear y crear el nuevo mundo digital abierto."
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-8 h-8 text-white"
+                    >
+                      <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
+                      <path d="M3 9V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4" />
+                      <path d="M12 12h.01" />
+                    </svg>
+                  }
+                />
+                <FeatureCard
+                  title="Eventos"
+                  description="Escuelas, Universidades e instituciones privadas serán parte de nuestros encuentros."
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-8 h-8 text-white"
+                    >
+                      <path d="M8 2v4" />
+                      <path d="M16 2v4" />
+                      <path d="M3 10h18" />
+                      <rect width="18" height="16" x="3" y="6" rx="2" />
+                      <path d="M8 14h.01" />
+                      <path d="M12 14h.01" />
+                      <path d="M16 14h.01" />
+                      <path d="M8 18h.01" />
+                      <path d="M12 18h.01" />
+                      <path d="M16 18h.01" />
+                    </svg>
+                  }
+                />
+                <FeatureCard
+                  title="Comunidad"
+                  description="Juntos podemos hacer más. Queremos conectar la comunidad local con el mundo."
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-8 h-8 text-white"
+                    >
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                  }
+                />
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* About Section */}
+        <section id="about" className="py-16 md:py-20 bg-[#051030]">
+          <div className="container mx-auto px-4">
+            <motion.div
+              ref={aboutAnimation.ref}
+              initial="hidden"
+              animate={aboutAnimation.controls}
+              variants={fadeIn}
+              className="max-w-3xl mx-auto text-center"
+            >
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">Sobre el Proyecto</h2>
+              <p className="text-base md:text-lg text-cyan-100/90 mb-8">
+                Nodo Serrano es una nueva iniciativa que se enfocará en la investigación y educación sobre ethereum.
+                Inspirados por las tecnologías descentralizadas y la innovación digital moderna, estamos creando una
+                experiencia para fomentar esta floreciente comunidad en nuestra ciudad: Tandil.
+              </p>
+              <p className="text-base md:text-lg text-cyan-100/90">
+                Mantente atento para más actualizaciones a medida que nos acercamos a nuestra fecha de lanzamiento.
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Newsletter Section */}
+        <section id="signup" className="py-16 md:py-20 bg-gradient-to-t from-[#051030] to-[#0a1f4d]">
+          <div className="container mx-auto px-4">
+            <motion.div
+              ref={signupAnimation.ref}
+              initial="hidden"
+              animate={signupAnimation.controls}
+              variants={fadeIn}
+              className="max-w-3xl mx-auto text-center"
+            >
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">Únete a Nuestra Misión</h2>
+              <p className="text-base md:text-lg text-cyan-100/90 mb-8">
+                Regístrate en nuestro boletín para recibir actualizaciones exclusivas, contenido detrás de escena y
+                oportunidades de acceso anticipado.
+              </p>
+              <div className="max-w-md mx-auto">
+                <NewsletterForm />
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </main>
+
+      <motion.footer
+        className="bg-[#030920] py-8 md:py-12"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.5 }}
+      >
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="text-xl font-bold bg-gradient-to-r from-cyan-300 to-blue-500 bg-clip-text text-transparent mb-6 md:mb-0">
+              NODO SERRANO
+            </div>
+            <div className="flex space-x-6 mb-6 md:mb-0">
+              <SocialLink href="mailto:hey@nodoserrano.org" icon={<Mail className="h-6 w-6" />} label="Email" />
+              <SocialLink
+                href="https://twitter.com/NodoSerrano"
+                icon={<Twitter className="h-6 w-6" />}
+                label="Twitter"
+              />
+              <SocialLink
+                href="https://instagram.com/nodoserrano"
+                icon={<Instagram className="h-6 w-6" />}
+                label="Instagram"
+              />
+              <SocialLink
+                href="https://whatsapp.com/channel/0029VbAvlX0Gk1FnUUeDII3g"
+                icon={<MessageCircle className="h-6 w-6" />}
+                label="WhatsApp"
+              />
+            </div>
+            <div className="text-sm text-cyan-100/60">
+              © {new Date().getFullYear()} Nodo Serrano. Todos los derechos reservados.
+            </div>
+          </div>
+        </div>
+      </motion.footer>
+    </div>
+  )
+}
+
+// Component for navigation links with hover animation
+function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+      <Link href={href} className="text-sm font-medium hover:text-cyan-300 transition-colors">
+        {children}
+      </Link>
+    </motion.div>
+  )
+}
+
+// Component for feature cards with animation
+function FeatureCard({
+  title,
+  description,
+  icon,
+}: {
+  title: string
+  description: string
+  icon: React.ReactNode
+}) {
+  return (
+    <motion.div
+      variants={itemFadeIn}
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+      className="bg-[#051030]/80 p-6 rounded-lg border border-cyan-500/30 hover:border-cyan-400 transition-colors"
+    >
+      <motion.div
+        className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-full flex items-center justify-center mb-4 mx-auto"
+        whileHover={{ rotate: 5, scale: 1.1 }}
+        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+      >
+        {icon}
+      </motion.div>
+      <h3 className="text-xl font-bold text-center mb-2">{title}</h3>
+      <p className="text-cyan-100/80 text-center">{description}</p>
+    </motion.div>
+  )
+}
+
+// Component for social links with animation
+function SocialLink({
+  href,
+  icon,
+  label,
+}: {
+  href: string
+  icon: React.ReactNode
+  label: string
+}) {
+  return (
+    <motion.div whileHover={{ y: -3, scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+      <Link
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-white hover:text-cyan-300 transition-colors"
+      >
+        {icon}
+        <span className="sr-only">{label}</span>
+      </Link>
+    </motion.div>
+  )
+}
