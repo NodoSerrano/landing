@@ -58,7 +58,7 @@ export default function NewsletterForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={status === "loading"}
-          className="bg-white/80 border-cyan-200 text-slate-800 placeholder:text-slate-500 focus:border-cyan-300"
+          className="bg-slate-800/60 border-violet-400/30 text-white placeholder:text-cyan-200 focus:border-violet-400/50"
           required
         />
         <motion.div
@@ -84,7 +84,7 @@ export default function NewsletterForm() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             className={`text-sm mt-3 flex items-center ${
-              status === "error" ? "text-red-600" : "text-green-700"
+              status === "error" ? "text-red-300" : "text-green-300"
             }`}
           >
             {status === "error" ? (

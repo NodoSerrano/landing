@@ -17,7 +17,7 @@ export default function MobileMenu() {
     <div className="md:hidden">
       <button
         onClick={toggleMenu}
-        className="p-2 text-slate-600 focus:outline-none"
+        className="p-2 text-cyan-200 focus:outline-none"
         aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
       >
         {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -30,7 +30,7 @@ export default function MobileMenu() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-16 left-0 right-0 bg-white/95 backdrop-blur border-b border-violet-200 shadow-lg z-50"
+            className="absolute top-16 left-0 right-0 bg-slate-900/95 backdrop-blur border-b border-violet-400/30 shadow-lg z-50"
           >
             <motion.nav
               className="flex flex-col p-4 space-y-4"
@@ -76,7 +76,7 @@ function MenuItem({
         closed: { opacity: 0, y: -10 },
       }}
     >
-      <Link href={href} className="block py-2 px-4 text-slate-600 hover:text-violet-600 transition-colors" onClick={onClick}>
+      <Link href={href} className="block py-2 px-4 text-cyan-200 hover:text-cyan-100 transition-colors" onClick={onClick}>
         {children}
       </Link>
     </motion.div>
