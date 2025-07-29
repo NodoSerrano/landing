@@ -2,42 +2,8 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-
-// Event data structure
-interface LumaEvent {
-  id: string
-  title: string
-  description: string
-  date: string
-  location: string
-  featured?: boolean
-}
-
-// Mock events - In a real implementation, you'd fetch this from Luma API
-const mockEvents: LumaEvent[] = [
-  {
-    id: "evt-1",
-    title: "Introducción a Ethereum",
-    description: "Workshop introductorio sobre la tecnología blockchain de Ethereum, smart contracts y DeFi.",
-    date: "2025-08-15",
-    location: "Tandil, Buenos Aires",
-    featured: true
-  },
-  {
-    id: "evt-2", 
-    title: "Workshop DeFi",
-    description: "Introducción práctica a las finanzas descentralizadas",
-    date: "2025-08-22",
-    location: "Tandil, Buenos Aires"
-  },
-  {
-    id: "evt-3",
-    title: "Meetup Blockchain",
-    description: "Networking y charlas técnicas sobre el ecosistema blockchain",
-    date: "2025-08-29", 
-    location: "Tandil, Buenos Aires"
-  }
-]
+import { useEffect, useState } from "react"
+import { fetchLumaEvents, formatEventDate, getRelativeDate, type LumaEvent } from "@/lib/luma-api"
 
 const itemFadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -45,17 +11,45 @@ const itemFadeIn = {
 }
 
 export default function LumaEvents() {
-  const featuredEvent = mockEvents.find(event => event.featured)
-  const otherEvents = mockEvents.filter(event => !event.featured)
+  const [events, setEvents] = useState<LumaEvent[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString('es-ES', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    })
+  useEffect(() => {
+    async function loadEvents() {
+      try {
+        const eventData = await fetchLumaEvents()
+        setEvents(eventData)
+      } catch (error) {
+        console.error('Failed to load events:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadEvents()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="grid lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2">
+          <div className="bg-gradient-to-r from-cyan-500/10 to-blue-600/10 p-6 rounded-lg border border-cyan-500/20 animate-pulse">
+            <div className="h-40 bg-cyan-500/10 rounded"></div>
+          </div>
+        </div>
+        <div className="space-y-4">
+          <div className="bg-[#051030]/60 p-4 rounded-lg border border-cyan-500/10 animate-pulse">
+            <div className="h-20 bg-cyan-500/10 rounded"></div>
+          </div>
+          <div className="bg-[#051030]/60 p-4 rounded-lg border border-cyan-500/10 animate-pulse">
+            <div className="h-20 bg-cyan-500/10 rounded"></div>
+          </div>
+        </div>
+      </div>
+    )
   }
+
+  const featuredEvent = events.find(event => event.featured) || events[0]
+  const otherEvents = events.filter(event => event.id !== featuredEvent?.id)
 
   return (
     <div className="grid lg:grid-cols-3 gap-8">
@@ -81,14 +75,24 @@ export default function LumaEvents() {
                 <p className="text-cyan-100/80 mb-4">
                   {featuredEvent.description}
                 </p>
-                <div className="flex items-center gap-4 text-sm text-cyan-200/70">
-                  <span>📅 {formatDate(featuredEvent.date)}</span>
-                  <span>📍 {featuredEvent.location}</span>
+                <div className="flex items-center gap-4 text-sm text-cyan-200/70 mb-3">
+                  <span>📅 {formatEventDate(featuredEvent.start_at)}</span>
+                  <span>📍 {featuredEvent.location?.name || 'Tandil'}</span>
+                </div>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="px-2 py-1 bg-cyan-500/30 text-cyan-200 text-xs font-medium rounded">
+                    {getRelativeDate(featuredEvent.start_at)}
+                  </span>
                 </div>
                 <div className="mt-4">
-                  <button className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-medium rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-colors">
-                    Registrarse
-                  </button>
+                  <Link 
+                    href={featuredEvent.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-medium rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-colors"
+                  >
+                    Registrarse en Luma
+                  </Link>
                 </div>
               </div>
             </div>
@@ -106,12 +110,20 @@ export default function LumaEvents() {
             whileHover={{ y: -2, transition: { duration: 0.2 } }}
           >
             <h4 className="font-semibold text-white mb-2">{event.title}</h4>
-            <p className="text-sm text-cyan-100/70 mb-2">{event.description}</p>
+            <p className="text-sm text-cyan-100/70 mb-3 line-clamp-2">{event.description}</p>
             <div className="flex items-center justify-between">
-              <span className="text-xs text-cyan-200/60">📅 {formatDate(event.date)}</span>
-              <button className="text-xs text-cyan-300 hover:text-cyan-200 font-medium">
-                Ver más
-              </button>
+              <div className="space-y-1">
+                <div className="text-xs text-cyan-200/60">📅 {formatEventDate(event.start_at)}</div>
+                <div className="text-xs text-cyan-200/60">📍 {event.location?.name || 'Tandil'}</div>
+              </div>
+              <Link 
+                href={event.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-xs text-cyan-300 hover:text-cyan-200 font-medium"
+              >
+                Ver en Luma
+              </Link>
             </div>
           </motion.div>
         ))}

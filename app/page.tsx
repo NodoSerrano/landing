@@ -79,12 +79,19 @@ export default function Home() {
       >
         <div className="container mx-auto py-4 px-4 flex justify-between items-center">
           <motion.div
-            className="text-2xl font-bold bg-gradient-to-r from-cyan-300 to-blue-500 bg-clip-text text-transparent"
+            className="h-8 w-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            NODO SERRANO
+            <Image
+              src="/isologotipo.svg"
+              alt="Nodo Serrano"
+              width={120}
+              height={32}
+              className="h-8 w-auto"
+              priority
+            />
           </motion.div>
           <div className="hidden md:flex space-x-8">
             <NavLink href="#about">Nosotros</NavLink>
@@ -126,23 +133,22 @@ export default function Home() {
             className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-4 py-20 md:py-24"
             {...heroAnimation}
           >
-            <div className="max-w-4xl mx-auto space-y-6">
-              <motion.h1
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-white"
+            <div className="max-w-4xl mx-auto space-y-8">
+              <motion.div
+                className="flex justify-center"
                 variants={fadeInUp}
-                style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}
               >
-                Nodo Serrano
-              </motion.h1>
+                <Image
+                  src="/isologotipo.svg"
+                  alt="Nodo Serrano"
+                  width={300}
+                  height={120}
+                  className="w-72 md:w-96 lg:w-[28rem] h-auto drop-shadow-2xl"
+                  priority
+                />
+              </motion.div>
               <motion.p
-                className="text-xl md:text-2xl lg:text-3xl text-cyan-200 font-medium"
-                variants={fadeInUp}
-                style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}
-              >
-                Próximamente
-              </motion.p>
-              <motion.p
-                className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto"
+                className="text-lg md:text-xl lg:text-2xl text-white/90 max-w-2xl mx-auto text-center"
                 variants={fadeInUp}
                 style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}
               >
@@ -329,8 +335,14 @@ export default function Home() {
       >
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-xl font-bold bg-gradient-to-r from-cyan-300 to-blue-500 bg-clip-text text-transparent mb-6 md:mb-0">
-              NODO SERRANO
+            <div className="mb-6 md:mb-0">
+              <Image
+                src="/isologotipo.svg"
+                alt="Nodo Serrano"
+                width={140}
+                height={36}
+                className="h-9 w-auto"
+              />
             </div>
             <div className="flex space-x-6 mb-6 md:mb-0">
               <SocialLink href="mailto:hey@nodoserrano.org" icon={<Mail className="h-6 w-6" />} label="Email" />
