@@ -11,6 +11,7 @@ import { motion, useAnimation, useInView } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import MobileMenu from "@/components/mobile-menu"
 import NewsletterForm from "@/components/newsletter-form"
+import LumaEvents from "@/components/luma-events"
 
 // Variants for animations
 const fadeIn = {
@@ -58,6 +59,15 @@ export default function Home() {
   const featuresAnimation = useScrollAnimation()
   const aboutAnimation = useScrollAnimation()
   const signupAnimation = useScrollAnimation()
+  const eventsAnimation = useScrollAnimation()
+
+  // Function to scroll to signup section
+  const scrollToSignup = () => {
+    const signupSection = document.getElementById('signup')
+    if (signupSection) {
+      signupSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[#051030] text-white flex flex-col">
@@ -83,7 +93,10 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-4">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700">
+              <Button 
+                onClick={scrollToSignup}
+                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700"
+              >
                 Suscribirse
               </Button>
             </motion.div>
@@ -139,18 +152,40 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* Email Signup Section */}
-        <section className="py-12 md:py-16 bg-gradient-to-b from-[#051030] to-[#0a1f4d]">
-          <div className="container mx-auto px-4 text-center">
-            <motion.div initial="hidden" animate="visible" variants={fadeIn}>
-              <h2 className="text-2xl md:text-3xl font-bold mb-8">Mantente Informado</h2>
-              <div className="max-w-md mx-auto">
-                <NewsletterForm />
-                <p className="text-sm text-cyan-200/70 mt-3">
-                  Sé el primero en enterarte cuando lancemos.
-                </p>
-              </div>
+        {/* Events Section */}
+        <section className="py-16 md:py-20 bg-gradient-to-b from-[#051030] to-[#0a1f4d]">
+          <div className="container mx-auto px-4">
+            <motion.div
+              ref={eventsAnimation.ref}
+              initial="hidden"
+              animate={eventsAnimation.controls}
+              variants={fadeIn}
+              className="text-center mb-12"
+            >
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">Próximos Eventos</h2>
+              <p className="text-lg text-cyan-100/90 max-w-2xl mx-auto">
+                Participa en nuestros eventos y talleres sobre blockchain y Ethereum
+              </p>
             </motion.div>
+            
+            <LumaEvents />
+            
+            {/* Luma Profile Link */}
+            <div className="text-center mt-8">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link 
+                  href="https://lu.ma/user/usr-dJssfd2hL0CffxN" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-colors"
+                >
+                  Ver todos los eventos
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </Link>
+              </motion.div>
+            </div>
           </div>
         </section>
 
