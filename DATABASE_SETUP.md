@@ -7,9 +7,13 @@
 1. Log in to your Neon account at [console.neon.tech](https://console.neon.tech)
 2. Navigate to your project (or create a new one)
 3. Go to the "Connection Details" section
-4. Copy your connection string (it should look like):
+4. **Important**: Make sure to:
+   - Select "Direct connection" (not pooled)
+   - Copy the entire connection string
+   - Ensure it includes `?sslmode=require` at the end
+5. Your connection string should look like:
    ```
-   postgresql://username:password@ep-xxx.region.aws.neon.tech/neondb?sslmode=require
+   postgresql://[user]:[password]@[endpoint-id].[region].aws.neon.tech/[database]?sslmode=require
    ```
 
 ### Step 2: Set Up Local Environment

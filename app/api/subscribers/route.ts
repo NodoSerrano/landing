@@ -1,21 +1,48 @@
-import { getActiveSubscribers } from "@/lib/db"
 import { NextResponse } from "next/server"
+import { subscribeToNewsletter } from "@/app/actions"
+import { sql } from "@/lib/db"
 
 export async function GET() {
   try {
-    const result = await getActiveSubscribers()
-
-    if (!result.success) {
-      return NextResponse.json({ error: "Error al obtener suscriptores" }, { status: 500 })
-    }
-
-    // Devolver solo el número de suscriptores por seguridad
+    // Get subscriber count directly
+    const result = await sql`SELECT COUNT(*) as count FROM subscribers`
+    
     return NextResponse.json({
-      count: result.data.length,
+      count: parseInt(result[0].count),
       message: "Los suscriptores se están guardando correctamente en la base de datos",
     })
   } catch (error) {
     console.error("Error en la ruta API de suscriptores:", error)
     return NextResponse.json({ error: "Error interno del servidor" }, { status: 500 })
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const { email } = await request.json()
+
+    if (!email) {
+      return NextResponse.json(
+        { success: false, message: "Email is required" },
+        { status: 400 }
+      )
+    }
+
+    const formData = new FormData()
+    formData.append("email", email)
+
+    const response = await subscribeToNewsletter(formData)
+
+    if (response.success) {
+      return NextResponse.json(response, { status: 200 })
+    } else {
+      return NextResponse.json(response, { status: 400 })
+    }
+  } catch (error) {
+    console.error("Error in POST /api/subscribers:", error)
+    return NextResponse.json(
+      { success: false, message: "Internal server error" },
+      { status: 500 }
+    )
   }
 }
