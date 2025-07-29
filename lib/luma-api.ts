@@ -17,6 +17,7 @@ export interface LumaEvent {
 }
 
 // User ID from the Luma profile: usr-dJssfd2hL0CffxN
+// Note: Only displaying events from the "Hosting" section
 const LUMA_USER_ID = 'usr-dJssfd2hL0CffxN'
 
 // Mock function - In production, this would call the actual Luma API
@@ -28,43 +29,44 @@ export async function fetchLumaEvents(): Promise<LumaEvent[]> {
     // 2. Proper CORS configuration
     // 3. Backend proxy to handle API calls
     
+    // Only showing events from "Hosting" section of the Luma profile
     const mockEvents: LumaEvent[] = [
       {
-        id: "evt-mock-1",
-        title: "Introducción a Ethereum",
-        description: "Workshop introductorio sobre la tecnología blockchain de Ethereum, smart contracts y DeFi. Aprenderemos los conceptos fundamentales y haremos ejercicios prácticos.",
-        start_at: "2025-08-15T18:00:00Z",
-        end_at: "2025-08-15T20:00:00Z",
+        id: "evt-lanzamiento-nodo-serrano",
+        title: "Lanzamiento Nodo Serrano",
+        description: "Te invitamos al lanzamiento oficial de Nodo Serrano, la nueva comunidad de Ethereum en Tandil. Conoce nuestros objetivos, la hoja de ruta y cómo puedes formar parte de esta iniciativa que conecta la tecnología blockchain con nuestra ciudad.",
+        start_at: "2025-08-10T18:00:00Z",
+        end_at: "2025-08-10T20:30:00Z",
         location: {
           name: "Centro de Innovación Tandil",
           city: "Tandil"
         },
-        url: `https://lu.ma/evt-mock-1`,
+        url: `https://lu.ma/lanzamiento-nodo-serrano`,
         featured: true
       },
       {
-        id: "evt-mock-2",
-        title: "Workshop DeFi Avanzado",
-        description: "Profundizaremos en protocolos DeFi, yield farming, y estrategias de inversión descentralizada.",
-        start_at: "2025-08-22T19:00:00Z",
-        end_at: "2025-08-22T21:00:00Z",
+        id: "evt-placeholder-1",
+        title: "Próximamente...",
+        description: "Estamos preparando más eventos increíbles. Mantente atento a nuestras redes sociales para conocer las próximas fechas.",
+        start_at: "2025-09-01T18:00:00Z",
+        end_at: "2025-09-01T20:00:00Z",
         location: {
-          name: "Universidad Nacional del Centro",
+          name: "Por definir",
           city: "Tandil"
         },
-        url: `https://lu.ma/evt-mock-2`
+        url: `https://lu.ma/user/usr-dJssfd2hL0CffxN`
       },
       {
-        id: "evt-mock-3",
-        title: "Meetup Blockchain Tandil",
-        description: "Networking y charlas técnicas sobre el ecosistema blockchain. Presentaciones de proyectos locales y oportunidades laborales.",
-        start_at: "2025-08-29T18:30:00Z",
-        end_at: "2025-08-29T21:00:00Z",
+        id: "evt-placeholder-2",
+        title: "Próximamente...",
+        description: "Más eventos en camino. Suscríbete a nuestro newsletter para ser el primero en enterarte.",
+        start_at: "2025-09-15T18:00:00Z",
+        end_at: "2025-09-15T20:00:00Z",
         location: {
-          name: "Coworking Tandil",
+          name: "Por definir",
           city: "Tandil"
         },
-        url: `https://lu.ma/evt-mock-3`
+        url: `https://lu.ma/user/usr-dJssfd2hL0CffxN`
       }
     ]
 
@@ -109,9 +111,10 @@ TODO: For production implementation with real Luma API:
    - Create /api/luma/events route
    - Handle CORS and authentication
    - Use Luma API key securely
+   - Filter events to only show "Hosting" events
 
 2. Example API call structure:
-   const response = await fetch(`https://api.lu.ma/user/${LUMA_USER_ID}/events`, {
+   const response = await fetch(`https://api.lu.ma/user/${LUMA_USER_ID}/events?filter=hosting`, {
      headers: {
        'Authorization': `Bearer ${LUMA_API_KEY}`,
        'Content-Type': 'application/json'
@@ -120,6 +123,7 @@ TODO: For production implementation with real Luma API:
 
 3. Update component to use real data:
    - Add loading states
-   - Handle empty states
+   - Handle empty states when no hosting events
    - Add error boundaries
+   - Show placeholders when less than 3 hosting events
 */

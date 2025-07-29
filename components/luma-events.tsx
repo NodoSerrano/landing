@@ -69,7 +69,7 @@ export default function LumaEvents() {
               </div>
               <div className="flex-1">
                 <span className="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-300 text-sm font-medium rounded-full mb-3">
-                  Próximo Evento
+                  {featuredEvent.id === 'evt-lanzamiento-nodo-serrano' ? 'Evento Principal' : 'Próximo Evento'}
                 </span>
                 <h3 className="text-xl font-bold text-white mb-2">{featuredEvent.title}</h3>
                 <p className="text-cyan-100 mb-4">
@@ -102,31 +102,49 @@ export default function LumaEvents() {
       
       {/* Side Events */}
       <div className="space-y-4">
-        {otherEvents.map((event) => (
-          <motion.div 
-            key={event.id}
-            className="bg-slate-800/60 backdrop-blur-sm p-4 rounded-lg border border-violet-400/30 hover:border-violet-400/50 transition-colors shadow-sm"
-            variants={itemFadeIn}
-            whileHover={{ y: -2, transition: { duration: 0.2 } }}
-          >
-            <h4 className="font-semibold text-white mb-2">{event.title}</h4>
-            <p className="text-sm text-cyan-100 mb-3 line-clamp-2">{event.description}</p>
-            <div className="flex items-center justify-between">
-              <div className="space-y-1">
-                <div className="text-xs text-cyan-200">📅 {formatEventDate(event.start_at)}</div>
-                <div className="text-xs text-cyan-200">📍 {event.location?.name || 'Tandil'}</div>
+        {otherEvents.map((event) => {
+          const isPlaceholder = event.id.startsWith('evt-placeholder')
+          
+          return (
+            <motion.div 
+              key={event.id}
+              className={`bg-slate-800/60 backdrop-blur-sm p-4 rounded-lg border transition-colors shadow-sm ${
+                isPlaceholder 
+                  ? 'border-slate-600/30 opacity-60' 
+                  : 'border-violet-400/30 hover:border-violet-400/50'
+              }`}
+              variants={itemFadeIn}
+              whileHover={!isPlaceholder ? { y: -2, transition: { duration: 0.2 } } : {}}
+            >
+              <h4 className={`font-semibold mb-2 ${
+                isPlaceholder ? 'text-slate-300' : 'text-white'
+              }`}>{event.title}</h4>
+              <p className={`text-sm mb-3 line-clamp-2 ${
+                isPlaceholder ? 'text-slate-400' : 'text-cyan-100'
+              }`}>{event.description}</p>
+              <div className="flex items-center justify-between">
+                <div className="space-y-1">
+                  <div className={`text-xs ${
+                    isPlaceholder ? 'text-slate-400' : 'text-cyan-200'
+                  }`}>📅 {isPlaceholder ? 'Fecha por confirmar' : formatEventDate(event.start_at)}</div>
+                  <div className={`text-xs ${
+                    isPlaceholder ? 'text-slate-400' : 'text-cyan-200'
+                  }`}>📍 {event.location?.name || 'Tandil'}</div>
+                </div>
+                {!isPlaceholder && (
+                  <Link 
+                    href={event.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-xs text-violet-300 hover:text-violet-200 font-medium"
+                  >
+                    Ver en Luma
+                  </Link>
+                )}
               </div>
-              <Link 
-                href={event.url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-xs text-violet-300 hover:text-violet-200 font-medium"
-              >
-                Ver en Luma
-              </Link>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          )
+        })
       </div>
     </div>
   )
