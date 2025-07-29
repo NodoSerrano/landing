@@ -54,4 +54,41 @@ WEBHOOK_URL=optional_webhook_url
 
 ## Deployment
 
-This project is configured for automatic deployment on Vercel. Push to the main branch to trigger a new deployment.
+### Automatic Deployment with GitHub Actions
+
+This project includes a GitHub Actions workflow for automatic deployment to Vercel. To set it up:
+
+1. Go to your GitHub repository settings
+2. Add the following secrets:
+   - `VERCEL_TOKEN` - Your Vercel personal access token
+   - `VERCEL_ORG_ID` - Your Vercel organization ID
+   - `VERCEL_PROJECT_ID` - Your Vercel project ID
+
+### Manual Deployment
+
+1. Install Vercel CLI:
+   ```bash
+   npm install -g vercel
+   ```
+
+2. Login to Vercel:
+   ```bash
+   vercel login
+   ```
+
+3. Deploy to production:
+   ```bash
+   vercel --prod
+   ```
+
+### First-time Setup
+
+For the first deployment, run:
+```bash
+vercel
+```
+
+Follow the prompts to:
+- Link to your Vercel account
+- Set up the project
+- Configure build settings (already set in vercel.json)
