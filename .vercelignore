@@ -1,0 +1,9 @@
+# Vercelignore
+.env.local
+node_modules
+.git
+.gitignore
+*.md
+test-*.js
+database/test-connection.js
+setup-database.sh
