@@ -70,28 +70,21 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-[#051030] text-white flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-50 text-slate-800 flex flex-col">
       <motion.header
-        className="sticky top-0 z-50 w-full border-b border-cyan-900/30 bg-[#051030]/95 backdrop-blur supports-[backdrop-filter]:bg-[#051030]/60"
+        className="sticky top-0 z-50 w-full border-b border-violet-200/30 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
       >
         <div className="container mx-auto py-4 px-4 flex justify-between items-center">
           <motion.div
-            className="h-8 w-auto"
+            className="text-2xl font-bold bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <Image
-              src="/isologotipo.svg"
-              alt="Nodo Serrano"
-              width={120}
-              height={32}
-              className="h-8 w-auto"
-              priority
-            />
+            NODO SERRANO
           </motion.div>
           <div className="hidden md:flex space-x-8">
             <NavLink href="#about">Nosotros</NavLink>
@@ -102,7 +95,7 @@ export default function Home() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button 
                 onClick={scrollToSignup}
-                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700"
+                className="bg-gradient-to-r from-violet-400 to-blue-400 hover:from-violet-500 hover:to-blue-500 text-white"
               >
                 Suscribirse
               </Button>
@@ -133,24 +126,26 @@ export default function Home() {
             className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-4 py-20 md:py-24"
             {...heroAnimation}
           >
-            <div className="max-w-4xl mx-auto space-y-8">
+            <div className="max-w-4xl mx-auto space-y-6">
               <motion.div
-                className="flex justify-center"
+                className="flex flex-col items-center space-y-4"
                 variants={fadeInUp}
               >
                 <Image
-                  src="/isologotipo.svg"
-                  alt="Nodo Serrano"
-                  width={300}
-                  height={120}
-                  className="w-72 md:w-96 lg:w-[28rem] h-auto drop-shadow-2xl"
+                  src="/imagotipo-color.svg"
+                  alt="Nodo Serrano Imagotipo"
+                  width={200}
+                  height={320}
+                  className="w-48 md:w-56 lg:w-64 h-auto drop-shadow-2xl"
                   priority
                 />
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800 text-center">
+                  Nodo Serrano
+                </h1>
               </motion.div>
               <motion.p
-                className="text-lg md:text-xl lg:text-2xl text-white/90 max-w-2xl mx-auto text-center"
+                className="text-lg md:text-xl lg:text-2xl text-slate-700 max-w-2xl mx-auto text-center"
                 variants={fadeInUp}
-                style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}
               >
                 Investigación y educación en la tecnología de Ethereum en la ciudad de Tandil
               </motion.p>
@@ -159,7 +154,7 @@ export default function Home() {
         </section>
 
         {/* Events Section */}
-        <section className="py-16 md:py-20 bg-gradient-to-b from-[#051030] to-[#0a1f4d]">
+        <section className="py-16 md:py-20 bg-gradient-to-b from-violet-50 to-cyan-50">
           <div className="container mx-auto px-4">
             <motion.div
               ref={eventsAnimation.ref}
@@ -168,8 +163,8 @@ export default function Home() {
               variants={fadeIn}
               className="text-center mb-12"
             >
-              <h2 className="text-2xl md:text-3xl font-bold mb-6">Próximos Eventos</h2>
-              <p className="text-lg text-cyan-100/90 max-w-2xl mx-auto">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-slate-800">Próximos Eventos</h2>
+              <p className="text-lg text-slate-600 max-w-2xl mx-auto">
                 Participa en nuestros eventos y talleres sobre blockchain y Ethereum
               </p>
             </motion.div>
@@ -183,7 +178,7 @@ export default function Home() {
                   href="https://lu.ma/user/usr-dJssfd2hL0CffxN" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-400 to-blue-400 text-white font-medium rounded-lg hover:from-cyan-500 hover:to-blue-500 transition-colors"
                 >
                   Ver todos los eventos
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -196,7 +191,7 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="py-16 md:py-20 bg-[#0a1f4d]">
+        <section id="features" className="py-16 md:py-20 bg-blue-50">
           <div className="container mx-auto px-4">
             <motion.div
               ref={featuresAnimation.ref}
@@ -205,7 +200,7 @@ export default function Home() {
               variants={staggerContainer}
               className="space-y-12"
             >
-              <motion.h2 className="text-2xl md:text-3xl font-bold text-center" variants={itemFadeIn}>
+              <motion.h2 className="text-2xl md:text-3xl font-bold text-center text-slate-800" variants={itemFadeIn}>
                 Qué se viene
               </motion.h2>
               <div className="grid md:grid-cols-3 gap-8">
@@ -283,7 +278,7 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section id="about" className="py-16 md:py-20 bg-[#051030]">
+        <section id="about" className="py-16 md:py-20 bg-gradient-to-b from-cyan-50 to-violet-50">
           <div className="container mx-auto px-4">
             <motion.div
               ref={aboutAnimation.ref}
@@ -292,13 +287,13 @@ export default function Home() {
               variants={fadeIn}
               className="max-w-3xl mx-auto text-center"
             >
-              <h2 className="text-2xl md:text-3xl font-bold mb-6">Sobre el Proyecto</h2>
-              <p className="text-base md:text-lg text-cyan-100/90 mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-slate-800">Sobre el Proyecto</h2>
+              <p className="text-base md:text-lg text-slate-600 mb-8">
                 Nodo Serrano es una nueva iniciativa que se enfocará en la investigación y educación sobre ethereum.
                 Inspirados por las tecnologías descentralizadas y la innovación digital moderna, estamos creando una
                 experiencia para fomentar esta floreciente comunidad en nuestra ciudad: Tandil.
               </p>
-              <p className="text-base md:text-lg text-cyan-100/90">
+              <p className="text-base md:text-lg text-slate-600">
                 Mantente atento para más actualizaciones a medida que nos acercamos a nuestra fecha de lanzamiento.
               </p>
             </motion.div>
@@ -306,7 +301,7 @@ export default function Home() {
         </section>
 
         {/* Newsletter Section */}
-        <section id="signup" className="py-16 md:py-20 bg-gradient-to-t from-[#051030] to-[#0a1f4d]">
+        <section id="signup" className="py-16 md:py-20 bg-gradient-to-t from-violet-50 to-blue-50">
           <div className="container mx-auto px-4">
             <motion.div
               ref={signupAnimation.ref}
@@ -315,8 +310,8 @@ export default function Home() {
               variants={fadeIn}
               className="max-w-3xl mx-auto text-center"
             >
-              <h2 className="text-2xl md:text-3xl font-bold mb-6">Únete a Nuestra Comunidad</h2>
-              <p className="text-base md:text-lg text-cyan-100/90 mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-slate-800">Únete a Nuestra Comunidad</h2>
+              <p className="text-base md:text-lg text-slate-600 mb-8">
                 Sé parte de la revolución blockchain en Tandil. Regístrate para recibir novedades sobre eventos, talleres y oportunidades.
               </p>
               <div className="max-w-md mx-auto">
@@ -328,21 +323,15 @@ export default function Home() {
       </main>
 
       <motion.footer
-        className="bg-[#030920] py-8 md:py-12"
+        className="bg-white border-t border-violet-200 py-8 md:py-12"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.5 }}
       >
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-6 md:mb-0">
-              <Image
-                src="/isologotipo.svg"
-                alt="Nodo Serrano"
-                width={140}
-                height={36}
-                className="h-9 w-auto"
-              />
+            <div className="text-xl font-bold bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent mb-6 md:mb-0">
+              NODO SERRANO
             </div>
             <div className="flex space-x-6 mb-6 md:mb-0">
               <SocialLink href="mailto:hey@nodoserrano.org" icon={<Mail className="h-6 w-6" />} label="Email" />
@@ -362,7 +351,7 @@ export default function Home() {
                 label="WhatsApp"
               />
             </div>
-            <div className="text-sm text-cyan-100/60">
+            <div className="text-sm text-slate-500">
               © {new Date().getFullYear()} Nodo Serrano. Todos los derechos reservados.
             </div>
           </div>
@@ -376,7 +365,7 @@ export default function Home() {
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-      <Link href={href} className="text-sm font-medium hover:text-cyan-300 transition-colors">
+      <Link href={href} className="text-sm font-medium text-slate-600 hover:text-violet-600 transition-colors">
         {children}
       </Link>
     </motion.div>
@@ -397,17 +386,17 @@ function FeatureCard({
     <motion.div
       variants={itemFadeIn}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className="bg-[#051030]/80 p-6 rounded-lg border border-cyan-500/30 hover:border-cyan-400 transition-colors"
+      className="bg-white/60 backdrop-blur-sm p-6 rounded-lg border border-violet-200/50 hover:border-violet-300 transition-colors shadow-sm"
     >
       <motion.div
-        className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-full flex items-center justify-center mb-4 mx-auto"
+        className="w-16 h-16 bg-gradient-to-br from-violet-300 to-blue-300 rounded-full flex items-center justify-center mb-4 mx-auto"
         whileHover={{ rotate: 5, scale: 1.1 }}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
       >
         {icon}
       </motion.div>
-      <h3 className="text-xl font-bold text-center mb-2">{title}</h3>
-      <p className="text-cyan-100/80 text-center">{description}</p>
+      <h3 className="text-xl font-bold text-center mb-2 text-slate-800">{title}</h3>
+      <p className="text-slate-600 text-center">{description}</p>
     </motion.div>
   )
 }
@@ -428,7 +417,7 @@ function SocialLink({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-white hover:text-cyan-300 transition-colors"
+        className="text-slate-600 hover:text-violet-600 transition-colors"
       >
         {icon}
         <span className="sr-only">{label}</span>

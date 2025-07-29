@@ -58,7 +58,7 @@ export default function NewsletterForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={status === "loading"}
-          className="bg-white/10 border-cyan-500/50 text-white placeholder:text-white/60 focus:border-cyan-400"
+          className="bg-white/80 border-cyan-200 text-slate-800 placeholder:text-slate-500 focus:border-cyan-300"
           required
         />
         <motion.div
@@ -68,7 +68,7 @@ export default function NewsletterForm() {
           <Button
             type="submit"
             disabled={status === "loading"}
-            className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 whitespace-nowrap w-full sm:w-auto"
+            className="bg-gradient-to-r from-cyan-400 to-blue-400 hover:from-cyan-500 hover:to-blue-500 text-white whitespace-nowrap w-full sm:w-auto"
           >
             {status === "loading" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {status === "loading" ? "Enviando..." : "Suscribirse"}
@@ -84,7 +84,7 @@ export default function NewsletterForm() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             className={`text-sm mt-3 flex items-center ${
-              status === "error" ? "text-red-300" : "text-green-300"
+              status === "error" ? "text-red-600" : "text-green-700"
             }`}
           >
             {status === "error" ? (
