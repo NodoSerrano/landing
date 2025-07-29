@@ -144,7 +144,7 @@ export default function LumaEvents() {
               </div>
             </motion.div>
           )
-        })
+        })}
       </div>
     </div>
   )
