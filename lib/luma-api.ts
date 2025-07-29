@@ -41,7 +41,7 @@ export async function fetchLumaEvents(): Promise<LumaEvent[]> {
           name: "Centro de Innovación Tandil",
           city: "Tandil"
         },
-        url: `https://lu.ma/lanzamiento-nodo-serrano`,
+        url: `https://lu.ma/lb7dtked?tk=DHF0Xm`,
         featured: true
       },
       {
