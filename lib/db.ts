@@ -12,6 +12,9 @@ export const sql = process.env.DATABASE_URL
 export async function addSubscriber(email: string) {
   try {
     const cleanEmail = email.trim().toLowerCase()
+    
+    console.log(`[addSubscriber] DATABASE_URL exists: ${!!process.env.DATABASE_URL}`)
+    console.log(`[addSubscriber] Attempting to insert email: ${cleanEmail}`)
 
     const result = await sql`
       INSERT INTO subscribers (email, created_at)
@@ -22,6 +25,7 @@ export async function addSubscriber(email: string) {
       RETURNING id, email, created_at
     `
 
+    console.log(`[addSubscriber] Insert successful:`, result[0])
     return { success: true, data: result[0] }
   } catch (error: any) {
     // Handle duplicate emails

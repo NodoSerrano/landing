@@ -24,8 +24,12 @@ export async function subscribeToNewsletter(formData: FormData) {
       }
     }
 
+    console.log(`[subscribeToNewsletter] Attempting to save email: ${email}`)
+    
     // Save to database
     const result = await addSubscriber(email)
+    
+    console.log(`[subscribeToNewsletter] Database result:`, result)
     
     if (!result.success) {
       // Check if it's a duplicate email
@@ -36,18 +40,22 @@ export async function subscribeToNewsletter(formData: FormData) {
         }
       }
       
+      console.error(`[subscribeToNewsletter] Failed to save email:`, result.error)
+      
       return {
         success: false,
-        message: "Error al guardar tu email. Por favor intenta nuevamente.",
+        message: result.error || "Error al guardar tu email. Por favor intenta nuevamente.",
       }
     }
 
+    console.log(`[subscribeToNewsletter] Email saved successfully: ${email}`)
+    
     return {
       success: true,
       message: "¡Gracias! Te mantendremos informado.",
     }
   } catch (error) {
-    console.error("Error in subscribeToNewsletter:", error)
+    console.error("[subscribeToNewsletter] Unexpected error:", error)
     return {
       success: false,
       message: "Ocurrió un error. Por favor intenta nuevamente.",
