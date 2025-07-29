@@ -94,36 +94,46 @@ export default function Home() {
 
       <main className="flex-grow">
         {/* Hero Section with the Image */}
-        <section className="relative w-full h-[70vh] md:h-[80vh] overflow-hidden">
-          <div className="absolute inset-0">
+        <section className="relative w-full min-h-[60vh] md:min-h-[70vh] flex flex-col">
+          {/* Background Image */}
+          <div className="absolute inset-0 z-0">
             <Image
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Coming%20soon-NZ17XlfHL3Ra5vWAyypCGA0DyDmn9T.jpeg"
               alt="Próximamente - Mundo de cristal con OVNI y cristales azules"
               fill
               priority
-              className="object-contain md:object-cover object-center"
+              className="object-cover object-center"
               sizes="100vw"
-              style={{ objectPosition: "center 30%" }}
             />
-            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
           </div>
+          
+          {/* Content */}
           <motion.div
-            className="relative h-full flex flex-col items-center justify-end text-center p-4 pb-12 md:pb-16"
+            className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-4 py-20 md:py-24"
             {...heroAnimation}
           >
-            <h1 className="sr-only">PRÓXIMAMENTE</h1>
-            <div className="space-y-4">
-              <motion.h2
-                className="text-3xl md:text-4xl lg:text-5xl font-bold text-white drop-shadow-lg"
+            <div className="max-w-4xl mx-auto space-y-6">
+              <motion.h1
+                className="text-4xl md:text-5xl lg:text-6xl font-bold text-white"
                 variants={fadeInUp}
+                style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}
               >
-                Una Nueva Aventura Espera
-              </motion.h2>
+                Nodo Serrano
+              </motion.h1>
               <motion.p
-                className="text-lg md:text-xl text-cyan-100 max-w-2xl mx-auto drop-shadow-md"
+                className="text-xl md:text-2xl lg:text-3xl text-cyan-200 font-medium"
                 variants={fadeInUp}
+                style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}
               >
-                Investigación y educación en la tecnología de Ethereum en la ciudad de Tandil.
+                Próximamente
+              </motion.p>
+              <motion.p
+                className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto"
+                variants={fadeInUp}
+                style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}
+              >
+                Investigación y educación en la tecnología de Ethereum en la ciudad de Tandil
               </motion.p>
             </div>
           </motion.div>
@@ -137,7 +147,7 @@ export default function Home() {
               <div className="max-w-md mx-auto">
                 <NewsletterForm />
                 <p className="text-sm text-cyan-200/70 mt-3">
-                  Sé el primero en saber cuando lancemos. Sin spam, solo actualizaciones.
+                  Sé el primero en enterarte cuando lancemos.
                 </p>
               </div>
             </motion.div>
@@ -264,10 +274,9 @@ export default function Home() {
               variants={fadeIn}
               className="max-w-3xl mx-auto text-center"
             >
-              <h2 className="text-2xl md:text-3xl font-bold mb-6">Únete a Nuestra Misión</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">Únete a Nuestra Comunidad</h2>
               <p className="text-base md:text-lg text-cyan-100/90 mb-8">
-                Regístrate en nuestro boletín para recibir actualizaciones exclusivas, contenido detrás de escena y
-                oportunidades de acceso anticipado.
+                Sé parte de la revolución blockchain en Tandil. Regístrate para recibir novedades sobre eventos, talleres y oportunidades.
               </p>
               <div className="max-w-md mx-auto">
                 <NewsletterForm />

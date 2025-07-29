@@ -1,30 +1,57 @@
-# Nodoserrano clone
+# Nodo Serrano
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
-
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/inaki-berras-projects/v0-nodoserrano-clone)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/5OoDD1cJEXm)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://nodoserrano.org)
 
 ## Overview
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+Nodo Serrano is a community initiative focused on Ethereum research and education in Tandil, Argentina. This landing page serves as the main entry point for our community, featuring newsletter subscription and information about upcoming events and activities.
+
+## Tech Stack
+
+- **Framework**: Next.js 15 with App Router
+- **Styling**: Tailwind CSS + shadcn/ui
+- **Database**: Neon PostgreSQL
+- **Animations**: Framer Motion
+- **Deployment**: Vercel
+
+## Development
+
+```bash
+# Install dependencies
+pnpm install
+
+# Run development server
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Run production build
+pnpm start
+```
+
+## Features
+
+- 🎨 Modern, responsive design with smooth animations
+- 📧 Newsletter subscription with email notifications
+- 🌐 Fully internationalized (Spanish)
+- 🔒 Server-side form validation
+- 📱 Mobile-first approach
+
+## Environment Variables
+
+Create a `.env.local` file with the following variables:
+
+```env
+DATABASE_URL=your_neon_database_url
+EMAIL_HOST=smtp.example.com
+EMAIL_PORT=587
+EMAIL_USER=your_email@example.com
+EMAIL_PASS=your_email_password
+EMAIL_FROM=noreply@nodoserrano.org
+WEBHOOK_URL=optional_webhook_url
+```
 
 ## Deployment
 
-Your project is live at:
-
-**[https://vercel.com/inaki-berras-projects/v0-nodoserrano-clone](https://vercel.com/inaki-berras-projects/v0-nodoserrano-clone)**
-
-## Build your app
-
-Continue building your app on:
-
-**[https://v0.dev/chat/projects/5OoDD1cJEXm](https://v0.dev/chat/projects/5OoDD1cJEXm)**
-
-## How It Works
-
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+This project is configured for automatic deployment on Vercel. Push to the main branch to trigger a new deployment.

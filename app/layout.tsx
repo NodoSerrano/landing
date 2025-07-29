@@ -6,8 +6,7 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
   title: "Nodo Serrano",
-  description: "Comunidad de Ethereum",
-    generator: 'v0.dev'
+  description: "Comunidad de Ethereum - Investigación y educación en Tandil",
 }
 
 export default function RootLayout({
