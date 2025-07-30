@@ -270,7 +270,7 @@ export default function Home() {
                 />
                 <FeatureCard
                   title="Hackerspace"
-                  description="Un espacio equipado con recursos de hardware, herramientas de hacking ético y tecnología para explorar la seguridad informática."
+                  description="Un espacio equipado con recursos de hardware, herramientas de hacking y tecnología para explorar la seguridad informática."
                   icon={
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -288,8 +288,8 @@ export default function Home() {
                   }
                 />
                 <FeatureCard
-                  title="Talleres"
-                  description="Ciclos de formación práctica sobre desarrollo en Ethereum, smart contracts y seguridad operacional para todos los niveles."
+                  title="Educación"
+                  description="Desde talleres prácticos de Ethereum y seguridad operacional hasta charlas espontáneas con expertos locales e internacionales que nos visitan."
                   icon={
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -301,29 +301,8 @@ export default function Home() {
                       strokeLinejoin="round"
                       className="w-8 h-8 text-off-white"
                     >
-                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                    </svg>
-                  }
-                />
-                <FeatureCard
-                  title="Charlas"
-                  description="Desde encuentros espontáneos hasta conferencias magistrales con expertos internacionales que nos visitan anualmente."
-                  icon={
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="w-8 h-8 text-off-white"
-                    >
-                      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
-                      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-                      <line x1="12" y1="19" x2="12" y2="22" />
-                      <line x1="8" y1="22" x2="16" y2="22" />
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                      <path d="M6 12v5c3 3 9 3 12 0v-5" />
                     </svg>
                   }
                 />
@@ -346,6 +325,47 @@ export default function Home() {
                       <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
                       <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
                       <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+                    </svg>
+                  }
+                />
+                <FeatureCard
+                  title="Cowork"
+                  description="Vení a trabajar al nodo, sea por el día o por unos meses, y disfrutá del acceso a todo lo que ofrece desde adentro."
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-8 h-8 text-off-white"
+                    >
+                      <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
+                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                    </svg>
+                  }
+                />
+                <FeatureCard
+                  title="After Office"
+                  description="Sumate a relajar después del trabajo, con música, comida y mucho networking en un ambiente distendido."
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-8 h-8 text-off-white"
+                    >
+                      <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+                      <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8Z" />
+                      <path d="M6 1v3" />
+                      <path d="M10 1v3" />
+                      <path d="M14 1v3" />
                     </svg>
                   }
                 />
