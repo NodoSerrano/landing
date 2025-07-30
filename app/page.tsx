@@ -397,6 +397,71 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Sponsors Section */}
+        <section className="py-16 md:py-20 bg-slate-800">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, threshold: 0.2 }}
+              variants={fadeIn}
+              className="max-w-4xl mx-auto text-center"
+            >
+              <h2 className="text-2xl md:text-3xl font-bold mb-12 text-off-white">Nos apoyan</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center justify-items-center">
+                {/* Ethereum Foundation */}
+                <motion.div
+                  whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                  className="flex items-center justify-center p-6 bg-slate-700/30 rounded-lg border border-violet-400/20 hover:border-violet-400/40 transition-colors w-full h-32"
+                >
+                  <svg
+                    width="64"
+                    height="64"
+                    viewBox="0 0 256 417"
+                    className="text-off-white"
+                    fill="currentColor"
+                  >
+                    <path d="m127.961 0-2.795 9.5v275.668l2.795 2.79 127.962-75.638z" fillOpacity=".602"/>
+                    <path d="m127.962 0-127.962 212.32 127.962 75.639V154.158z"/>
+                    <path d="m127.961 312.187-1.575 1.92v98.199l1.575 4.6L256 236.587z" fillOpacity=".602"/>
+                    <path d="m127.962 416.905v-104.72L0 236.585z"/>
+                    <path d="m127.961 287.958 127.96-75.637-127.96-58.162z" fillOpacity=".2"/>
+                    <path d="m0 212.32 127.96 75.638v-133.8z" fillOpacity=".602"/>
+                  </svg>
+                </motion.div>
+
+                {/* Devconnect */}
+                <motion.div
+                  whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                  className="flex items-center justify-center p-6 bg-slate-700/30 rounded-lg border border-violet-400/20 hover:border-violet-400/40 transition-colors w-full h-32"
+                >
+                  <Image
+                    src="https://devconnect.org/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcube-logo.6e90fa94.png&w=384&q=75"
+                    alt="Devconnect"
+                    width={80}
+                    height={80}
+                    className="object-contain filter brightness-0 invert opacity-80"
+                  />
+                </motion.div>
+
+                {/* TheRedGuild */}
+                <motion.div
+                  whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                  className="flex items-center justify-center p-6 bg-slate-700/30 rounded-lg border border-violet-400/20 hover:border-violet-400/40 transition-colors w-full h-32"
+                >
+                  <Image
+                    src="https://theredguild.org/assets/navbar-logo.svg"
+                    alt="TheRedGuild"
+                    width={120}
+                    height={60}
+                    className="object-contain filter brightness-0 invert opacity-80"
+                  />
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
         {/* Newsletter Section */}
         <section id="signup" className="py-16 md:py-20 bg-gradient-to-t from-slate-800 to-slate-700">
           <div className="container mx-auto px-4">
