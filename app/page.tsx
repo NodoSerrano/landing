@@ -361,7 +361,7 @@ export default function Home() {
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-      <Link href={href} className="text-base font-bold text-off-white hover:text-white transition-colors">
+      <Link href={href} className="text-base font-bold text-violet-500 hover:text-violet-600 transition-colors">
         {children}
       </Link>
     </motion.div>

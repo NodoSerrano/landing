@@ -76,7 +76,7 @@ function MenuItem({
         closed: { opacity: 0, y: -10 },
       }}
     >
-      <Link href={href} className="block py-2 px-4 text-off-white hover:text-white font-bold transition-colors" onClick={onClick}>
+      <Link href={href} className="block py-2 px-4 text-violet-500 hover:text-violet-600 font-bold transition-colors" onClick={onClick}>
         {children}
       </Link>
     </motion.div>

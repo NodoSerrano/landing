@@ -92,14 +92,16 @@ export default function LumaEvents() {
                   </span>
                 </div>
                 <div className="mt-4">
-                  <Link 
-                    href={featuredEvent.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-off-white text-sm font-medium rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-colors"
-                  >
-                    Registrarse en Luma
-                  </Link>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="inline-block">
+                    <Link 
+                      href={featuredEvent.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-block px-4 py-3 bg-gradient-to-r from-violet-500 to-blue-500 text-off-white text-base font-bold rounded-lg hover:from-violet-600 hover:to-blue-600 transition-colors"
+                    >
+                      Registrarse en Luma
+                    </Link>
+                  </motion.div>
                 </div>
               </div>
             </div>
