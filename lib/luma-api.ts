@@ -93,16 +93,32 @@ export function formatEventDate(dateString: string): string {
 // Helper function to get relative date (e.g., "En 5 días")
 export function getRelativeDate(dateString: string): string {
   const eventDate = new Date(dateString)
+  
+  // Get current date in Argentina timezone (GMT-3)
   const now = new Date()
-  const diffTime = eventDate.getTime() - now.getTime()
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  const argentinaOffset = -3 * 60 // Argentina is GMT-3
+  const localOffset = now.getTimezoneOffset()
+  const offsetDiff = argentinaOffset - localOffset
+  now.setMinutes(now.getMinutes() + offsetDiff)
+  
+  // Set both dates to start of day for accurate day comparison
+  const eventDay = new Date(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate())
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  
+  const diffTime = eventDay.getTime() - today.getTime()
+  const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24))
   
   if (diffDays < 0) return 'Pasado'
   if (diffDays === 0) return 'Hoy'
   if (diffDays === 1) return 'Mañana'
+  if (diffDays === 2) return 'Pasado mañana'
   if (diffDays <= 7) return `En ${diffDays} días`
-  if (diffDays <= 30) return `En ${Math.ceil(diffDays / 7)} semanas`
-  return `En ${Math.ceil(diffDays / 30)} meses`
+  if (diffDays <= 30) {
+    const weeks = Math.ceil(diffDays / 7)
+    return weeks === 1 ? 'En 1 semana' : `En ${weeks} semanas`
+  }
+  const months = Math.ceil(diffDays / 30)
+  return months === 1 ? 'En 1 mes' : `En ${months} meses`
 }
 
 /* 
