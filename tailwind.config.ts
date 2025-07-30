@@ -24,6 +24,8 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        // Custom off-white color (slightly gray)
+        'off-white': '#FAFAFA',
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -52,16 +54,42 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Enhanced pastel color scheme (intensity level 3)
         cyan: {
-          300: "#67e8f9",
-          400: "#22d3ee",
-          500: "#06b6d4",
-          600: "#0891b2",
+          50: '#E0FAF8',
+          100: '#B8F2EE', 
+          200: '#7AE7E0',
+          300: '#4DD4CA',
+          400: '#2BB8B0',
+          500: '#1E9B94',
+          600: '#187E78',
+          700: '#146360',
+          800: '#104A4A',
+          900: '#0A3335'
+        },
+        violet: {
+          50: '#F5F0FC',
+          100: '#E8DDF8',
+          200: '#D4BFF0',
+          300: '#B998DF', 
+          400: '#A073CC',
+          500: '#8954BA',
+          600: '#7340A2',
+          700: '#5D3384',
+          800: '#482866',
+          900: '#321C46'
         },
         blue: {
-          500: "#3b82f6",
-          600: "#2563eb",
-          700: "#1d4ed8",
+          50: '#EBF4FD',
+          100: '#D2E6FB',
+          200: '#A4CCF6',
+          300: '#6BA8ED',
+          400: '#4286E4',
+          500: '#2B69D3',
+          600: '#2253BA',
+          700: '#1C429C',
+          800: '#163379',
+          900: '#0F2554'
         },
       },
       borderRadius: {
