@@ -84,7 +84,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            NODO SERRANO
+            TANDIL
           </motion.div>
           <div className="hidden md:flex space-x-8 items-center justify-center flex-1">
             <NavLink href="#about">Nosotros</NavLink>
@@ -95,7 +95,7 @@ export default function Home() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button 
                 onClick={scrollToSignup}
-                className="bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-600 hover:to-blue-600 text-white"
+                className="bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-600 hover:to-blue-600 text-off-white"
               >
                 Suscribirse
               </Button>
@@ -135,6 +135,9 @@ export default function Home() {
                   className="w-48 md:w-56 lg:w-64 h-auto drop-shadow-2xl"
                   priority
                 />
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white text-center drop-shadow-lg">
+                  Nodo Serrano
+                </h1>
               </motion.div>
               <motion.p
                 className="text-lg md:text-xl lg:text-2xl text-cyan-200 max-w-2xl mx-auto text-center drop-shadow"
@@ -156,7 +159,7 @@ export default function Home() {
               variants={fadeIn}
               className="text-center mb-12"
             >
-              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">Próximos Eventos</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-off-white">Próximos Eventos</h2>
               <p className="text-lg text-cyan-200 max-w-2xl mx-auto">
                 Participa en nuestros eventos y talleres sobre blockchain y Ethereum
               </p>
@@ -171,7 +174,7 @@ export default function Home() {
                   href="https://lu.ma/user/usr-dJssfd2hL0CffxN" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-medium rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-off-white font-medium rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-colors"
                 >
                   Ver todos los eventos
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -193,7 +196,7 @@ export default function Home() {
               variants={staggerContainer}
               className="space-y-12"
             >
-              <motion.h2 className="text-2xl md:text-3xl font-bold text-center text-white" variants={itemFadeIn}>
+              <motion.h2 className="text-2xl md:text-3xl font-bold text-center text-off-white" variants={itemFadeIn}>
                 Qué se viene
               </motion.h2>
               <div className="grid md:grid-cols-3 gap-8">
@@ -209,7 +212,7 @@ export default function Home() {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="w-8 h-8 text-white"
+                      className="w-8 h-8 text-off-white"
                     >
                       <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
                       <path d="M3 9V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4" />
@@ -229,7 +232,7 @@ export default function Home() {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="w-8 h-8 text-white"
+                      className="w-8 h-8 text-off-white"
                     >
                       <path d="M8 2v4" />
                       <path d="M16 2v4" />
@@ -256,7 +259,7 @@ export default function Home() {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="w-8 h-8 text-white"
+                      className="w-8 h-8 text-off-white"
                     >
                       <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                       <circle cx="9" cy="7" r="4" />
@@ -280,7 +283,7 @@ export default function Home() {
               variants={fadeIn}
               className="max-w-3xl mx-auto text-center"
             >
-              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">Sobre el Proyecto</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-off-white">Sobre el Proyecto</h2>
               <p className="text-base md:text-lg text-cyan-200 mb-8">
                 Nodo Serrano es una nueva iniciativa que se enfocará en la investigación y educación sobre ethereum.
                 Inspirados por las tecnologías descentralizadas y la innovación digital moderna, estamos creando una
@@ -303,7 +306,7 @@ export default function Home() {
               variants={fadeIn}
               className="max-w-3xl mx-auto text-center"
             >
-              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">Únete a Nuestra Comunidad</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-off-white">Únete a Nuestra Comunidad</h2>
               <p className="text-base md:text-lg text-cyan-200 mb-8">
                 Sé parte de la revolución blockchain en Tandil. Regístrate para recibir novedades sobre eventos, talleres y oportunidades.
               </p>
@@ -324,7 +327,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-xl font-bold bg-gradient-to-r from-violet-500 to-blue-500 bg-clip-text text-transparent mb-6 md:mb-0">
-              NODO SERRANO
+              TANDIL
             </div>
             <div className="flex space-x-6 mb-6 md:mb-0">
               <SocialLink href="mailto:hey@nodoserrano.org" icon={<Mail className="h-6 w-6" />} label="Email" />
@@ -388,7 +391,7 @@ function FeatureCard({
       >
         {icon}
       </motion.div>
-      <h3 className="text-xl font-bold text-center mb-2 text-white">{title}</h3>
+      <h3 className="text-xl font-bold text-center mb-2 text-off-white">{title}</h3>
       <p className="text-cyan-200 text-center">{description}</p>
     </motion.div>
   )

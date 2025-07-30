@@ -63,7 +63,7 @@ export default function LumaEvents() {
           >
             <div className="flex items-start gap-4">
               <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-lg flex items-center justify-center flex-shrink-0">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-off-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
@@ -71,7 +71,7 @@ export default function LumaEvents() {
                 <span className="inline-block px-3 py-1 bg-cyan-500/30 text-cyan-300 text-sm font-medium rounded-full mb-3">
                   {featuredEvent.id === 'evt-lanzamiento-nodo-serrano' ? 'Evento Principal' : 'Próximo Evento'}
                 </span>
-                <h3 className="text-xl font-bold text-white mb-2">{featuredEvent.title}</h3>
+                <h3 className="text-xl font-bold text-off-white mb-2">{featuredEvent.title}</h3>
                 <p className="text-cyan-200 mb-4">
                   {featuredEvent.description}
                 </p>
@@ -89,7 +89,7 @@ export default function LumaEvents() {
                     href={featuredEvent.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-sm font-medium rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-colors"
+                    className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-off-white text-sm font-medium rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-colors"
                   >
                     Registrarse en Luma
                   </Link>
@@ -117,7 +117,7 @@ export default function LumaEvents() {
               whileHover={!isPlaceholder ? { y: -2, transition: { duration: 0.2 } } : {}}
             >
               <h4 className={`font-semibold mb-2 ${
-                isPlaceholder ? 'text-slate-300' : 'text-white'
+                isPlaceholder ? 'text-slate-300' : 'text-off-white'
               }`}>{event.title}</h4>
               <p className={`text-sm mb-3 line-clamp-2 ${
                 isPlaceholder ? 'text-slate-400' : 'text-cyan-200'
