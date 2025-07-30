@@ -72,10 +72,10 @@ export default function LumaEvents() {
                   {featuredEvent.id === 'evt-lanzamiento-nodo-serrano' ? 'Evento Principal' : 'Próximo Evento'}
                 </span>
                 <h3 className="text-xl font-bold text-off-white mb-2">{featuredEvent.title}</h3>
-                <p className="text-cyan-200 mb-4">
+                <p className="text-off-white mb-4">
                   {featuredEvent.description}
                 </p>
-                <div className="flex items-center gap-4 text-sm text-cyan-300 mb-3">
+                <div className="flex items-center gap-4 text-sm text-off-white mb-3">
                   <span>📅 {formatEventDate(featuredEvent.start_at)}</span>
                   <span>📍 {featuredEvent.location?.name || 'Tandil'}</span>
                 </div>
@@ -120,15 +120,15 @@ export default function LumaEvents() {
                 isPlaceholder ? 'text-slate-300' : 'text-off-white'
               }`}>{event.title}</h4>
               <p className={`text-sm mb-3 line-clamp-2 ${
-                isPlaceholder ? 'text-slate-400' : 'text-cyan-200'
+                isPlaceholder ? 'text-slate-400' : 'text-off-white'
               }`}>{event.description}</p>
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <div className={`text-xs ${
-                    isPlaceholder ? 'text-slate-400' : 'text-cyan-300'
+                    isPlaceholder ? 'text-slate-400' : 'text-off-white'
                   }`}>📅 {isPlaceholder ? 'Fecha por confirmar' : formatEventDate(event.start_at)}</div>
                   <div className={`text-xs ${
-                    isPlaceholder ? 'text-slate-400' : 'text-cyan-300'
+                    isPlaceholder ? 'text-slate-400' : 'text-off-white'
                   }`}>📍 {event.location?.name || 'Tandil'}</div>
                 </div>
                 {!isPlaceholder && (

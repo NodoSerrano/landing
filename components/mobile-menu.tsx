@@ -17,7 +17,7 @@ export default function MobileMenu() {
     <div className="md:hidden">
       <button
         onClick={toggleMenu}
-        className="p-2 text-cyan-300 focus:outline-none"
+        className="p-2 text-off-white focus:outline-none"
         aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
       >
         {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -76,7 +76,7 @@ function MenuItem({
         closed: { opacity: 0, y: -10 },
       }}
     >
-      <Link href={href} className="block py-2 px-4 text-cyan-300 hover:text-cyan-200 transition-colors" onClick={onClick}>
+      <Link href={href} className="block py-2 px-4 text-off-white hover:text-white font-bold transition-colors" onClick={onClick}>
         {children}
       </Link>
     </motion.div>

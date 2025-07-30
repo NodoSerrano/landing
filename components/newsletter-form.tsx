@@ -68,7 +68,7 @@ export default function NewsletterForm() {
           <Button
             type="submit"
             disabled={status === "loading"}
-            className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-off-white whitespace-nowrap w-full sm:w-auto"
+            className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-off-white font-bold text-base whitespace-nowrap w-full sm:w-auto"
           >
             {status === "loading" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {status === "loading" ? "Enviando..." : "Suscribirse"}
