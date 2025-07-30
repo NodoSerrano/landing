@@ -34,14 +34,15 @@ export async function fetchLumaEvents(): Promise<LumaEvent[]> {
       {
         id: "evt-lanzamiento-nodo-serrano",
         title: "Lanzamiento Nodo Serrano",
-        description: "Te invitamos al lanzamiento oficial de Nodo Serrano, la nueva comunidad de Ethereum en Tandil. Conoce nuestros objetivos, la hoja de ruta y cómo puedes formar parte de esta iniciativa que conecta la tecnología blockchain con nuestra ciudad.",
-        start_at: "2025-08-10T18:00:00Z",
-        end_at: "2025-08-10T20:30:00Z",
+        description: "Nodo Serrano es un espacio abierto para aprender, desarrollar y construir con tecnología blockchain en el ecosistema de Ethereum. Únete a nosotros para el lanzamiento oficial con documental, networking, cena y música en vivo.",
+        start_at: "2025-07-30T20:00:00Z", // 5:00 PM Argentina time (UTC-3)
+        end_at: "2025-07-31T01:00:00Z", // 10:00 PM Argentina time (UTC-3)
         location: {
-          name: "Centro de Innovación Tandil",
-          city: "Tandil"
+          name: "San Martín 864",
+          city: "Tandil, Buenos Aires"
         },
         url: `https://lu.ma/lb7dtked?tk=DHF0Xm`,
+        cover_image: 'https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=400,height=400/event-covers/3g/f1541228-70de-43c4-a47f-bb4129154bda.jpg',
         featured: true
       },
       {
