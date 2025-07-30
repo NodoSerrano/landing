@@ -413,7 +413,7 @@ function SocialLink({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-off-white hover:text-white transition-colors">>
+        className="text-off-white hover:text-white transition-colors"
       >
         {icon}
         <span className="sr-only">{label}</span>
