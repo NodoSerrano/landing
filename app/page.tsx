@@ -159,7 +159,7 @@ export default function Home() {
               variants={fadeIn}
               className="text-center mb-12"
             >
-              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-off-white">Próximos Eventos</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-off-white">Próximos eventos</h2>
               <p className="text-lg text-off-white max-w-2xl mx-auto">
                 Participa en nuestros eventos y talleres sobre blockchain y Ethereum
               </p>
@@ -384,7 +384,7 @@ export default function Home() {
               variants={fadeIn}
               className="max-w-3xl mx-auto text-center"
             >
-              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-off-white">Sobre el Proyecto</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-off-white">Sobre el proyecto</h2>
               <p className="text-base md:text-lg text-off-white mb-8">
                 Nodo Serrano es una nueva iniciativa que se enfocará en la investigación y educación sobre ethereum.
                 Inspirados por las tecnologías descentralizadas y la innovación digital moderna, estamos creando una
@@ -407,7 +407,7 @@ export default function Home() {
               variants={fadeIn}
               className="max-w-3xl mx-auto text-center"
             >
-              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-off-white">Únete a Nuestra Comunidad</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-off-white">Únete a nuestra comunidad</h2>
               <p className="text-base md:text-lg text-off-white mb-8">
                 Sé parte de la revolución blockchain en Tandil. Regístrate para recibir novedades sobre eventos, talleres y oportunidades.
               </p>
