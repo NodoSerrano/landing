@@ -86,7 +86,7 @@ export default function Home() {
           >
             NODO SERRANO
           </motion.div>
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex space-x-8 items-center justify-center flex-1">
             <NavLink href="#about">Nosotros</NavLink>
             <NavLink href="#features">Características</NavLink>
             <NavLink href="#signup">Registro</NavLink>
@@ -139,15 +139,12 @@ export default function Home() {
                   className="w-48 md:w-56 lg:w-64 h-auto drop-shadow-2xl"
                   priority
                 />
-                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white text-center drop-shadow-lg">
-                  Nodo Serrano
-                </h1>
               </motion.div>
               <motion.p
                 className="text-lg md:text-xl lg:text-2xl text-cyan-100 max-w-2xl mx-auto text-center drop-shadow"
                 variants={fadeInUp}
               >
-                Investigación y educación en la tecnología de Ethereum en la ciudad de Tandil
+                Hackerspace y Semillero. Investigación y educación con un foco en Ethereum Blockchain en la ciudad de Tandil.
               </motion.p>
             </div>
           </motion.div>
