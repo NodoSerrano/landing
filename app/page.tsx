@@ -408,53 +408,100 @@ export default function Home() {
               className="max-w-4xl mx-auto text-center"
             >
               <h2 className="text-2xl md:text-3xl font-bold mb-12 text-off-white">Nos apoyan</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center justify-items-center">
-                {/* Ethereum Foundation */}
+              
+              {/* Ethereum Logo - Centered Top */}
+              <div className="flex justify-center mb-12">
                 <motion.div
                   whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                  className="flex items-center justify-center p-6 bg-slate-700/30 rounded-lg border border-violet-400/20 hover:border-violet-400/40 transition-colors w-full h-32"
+                  className="flex items-center justify-center"
                 >
                   <svg
-                    width="64"
-                    height="64"
+                    height="128"
                     viewBox="0 0 256 417"
-                    className="text-off-white"
-                    fill="currentColor"
+                    className="h-32"
                   >
-                    <path d="m127.961 0-2.795 9.5v275.668l2.795 2.79 127.962-75.638z" fillOpacity=".602"/>
-                    <path d="m127.962 0-127.962 212.32 127.962 75.639V154.158z"/>
-                    <path d="m127.961 312.187-1.575 1.92v98.199l1.575 4.6L256 236.587z" fillOpacity=".602"/>
-                    <path d="m127.962 416.905v-104.72L0 236.585z"/>
-                    <path d="m127.961 287.958 127.96-75.637-127.96-58.162z" fillOpacity=".2"/>
-                    <path d="m0 212.32 127.96 75.638v-133.8z" fillOpacity=".602"/>
+                    <path d="m127.961 0-2.795 9.5v275.668l2.795 2.79 127.962-75.638z" fill="#343434"/>
+                    <path d="m127.962 0-127.962 212.32 127.962 75.639V154.158z" fill="#8C8C8C"/>
+                    <path d="m127.961 312.187-1.575 1.92v98.199l1.575 4.6L256 236.587z" fill="#3C3C3B"/>
+                    <path d="m127.962 416.905v-104.72L0 236.585z" fill="#8C8C8C"/>
+                    <path d="m127.961 287.958 127.96-75.637-127.96-58.162z" fill="#141414"/>
+                    <path d="m0 212.32 127.96 75.638v-133.8z" fill="#393939"/>
+                  </svg>
+                </motion.div>
+              </div>
+
+              {/* Bottom Row - Three logos */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-items-center">
+                {/* ESP - Ethereum Support Program */}
+                <motion.div
+                  whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                  className="flex items-center justify-center"
+                >
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 93.231 158.588"
+                    className="h-32"
+                  >
+                    <defs>
+                      <linearGradient id="esp-gradient-1" x1="-1.041" y1="74.024" x2="56.307" y2="16.676" gradientTransform="matrix(1, 0, 0, -1, 0, 165.733)" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stopColor="#f47d51"/>
+                        <stop offset="0.96" stopColor="#df72ac"/>
+                      </linearGradient>
+                      <linearGradient id="esp-gradient-2" x1="56.17" y1="54.938" x2="75.388" y2="35.72" gradientTransform="matrix(1, 0, 0, -1, 0, 165.733)" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stopColor="#f15d4c"/>
+                        <stop offset="1" stopColor="#c36ca1"/>
+                      </linearGradient>
+                      <linearGradient id="esp-gradient-3" x1="70.463" y1="104.612" x2="27.115" y2="47.264" gradientTransform="matrix(1, 0, 0, -1, 0, 165.733)" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stopColor="#f47d51"/>
+                        <stop offset="0.96" stopColor="#df72ac"/>
+                      </linearGradient>
+                      <linearGradient id="esp-gradient-4" x1="70.463" y1="137.557" x2="27.115" y2="80.209" gradientTransform="matrix(1, 0, 0, -1, 0, 165.733)" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stopColor="#f47d51"/>
+                        <stop offset="0.96" stopColor="#df72ac"/>
+                      </linearGradient>
+                      <linearGradient id="esp-gradient-5" x1="-1.041" y1="137.557" x2="41.307" y2="80.209" gradientTransform="matrix(1, 0, 0, -1, 0, 165.733)" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stopColor="#f47d51"/>
+                        <stop offset="0.96" stopColor="#df72ac"/>
+                      </linearGradient>
+                      <linearGradient id="esp-gradient-6" x1="-1.041" y1="104.612" x2="41.307" y2="47.264" gradientTransform="matrix(1, 0, 0, -1, 0, 165.733)" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stopColor="#f47d51"/>
+                        <stop offset="0.96" stopColor="#df72ac"/>
+                      </linearGradient>
+                    </defs>
+                    <polygon fill="url(#esp-gradient-1)" points="46.775 120.463 46.775 158.588 0 90.668 46.775 120.463"/>
+                    <polygon fill="url(#esp-gradient-2)" points="93.231 90.668 46.775 158.588 46.775 120.463 93.231 90.668"/>
+                    <polygon fill="url(#esp-gradient-3)" points="93.231 81.056 46.775 54.465 46.775 110.851 93.231 81.056"/>
+                    <polygon fill="url(#esp-gradient-4)" points="93.231 81.056 46.775 0 46.775 54.465 93.231 81.056"/>
+                    <polygon fill="url(#esp-gradient-5)" points="46.775 0 46.775 54.465 0 81.056 46.775 0"/>
+                    <polygon fill="url(#esp-gradient-6)" points="46.775 54.465 46.775 110.851 0 81.056 46.775 54.465"/>
                   </svg>
                 </motion.div>
 
                 {/* Devconnect */}
                 <motion.div
                   whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                  className="flex items-center justify-center p-6 bg-slate-700/30 rounded-lg border border-violet-400/20 hover:border-violet-400/40 transition-colors w-full h-32"
+                  className="flex items-center justify-center"
                 >
                   <Image
                     src="https://devconnect.org/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcube-logo.6e90fa94.png&w=384&q=75"
                     alt="Devconnect"
-                    width={80}
-                    height={80}
-                    className="object-contain filter brightness-0 invert opacity-80"
+                    width={128}
+                    height={128}
+                    className="object-contain h-32"
                   />
                 </motion.div>
 
                 {/* TheRedGuild */}
                 <motion.div
                   whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                  className="flex items-center justify-center p-6 bg-slate-700/30 rounded-lg border border-violet-400/20 hover:border-violet-400/40 transition-colors w-full h-32"
+                  className="flex items-center justify-center"
                 >
                   <Image
                     src="https://theredguild.org/assets/navbar-logo.svg"
                     alt="TheRedGuild"
-                    width={120}
-                    height={60}
-                    className="object-contain filter brightness-0 invert opacity-80"
+                    width={240}
+                    height={128}
+                    className="object-contain h-32"
                   />
                 </motion.div>
               </div>
