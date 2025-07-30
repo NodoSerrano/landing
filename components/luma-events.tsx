@@ -62,25 +62,25 @@ export default function LumaEvents() {
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
           >
             <div className="flex items-start gap-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-cyan-300 to-blue-300 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-lg flex items-center justify-center flex-shrink-0">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
               <div className="flex-1">
-                <span className="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-300 text-sm font-medium rounded-full mb-3">
+                <span className="inline-block px-3 py-1 bg-cyan-500/30 text-cyan-300 text-sm font-medium rounded-full mb-3">
                   {featuredEvent.id === 'evt-lanzamiento-nodo-serrano' ? 'Evento Principal' : 'Próximo Evento'}
                 </span>
                 <h3 className="text-xl font-bold text-white mb-2">{featuredEvent.title}</h3>
-                <p className="text-cyan-100 mb-4">
+                <p className="text-cyan-200 mb-4">
                   {featuredEvent.description}
                 </p>
-                <div className="flex items-center gap-4 text-sm text-cyan-200 mb-3">
+                <div className="flex items-center gap-4 text-sm text-cyan-300 mb-3">
                   <span>📅 {formatEventDate(featuredEvent.start_at)}</span>
                   <span>📍 {featuredEvent.location?.name || 'Tandil'}</span>
                 </div>
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="px-2 py-1 bg-cyan-500/30 text-cyan-200 text-xs font-medium rounded">
+                  <span className="px-2 py-1 bg-cyan-500/40 text-cyan-300 text-xs font-medium rounded">
                     {getRelativeDate(featuredEvent.start_at)}
                   </span>
                 </div>
@@ -89,7 +89,7 @@ export default function LumaEvents() {
                     href={featuredEvent.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-400 to-blue-400 text-white text-sm font-medium rounded-lg hover:from-cyan-500 hover:to-blue-500 transition-colors"
+                    className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-sm font-medium rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-colors"
                   >
                     Registrarse en Luma
                   </Link>
@@ -120,15 +120,15 @@ export default function LumaEvents() {
                 isPlaceholder ? 'text-slate-300' : 'text-white'
               }`}>{event.title}</h4>
               <p className={`text-sm mb-3 line-clamp-2 ${
-                isPlaceholder ? 'text-slate-400' : 'text-cyan-100'
+                isPlaceholder ? 'text-slate-400' : 'text-cyan-200'
               }`}>{event.description}</p>
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <div className={`text-xs ${
-                    isPlaceholder ? 'text-slate-400' : 'text-cyan-200'
+                    isPlaceholder ? 'text-slate-400' : 'text-cyan-300'
                   }`}>📅 {isPlaceholder ? 'Fecha por confirmar' : formatEventDate(event.start_at)}</div>
                   <div className={`text-xs ${
-                    isPlaceholder ? 'text-slate-400' : 'text-cyan-200'
+                    isPlaceholder ? 'text-slate-400' : 'text-cyan-300'
                   }`}>📍 {event.location?.name || 'Tandil'}</div>
                 </div>
                 {!isPlaceholder && (
@@ -136,7 +136,7 @@ export default function LumaEvents() {
                     href={event.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-xs text-violet-300 hover:text-violet-200 font-medium"
+                    className="text-xs text-violet-400 hover:text-violet-300 font-medium"
                   >
                     Ver en Luma
                   </Link>

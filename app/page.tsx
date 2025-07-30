@@ -79,7 +79,7 @@ export default function Home() {
       >
         <div className="container mx-auto py-4 px-4 flex justify-between items-center">
           <motion.div
-            className="text-2xl font-bold bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent"
+            className="text-2xl font-bold bg-gradient-to-r from-violet-500 to-blue-500 bg-clip-text text-transparent"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
@@ -95,7 +95,7 @@ export default function Home() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button 
                 onClick={scrollToSignup}
-                className="bg-gradient-to-r from-violet-400 to-blue-400 hover:from-violet-500 hover:to-blue-500 text-white"
+                className="bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-600 hover:to-blue-600 text-white"
               >
                 Suscribirse
               </Button>
@@ -106,19 +106,15 @@ export default function Home() {
       </motion.header>
 
       <main className="flex-grow">
-        {/* Hero Section with the Image */}
-        <section className="relative w-full min-h-[60vh] md:min-h-[70vh] flex flex-col">
-          {/* Background Image */}
+        {/* Hero Section with Magical Gradient */}
+        <section className="relative w-full min-h-[60vh] md:min-h-[70vh] flex flex-col overflow-hidden">
+          {/* Magical Gradient Background */}
           <div className="absolute inset-0 z-0">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Coming%20soon-NZ17XlfHL3Ra5vWAyypCGA0DyDmn9T.jpeg"
-              alt="Próximamente - Mundo de cristal con OVNI y cristales azules"
-              fill
-              priority
-              className="object-cover object-center"
-              sizes="100vw"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-violet-900/20 to-slate-900" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-transparent to-blue-500/10" />
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full filter blur-[128px] animate-pulse" />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full filter blur-[128px] animate-pulse animation-delay-2000" />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full filter blur-[200px]" />
           </div>
           
           {/* Content */}
@@ -141,7 +137,7 @@ export default function Home() {
                 />
               </motion.div>
               <motion.p
-                className="text-lg md:text-xl lg:text-2xl text-cyan-100 max-w-2xl mx-auto text-center drop-shadow"
+                className="text-lg md:text-xl lg:text-2xl text-cyan-200 max-w-2xl mx-auto text-center drop-shadow"
                 variants={fadeInUp}
               >
                 Hackerspace y Semillero. Investigación y educación con un foco en Ethereum Blockchain en la ciudad de Tandil.
@@ -161,7 +157,7 @@ export default function Home() {
               className="text-center mb-12"
             >
               <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">Próximos Eventos</h2>
-              <p className="text-lg text-cyan-100 max-w-2xl mx-auto">
+              <p className="text-lg text-cyan-200 max-w-2xl mx-auto">
                 Participa en nuestros eventos y talleres sobre blockchain y Ethereum
               </p>
             </motion.div>
@@ -175,7 +171,7 @@ export default function Home() {
                   href="https://lu.ma/user/usr-dJssfd2hL0CffxN" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-400 to-blue-400 text-white font-medium rounded-lg hover:from-cyan-500 hover:to-blue-500 transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-medium rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-colors"
                 >
                   Ver todos los eventos
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -285,12 +281,12 @@ export default function Home() {
               className="max-w-3xl mx-auto text-center"
             >
               <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">Sobre el Proyecto</h2>
-              <p className="text-base md:text-lg text-cyan-100 mb-8">
+              <p className="text-base md:text-lg text-cyan-200 mb-8">
                 Nodo Serrano es una nueva iniciativa que se enfocará en la investigación y educación sobre ethereum.
                 Inspirados por las tecnologías descentralizadas y la innovación digital moderna, estamos creando una
                 experiencia para fomentar esta floreciente comunidad en nuestra ciudad: Tandil.
               </p>
-              <p className="text-base md:text-lg text-cyan-100">
+              <p className="text-base md:text-lg text-cyan-200">
                 Mantente atento para más actualizaciones a medida que nos acercamos a nuestra fecha de lanzamiento.
               </p>
             </motion.div>
@@ -308,7 +304,7 @@ export default function Home() {
               className="max-w-3xl mx-auto text-center"
             >
               <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">Únete a Nuestra Comunidad</h2>
-              <p className="text-base md:text-lg text-cyan-100 mb-8">
+              <p className="text-base md:text-lg text-cyan-200 mb-8">
                 Sé parte de la revolución blockchain en Tandil. Regístrate para recibir novedades sobre eventos, talleres y oportunidades.
               </p>
               <div className="max-w-md mx-auto">
@@ -327,7 +323,7 @@ export default function Home() {
       >
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-xl font-bold bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent mb-6 md:mb-0">
+            <div className="text-xl font-bold bg-gradient-to-r from-violet-500 to-blue-500 bg-clip-text text-transparent mb-6 md:mb-0">
               NODO SERRANO
             </div>
             <div className="flex space-x-6 mb-6 md:mb-0">
@@ -348,7 +344,7 @@ export default function Home() {
                 label="WhatsApp"
               />
             </div>
-            <div className="text-sm text-cyan-200">
+            <div className="text-sm text-cyan-300">
               © {new Date().getFullYear()} Nodo Serrano. Todos los derechos reservados.
             </div>
           </div>
@@ -362,7 +358,7 @@ export default function Home() {
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-      <Link href={href} className="text-sm font-medium text-cyan-200 hover:text-cyan-100 transition-colors">
+      <Link href={href} className="text-sm font-medium text-cyan-300 hover:text-cyan-200 transition-colors">
         {children}
       </Link>
     </motion.div>
@@ -386,14 +382,14 @@ function FeatureCard({
       className="bg-slate-800/60 backdrop-blur-sm p-6 rounded-lg border border-violet-400/30 hover:border-violet-400/50 transition-colors shadow-sm"
     >
       <motion.div
-        className="w-16 h-16 bg-gradient-to-br from-violet-300 to-blue-300 rounded-full flex items-center justify-center mb-4 mx-auto"
+        className="w-16 h-16 bg-gradient-to-br from-violet-400 to-blue-400 rounded-full flex items-center justify-center mb-4 mx-auto"
         whileHover={{ rotate: 5, scale: 1.1 }}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
       >
         {icon}
       </motion.div>
       <h3 className="text-xl font-bold text-center mb-2 text-white">{title}</h3>
-      <p className="text-cyan-100 text-center">{description}</p>
+      <p className="text-cyan-200 text-center">{description}</p>
     </motion.div>
   )
 }
@@ -414,7 +410,7 @@ function SocialLink({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-cyan-200 hover:text-cyan-100 transition-colors"
+        className="text-cyan-300 hover:text-cyan-200 transition-colors">
       >
         {icon}
         <span className="sr-only">{label}</span>
