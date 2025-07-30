@@ -143,7 +143,7 @@ export default function Home() {
                 className="text-lg md:text-xl lg:text-2xl text-off-white max-w-2xl mx-auto text-center drop-shadow"
                 variants={fadeInUp}
               >
-                Hackerspace y Semillero. Investigación y educación con un foco en Ethereum Blockchain en la ciudad de Tandil.
+                Hackerspace y Semillero. Investigación y educación con foco en Ethereum Ecosystem en la ciudad de Tandil.
               </motion.p>
             </div>
           </motion.div>
@@ -199,10 +199,10 @@ export default function Home() {
               <motion.h2 className="text-2xl md:text-3xl font-bold text-center text-off-white" variants={itemFadeIn}>
                 Qué se viene
               </motion.h2>
-              <div className="grid md:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 <FeatureCard
                   title="Hub"
-                  description="Un espacio físico para compartir, hackear y crear el nuevo mundo digital abierto."
+                  description="Un espacio físico para compartir y crear el nuevo mundo digital abierto."
                   icon={
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -265,6 +265,87 @@ export default function Home() {
                       <circle cx="9" cy="7" r="4" />
                       <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
                       <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                  }
+                />
+                <FeatureCard
+                  title="Hackerspace"
+                  description="Un espacio equipado con recursos de hardware, herramientas de hacking ético y tecnología para explorar la seguridad informática."
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-8 h-8 text-off-white"
+                    >
+                      <polyline points="4 17 10 11 4 5" />
+                      <line x1="12" y1="19" x2="20" y2="19" />
+                    </svg>
+                  }
+                />
+                <FeatureCard
+                  title="Talleres"
+                  description="Ciclos de formación práctica sobre desarrollo en Ethereum, smart contracts y seguridad operacional para todos los niveles."
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-8 h-8 text-off-white"
+                    >
+                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                    </svg>
+                  }
+                />
+                <FeatureCard
+                  title="Charlas"
+                  description="Desde encuentros espontáneos hasta conferencias magistrales con expertos internacionales que nos visitan anualmente."
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-8 h-8 text-off-white"
+                    >
+                      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                      <line x1="12" y1="19" x2="12" y2="22" />
+                      <line x1="8" y1="22" x2="16" y2="22" />
+                    </svg>
+                  }
+                />
+                <FeatureCard
+                  title="Arte"
+                  description="Un espacio creativo transversal donde la tecnología y el arte convergen. Ven a experimentar, jugar y expresarte."
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-8 h-8 text-off-white"
+                    >
+                      <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+                      <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+                      <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+                      <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+                      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
                     </svg>
                   }
                 />
