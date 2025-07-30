@@ -2,9 +2,30 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Development Workflow
+
+**IMPORTANT**: Always work on the `develop` branch and create Pull Requests to `main`.
+
+- `main` branch → Production (auto-deploys to nodoserrano.org via Vercel)
+- `develop` branch → Development work
+- Feature branches → Specific features (branch from `develop`)
+
+### Git Workflow
+```bash
+# Always start from develop
+git checkout develop
+git pull origin develop
+
+# Create feature branch (optional)
+git checkout -b feature/your-feature-name
+
+# When ready, create PR to main
+# Never commit directly to main
+```
+
 ## Project Overview
 
-Nodo Serrano is a Next.js 15 landing page for an Ethereum community in Tandil. It's a v0.dev project that syncs with GitHub and deploys to Vercel.
+Nodo Serrano is a Next.js 15 landing page for an Ethereum community in Tandil with email collection functionality.
 
 ## Key Commands
 
@@ -17,6 +38,10 @@ pnpm lint       # Run ESLint
 
 # Package management
 pnpm install    # Install dependencies
+
+# Database
+node database/test-connection.js  # Test database connection
+./setup-database.sh              # Set up database schema
 ```
 
 ## Architecture
@@ -49,9 +74,24 @@ pnpm install    # Install dependencies
 3. **Database**: PostgreSQL with `subscribers` table (email, name, status, created_at)
 4. **Environment Variables**: DATABASE_URL, EMAIL_*, WEBHOOK_URL
 
+## Development Environment
+
+### Environment Variables
+- **Local Development**: Use `.env.local` with development database
+- **Production**: Set in Vercel dashboard with production database
+- **Required Variables**:
+  - `DATABASE_URL` - Neon PostgreSQL connection string
+  - `ADMIN_API_KEY` - Optional, for admin endpoints
+
+### Database Setup
+- Development and production use separate Neon databases
+- Run `./setup-database.sh` to initialize schema
+- Use `/api/health` to verify database connection
+
 ## Important Notes
 
 - **Co-authorship**: NEVER include Claude as a co-author in git commits. Do not add "Co-Authored-By: Claude" or any similar attribution.
+- **Git Workflow**: Always work on `develop` branch, create PRs to `main`
 - **Build Configuration**: ESLint and TypeScript errors are ignored during builds (see next.config.mjs)
 - **Path Aliases**: Use `@/` for imports (maps to project root)
 - **Database**: Requires `subscribers` table to be created before use

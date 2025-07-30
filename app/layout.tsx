@@ -7,6 +7,13 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata = {
   title: "Nodo Serrano",
   description: "Comunidad de Ethereum - Investigación y educación en Tandil",
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/imagotipo-color.svg', type: 'image/svg+xml', sizes: 'any' }
+    ],
+    apple: '/imagotipo-color.svg',
+  },
 }
 
 export default function RootLayout({

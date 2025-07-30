@@ -1,0 +1,146 @@
+// Luma API integration
+// Note: This would require proper API keys and CORS setup in production
+
+export interface LumaEvent {
+  id: string
+  title: string
+  description: string
+  start_at: string
+  end_at: string
+  location?: {
+    name: string
+    city?: string
+  }
+  url: string
+  cover_image?: string
+  featured?: boolean
+}
+
+// User ID from the Luma profile: usr-dJssfd2hL0CffxN
+// Note: Only displaying events from the "Hosting" section
+const LUMA_USER_ID = 'usr-dJssfd2hL0CffxN'
+
+// Mock function - In production, this would call the actual Luma API
+export async function fetchLumaEvents(): Promise<LumaEvent[]> {
+  try {
+    // For now, return mock data until we can set up proper API access
+    // In production, you would need:
+    // 1. Luma API key
+    // 2. Proper CORS configuration
+    // 3. Backend proxy to handle API calls
+    
+    // Only showing events from "Hosting" section of the Luma profile
+    const mockEvents: LumaEvent[] = [
+      {
+        id: "evt-lanzamiento-nodo-serrano",
+        title: "Lanzamiento Nodo Serrano",
+        description: "Nodo Serrano es un espacio abierto para aprender, desarrollar y construir con tecnología blockchain en el ecosistema de Ethereum. Únete a nosotros para el lanzamiento oficial con documental, networking, cena y música en vivo.",
+        start_at: "2025-07-30T20:00:00Z", // 5:00 PM Argentina time (UTC-3)
+        end_at: "2025-07-31T01:00:00Z", // 10:00 PM Argentina time (UTC-3)
+        location: {
+          name: "San Martín 864",
+          city: "Tandil, Buenos Aires"
+        },
+        url: `https://lu.ma/lb7dtked?tk=DHF0Xm`,
+        cover_image: 'https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=400,height=400/event-covers/3g/f1541228-70de-43c4-a47f-bb4129154bda.jpg',
+        featured: true
+      },
+      {
+        id: "evt-placeholder-1",
+        title: "Próximamente...",
+        description: "Estamos preparando más eventos increíbles. Mantente atento a nuestras redes sociales para conocer las próximas fechas.",
+        start_at: "2025-09-01T18:00:00Z",
+        end_at: "2025-09-01T20:00:00Z",
+        location: {
+          name: "Por definir",
+          city: "Tandil"
+        },
+        url: `https://lu.ma/user/usr-dJssfd2hL0CffxN`
+      },
+      {
+        id: "evt-placeholder-2",
+        title: "Próximamente...",
+        description: "Más eventos en camino. Suscríbete a nuestro newsletter para ser el primero en enterarte.",
+        start_at: "2025-09-15T18:00:00Z",
+        end_at: "2025-09-15T20:00:00Z",
+        location: {
+          name: "Por definir",
+          city: "Tandil"
+        },
+        url: `https://lu.ma/user/usr-dJssfd2hL0CffxN`
+      }
+    ]
+
+    return mockEvents
+  } catch (error) {
+    console.error('Error fetching Luma events:', error)
+    return []
+  }
+}
+
+// Helper function to format dates in Spanish
+export function formatEventDate(dateString: string): string {
+  const date = new Date(dateString)
+  return date.toLocaleDateString('es-ES', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+}
+
+// Helper function to get relative date (e.g., "En 5 días")
+export function getRelativeDate(dateString: string): string {
+  const eventDate = new Date(dateString)
+  
+  // Get current date in Argentina timezone (GMT-3)
+  const now = new Date()
+  const argentinaOffset = -3 * 60 // Argentina is GMT-3
+  const localOffset = now.getTimezoneOffset()
+  const offsetDiff = argentinaOffset - localOffset
+  now.setMinutes(now.getMinutes() + offsetDiff)
+  
+  // Set both dates to start of day for accurate day comparison
+  const eventDay = new Date(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate())
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  
+  const diffTime = eventDay.getTime() - today.getTime()
+  const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24))
+  
+  if (diffDays < 0) return 'Pasado'
+  if (diffDays === 0) return 'Hoy'
+  if (diffDays === 1) return 'Mañana'
+  if (diffDays === 2) return 'Pasado mañana'
+  if (diffDays <= 7) return `En ${diffDays} días`
+  if (diffDays <= 30) {
+    const weeks = Math.ceil(diffDays / 7)
+    return weeks === 1 ? 'En 1 semana' : `En ${weeks} semanas`
+  }
+  const months = Math.ceil(diffDays / 30)
+  return months === 1 ? 'En 1 mes' : `En ${months} meses`
+}
+
+/* 
+TODO: For production implementation with real Luma API:
+
+1. Set up API proxy endpoint:
+   - Create /api/luma/events route
+   - Handle CORS and authentication
+   - Use Luma API key securely
+   - Filter events to only show "Hosting" events
+
+2. Example API call structure:
+   const response = await fetch(`https://api.lu.ma/user/${LUMA_USER_ID}/events?filter=hosting`, {
+     headers: {
+       'Authorization': `Bearer ${LUMA_API_KEY}`,
+       'Content-Type': 'application/json'
+     }
+   })
+
+3. Update component to use real data:
+   - Add loading states
+   - Handle empty states when no hosting events
+   - Add error boundaries
+   - Show placeholders when less than 3 hosting events
+*/
