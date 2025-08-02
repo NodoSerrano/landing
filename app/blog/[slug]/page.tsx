@@ -9,10 +9,22 @@ interface BlogPostPageProps {
 }
 
 export async function generateStaticParams() {
-  const posts = await getAllPosts()
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
+  try {
+    console.log('[Static Params] Attempting to generate static params for blog posts')
+    const posts = await getAllPosts()
+    console.log(`[Static Params] Found ${posts.length} posts for static generation`)
+    
+    const params = posts.map((post) => ({
+      slug: post.slug,
+    }))
+    
+    console.log('[Static Params] Generated params:', params.map(p => p.slug))
+    return params
+  } catch (error) {
+    console.error('[Static Params] Failed to generate static params:', error)
+    // Return empty array to avoid build failure, pages will be generated on-demand
+    return []
+  }
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
