@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button"
 import MobileMenu from "@/components/mobile-menu"
 import NewsletterForm from "@/components/newsletter-form"
 import LumaEvents from "@/components/luma-events"
+import BlogSectionClient from "@/components/blog-section-client"
 
 // Variants for animations
 const fadeIn = {
@@ -107,7 +108,7 @@ export default function Home() {
 
       <main className="flex-grow">
         {/* Hero Section with Magical Gradient */}
-        <section className="relative w-full min-h-[60vh] md:min-h-[70vh] flex flex-col overflow-hidden">
+        <section className="relative w-full min-h-[30vh] md:min-h-[35vh] flex flex-col overflow-hidden">
           {/* Magical Gradient Background */}
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-violet-900/20 to-slate-900" />
@@ -119,12 +120,12 @@ export default function Home() {
           
           {/* Content */}
           <motion.div
-            className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-4 py-20 md:py-24"
+            className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-4 py-6 md:py-8"
             {...heroAnimation}
           >
-            <div className="max-w-4xl mx-auto space-y-6">
+            <div className="max-w-4xl mx-auto space-y-4">
               <motion.div
-                className="flex flex-col items-center space-y-4"
+                className="flex flex-col items-center space-y-2"
                 variants={fadeInUp}
               >
                 <Image
@@ -132,15 +133,15 @@ export default function Home() {
                   alt="Nodo Serrano Imagotipo"
                   width={200}
                   height={320}
-                  className="w-48 md:w-56 lg:w-64 h-auto drop-shadow-2xl"
+                  className="w-16 md:w-20 lg:w-24 h-auto drop-shadow-2xl"
                   priority
                 />
-                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white text-center drop-shadow-lg">
+                <h1 className="text-xl md:text-2xl lg:text-2xl font-bold text-white text-center drop-shadow-lg">
                   Nodo Serrano
                 </h1>
               </motion.div>
               <motion.p
-                className="text-lg md:text-xl lg:text-2xl text-off-white max-w-2xl mx-auto text-center drop-shadow"
+                className="text-base md:text-lg lg:text-xl text-off-white max-w-2xl mx-auto text-center drop-shadow"
                 variants={fadeInUp}
               >
                 Hackerspace y Semillero. Investigación y educación con foco en Ethereum Ecosystem en la ciudad de Tandil.
@@ -149,8 +150,11 @@ export default function Home() {
           </motion.div>
         </section>
 
+        {/* Blog Section */}
+        <BlogSectionClient />
+
         {/* Events Section */}
-        <section className="py-16 md:py-20 bg-gradient-to-b from-slate-800 to-slate-700">
+        <section className="py-12 md:py-16 bg-gradient-to-b from-slate-700 to-slate-800">
           <div className="container mx-auto px-4">
             <motion.div
               ref={eventsAnimation.ref}
@@ -187,7 +191,7 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="py-16 md:py-20 bg-slate-800">
+        <section id="features" className="py-12 md:py-16 bg-slate-800">
           <div className="container mx-auto px-4">
             <motion.div
               ref={featuresAnimation.ref}
@@ -375,7 +379,7 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section id="about" className="py-16 md:py-20 bg-gradient-to-b from-slate-700 to-slate-800">
+        <section id="about" className="py-12 md:py-16 bg-gradient-to-b from-slate-700 to-slate-800">
           <div className="container mx-auto px-4">
             <motion.div
               ref={aboutAnimation.ref}
@@ -398,7 +402,7 @@ export default function Home() {
         </section>
 
         {/* Sponsors Section */}
-        <section className="py-16 md:py-20 bg-slate-800">
+        <section className="py-12 md:py-16 bg-slate-800">
           <div className="container mx-auto px-4">
             <motion.div
               initial="hidden"
@@ -510,7 +514,7 @@ export default function Home() {
         </section>
 
         {/* Newsletter Section */}
-        <section id="signup" className="py-16 md:py-20 bg-gradient-to-t from-slate-800 to-slate-700">
+        <section id="signup" className="py-12 md:py-16 bg-gradient-to-t from-slate-800 to-slate-700">
           <div className="container mx-auto px-4">
             <motion.div
               ref={signupAnimation.ref}
