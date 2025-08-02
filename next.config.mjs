@@ -9,6 +9,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Ensure content directory is included in Vercel builds
+  outputFileTracingIncludes: {
+    '/api/blog/posts': ['./content/blog/**/*'],
+    '/api/blog/all': ['./content/blog/**/*'],
+  },
   async headers() {
     return [
       {

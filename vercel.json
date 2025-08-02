@@ -1,6 +1,6 @@
 {
   "buildCommand": "pnpm build",
-  "installCommand": "pnpm install",
+  "installCommand": "pnpm install && pnpm approve-builds",
   "framework": "nextjs",
   "regions": ["gru1"],
   "git": {
