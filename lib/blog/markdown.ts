@@ -54,7 +54,8 @@ function resolveImageUrls(post: any): { thumbnailUrl?: string; coverUrl?: string
   return result
 }
 
-const postsDirectory = path.join(process.cwd(), "content/blog")
+// Ensure proper path resolution in both dev and production
+const postsDirectory = path.join(process.cwd(), "content", "blog")
 
 export async function getPostBySlug(slug: string): Promise<BlogPostWithSlug | null> {
   try {
@@ -119,9 +120,14 @@ export async function getPostBySlug(slug: string): Promise<BlogPostWithSlug | nu
 
 export async function getAllPosts(): Promise<BlogPostWithSlug[]> {
   try {
+    // Debug logging for production troubleshooting
+    console.log("[Blog Debug] Posts directory:", postsDirectory)
+    console.log("[Blog Debug] Directory exists:", fs.existsSync(postsDirectory))
+    
     // Create directory if it doesn't exist
     if (!fs.existsSync(postsDirectory)) {
       fs.mkdirSync(postsDirectory, { recursive: true })
+      console.log("[Blog Debug] Created missing directory")
       return []
     }
 
