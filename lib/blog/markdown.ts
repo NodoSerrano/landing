@@ -2,9 +2,12 @@ import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
 import { remark } from "remark"
-import html from "remark-html"
+import remarkRehype from "remark-rehype"
+import rehypeHighlight from "rehype-highlight"
+import rehypeStringify from "rehype-stringify"
 import gfm from "remark-gfm"
 import readingTime from "reading-time"
+import DOMPurify from "isomorphic-dompurify"
 import { blogPostSchema, type BlogPostWithSlug } from "./schema"
 
 // Helper function to extract excerpt from markdown content
@@ -73,13 +76,19 @@ export async function getPostBySlug(slug: string): Promise<BlogPostWithSlug | nu
       return null
     }
 
-    // Process markdown content
+    // Process markdown content with syntax highlighting
     const processedContent = await remark()
       .use(gfm) // GitHub Flavored Markdown
-      .use(html) // Convert to HTML without aggressive sanitization
+      .use(remarkRehype) // Convert markdown to rehype AST
+      .use(rehypeHighlight) // Add syntax highlighting
+      .use(rehypeStringify) // Convert back to HTML string
       .process(content)
 
-    const contentHtml = processedContent.toString()
+    // Sanitize HTML to prevent XSS attacks while preserving syntax highlighting classes
+    const contentHtml = DOMPurify.sanitize(processedContent.toString(), {
+      ALLOWED_TAGS: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'strong', 'em', 'code', 'pre', 'a', 'blockquote', 'img', 'hr', 'br', 'div', 'span'],
+      ALLOWED_ATTR: ['href', 'title', 'target', 'rel', 'class', 'id', 'src', 'alt', 'data-language', 'data-highlighted']
+    })
     const stats = readingTime(content)
     const excerpt = extractExcerpt(content)
     const imageUrls = resolveImageUrls(validatedData)
@@ -93,7 +102,17 @@ export async function getPostBySlug(slug: string): Promise<BlogPostWithSlug | nu
       readingTime: stats,
     }
   } catch (error) {
-    console.error(`Error parsing post ${slug}:`, error)
+    // Enhanced error logging with more context
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    const errorStack = error instanceof Error ? error.stack : undefined
+    
+    console.error(`[Blog Error] Failed to parse post "${slug}":`, {
+      message: errorMessage,
+      stack: errorStack,
+      timestamp: new Date().toISOString(),
+    })
+    
+    // Return null for graceful degradation
     return null
   }
 }
@@ -121,7 +140,16 @@ export async function getAllPosts(): Promise<BlogPostWithSlug[]> {
       .filter((post): post is BlogPostWithSlug => post !== null)
       .sort((a, b) => (a.date > b.date ? -1 : 1))
   } catch (error) {
-    console.error("Error getting all posts:", error)
+    // Enhanced error logging for getAllPosts
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    
+    console.error("[Blog Error] Failed to get all posts:", {
+      message: errorMessage,
+      directory: postsDirectory,
+      timestamp: new Date().toISOString(),
+    })
+    
+    // Return empty array for graceful degradation
     return []
   }
 }

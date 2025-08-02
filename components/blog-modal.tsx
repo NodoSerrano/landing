@@ -31,6 +31,12 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
     if (isOpen) {
       document.addEventListener('keydown', handleEscape)
       document.body.style.overflow = 'hidden'
+      
+      // Focus trap: focus the modal when it opens
+      const modalElement = document.querySelector('[role="dialog"]') as HTMLElement
+      if (modalElement) {
+        modalElement.focus()
+      }
     }
 
     return () => {
@@ -62,6 +68,11 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
             exit={{ opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
             className="fixed top-16 bottom-16 left-4 right-4 z-50 flex flex-col overflow-hidden rounded-xl border border-slate-700 bg-slate-900/95 backdrop-blur-xl shadow-2xl md:top-20 md:bottom-20 md:left-48 md:right-48 lg:top-24 lg:bottom-24 lg:left-72 lg:right-72 xl:top-28 xl:bottom-28 xl:left-96 xl:right-96 2xl:top-32 2xl:bottom-32 2xl:left-[30rem] 2xl:right-[30rem]"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description"
+            tabIndex={-1}
           >
             {/* Header */}
             <div className="flex-shrink-0 flex items-center justify-between border-b border-slate-700 p-3 md:p-4">
@@ -71,14 +82,16 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
                     <button
                       onClick={() => onNavigate('prev')}
                       disabled={!canNavigate?.prev}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+                      aria-label="Artículo anterior"
                     >
                       <ArrowLeft className="h-4 w-4" />
                     </button>
                     <button
                       onClick={() => onNavigate('next')}
                       disabled={!canNavigate?.next}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+                      aria-label="Artículo siguiente"
                     >
                       <ArrowRight className="h-4 w-4" />
                     </button>
@@ -94,7 +107,8 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
               
               <button
                 onClick={onClose}
-                className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white"
+                className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+                aria-label="Cerrar modal"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -120,11 +134,17 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
                     
                     {/* Content */}
                     <div className="flex-1">
-                      <h1 className="mb-4 bg-gradient-to-r from-white to-slate-200 bg-clip-text text-2xl font-bold leading-tight text-transparent md:text-3xl lg:text-4xl">
+                      <h1 
+                        id="modal-title" 
+                        className="mb-4 bg-gradient-to-r from-white to-slate-200 bg-clip-text text-2xl font-bold leading-tight text-transparent md:text-3xl lg:text-4xl"
+                      >
                         {post.title}
                       </h1>
                       
-                      <p className="mb-6 text-lg leading-relaxed text-slate-300">
+                      <p 
+                        id="modal-description"
+                        className="mb-6 text-lg leading-relaxed text-slate-300"
+                      >
                         {post.description}
                       </p>
 

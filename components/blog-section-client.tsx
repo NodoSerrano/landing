@@ -9,6 +9,64 @@ import BlogModal from "./blog-modal"
 import { motion } from "framer-motion"
 import type { BlogPostWithSlug } from "@/lib/blog/schema"
 
+// Skeleton component for loading state
+function BlogSectionSkeleton() {
+  return (
+    <div className="space-y-12">
+      {/* Featured post skeleton */}
+      <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-lg overflow-hidden p-6 lg:p-8">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+          {/* Thumbnail skeleton */}
+          <div className="w-full lg:w-80 h-48 lg:h-64 bg-slate-700 animate-pulse rounded-lg" />
+          
+          {/* Content skeleton */}
+          <div className="flex-1 space-y-4">
+            <div className="h-3 bg-slate-700 animate-pulse rounded w-20" />
+            <div className="h-8 bg-slate-700 animate-pulse rounded w-3/4" />
+            <div className="space-y-2">
+              <div className="h-4 bg-slate-700 animate-pulse rounded w-full" />
+              <div className="h-4 bg-slate-700 animate-pulse rounded w-5/6" />
+            </div>
+            <div className="flex gap-4 pt-4">
+              <div className="h-4 bg-slate-700 animate-pulse rounded w-24" />
+              <div className="h-4 bg-slate-700 animate-pulse rounded w-20" />
+              <div className="h-4 bg-slate-700 animate-pulse rounded w-16" />
+            </div>
+            <div className="flex gap-2 pt-2">
+              <div className="h-6 bg-slate-700 animate-pulse rounded-full w-16" />
+              <div className="h-6 bg-slate-700 animate-pulse rounded-full w-20" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Latest posts skeleton */}
+      <div className="grid gap-6 md:grid-cols-2">
+        {[1, 2].map((i) => (
+          <div key={i} className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-lg overflow-hidden p-4">
+            <div className="flex gap-4">
+              <div className="w-20 h-20 bg-slate-700 animate-pulse rounded-lg flex-shrink-0" />
+              <div className="flex-1 space-y-2">
+                <div className="h-5 bg-slate-700 animate-pulse rounded w-full" />
+                <div className="h-3 bg-slate-700 animate-pulse rounded w-4/5" />
+                <div className="flex gap-2 pt-2">
+                  <div className="h-3 bg-slate-700 animate-pulse rounded w-16" />
+                  <div className="h-3 bg-slate-700 animate-pulse rounded w-12" />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Button skeleton */}
+      <div className="text-center">
+        <div className="inline-block h-12 bg-slate-700 animate-pulse rounded-lg w-48" />
+      </div>
+    </div>
+  )
+}
+
 const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
@@ -94,7 +152,13 @@ export default function BlogSectionClient() {
   }
 
   if (loading) {
-    return null
+    return (
+      <section className="py-12 md:py-16 bg-gradient-to-b from-slate-800 to-slate-700">
+        <div className="container mx-auto px-4">
+          <BlogSectionSkeleton />
+        </div>
+      </section>
+    )
   }
 
   if (!featuredPost && posts.length === 0) {

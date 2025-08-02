@@ -18,9 +18,20 @@ export async function GET() {
       latest: posts,
     })
   } catch (error) {
-    console.error("Error fetching blog posts:", error)
+    // Enhanced error logging for API route
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    
+    console.error("[API Error] Failed to fetch blog posts:", {
+      message: errorMessage,
+      endpoint: '/api/blog/posts',
+      timestamp: new Date().toISOString(),
+    })
+    
     return NextResponse.json(
-      { error: "Failed to fetch blog posts" },
+      { 
+        error: "Failed to fetch blog posts",
+        message: process.env.NODE_ENV === 'development' ? errorMessage : undefined 
+      },
       { status: 500 }
     )
   }
