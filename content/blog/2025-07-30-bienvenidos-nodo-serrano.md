@@ -59,7 +59,7 @@ Tandil tiene todos los ingredientes para convertirse en un **hub importante** de
 - 🎓 **Talento Técnico**
 Con la Universidad Nacional del Centro (UNCPBA) y su fuerte tradición en informática, contamos con una base sólida de desarrolladores.
 
-- 🌄 **C*alidad de Vida**
+- 🌄 **Calidad de Vida**
 El ambiente tranquilo y la calidad de vida de Tandil atraen a profesionales que buscan equilibrio entre trabajo y vida personal.
 
 - 🏛️ **Comunidad Universitaria**

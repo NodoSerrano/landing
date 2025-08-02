@@ -141,10 +141,12 @@ export default function Home() {
                 </h1>
               </motion.div>
               <motion.p
-                className="text-base md:text-lg lg:text-xl text-off-white max-w-2xl mx-auto text-center drop-shadow"
+                className="text-base md:text-lg lg:text-xl text-off-white max-w-2xl mx-auto text-center drop-shadow leading-relaxed"
                 variants={fadeInUp}
               >
-                Hackerspace y Semillero. Investigación y educación con foco en Ethereum Ecosystem en la ciudad de Tandil.
+                <span className="block sm:inline">Hackerspace y Semillero.</span>{" "}
+                <span className="block sm:inline">Investigación y educación con foco en Ethereum Ecosystem</span>{" "}
+                <span className="block sm:inline">en la ciudad de Tandil.</span>
               </motion.p>
             </div>
           </motion.div>
