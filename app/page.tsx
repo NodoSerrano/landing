@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button"
 import MobileMenu from "@/components/mobile-menu"
 import NewsletterForm from "@/components/newsletter-form"
 import LumaEvents from "@/components/luma-events"
+import BlogSectionClient from "@/components/blog-section-client"
 
 // Variants for animations
 const fadeIn = {
@@ -149,8 +150,11 @@ export default function Home() {
           </motion.div>
         </section>
 
+        {/* Blog Section */}
+        <BlogSectionClient />
+
         {/* Events Section */}
-        <section className="py-16 md:py-20 bg-gradient-to-b from-slate-800 to-slate-700">
+        <section className="py-16 md:py-20 bg-gradient-to-b from-slate-700 to-slate-800">
           <div className="container mx-auto px-4">
             <motion.div
               ref={eventsAnimation.ref}
