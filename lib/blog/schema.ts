@@ -9,6 +9,8 @@ export const blogPostSchema = z.object({
   featured: z.boolean().default(false),
   published: z.boolean().default(true),
   image: z.string().url().optional(),
+  thumbnail: z.string().optional(), // Filename only, will be resolved to /blog/thumbnails/{filename}
+  cover: z.string().optional(), // Filename only, will be resolved to /blog/covers/{filename}
 })
 
 export type BlogPost = z.infer<typeof blogPostSchema>
@@ -16,6 +18,9 @@ export type BlogPost = z.infer<typeof blogPostSchema>
 export interface BlogPostWithSlug extends BlogPost {
   slug: string
   content: string
+  excerpt: string // First paragraph or preview text for featured post
+  thumbnailUrl?: string // Resolved thumbnail URL
+  coverUrl?: string // Resolved cover URL
   readingTime: {
     text: string
     minutes: number

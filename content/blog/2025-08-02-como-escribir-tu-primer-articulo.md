@@ -1,11 +1,13 @@
 ---
 title: "Cómo escribir tu primer artículo para el blog de Nodo Serrano"
 description: "Guía paso a paso para crear contenido en nuestro blog. Desde la configuración básica hasta tips para escribir artículos que conecten con la comunidad."
-date: "2024-02-01"
+date: "2025-08-02"
 author: "Equipo Nodo Serrano"
 tags: ["guía", "blog", "escritura", "comunidad"]
 featured: false
 published: true
+thumbnail: "como-escribir-articulo-square.jpg"
+cover: "como-escribir-articulo-cover.jpg"
 ---
 
 ## ¡Bienvenido al equipo de escritores!
@@ -55,6 +57,15 @@ published: true
 ---
 ```
 
+**Campos importantes:**
+- **title**: El título principal que verán los lectores
+- **description**: Aparece en previews y listados
+- **date**: Formato YYYY-MM-DD
+- **author**: Tu nombre o pseudónimo
+- **tags**: Array de palabras clave para categorización
+- **featured**: `true` si quieres destacar el artículo
+- **published**: `false` para borradores, `true` para publicar
+
 ### 3. Escribe tu contenido
 
 Después del frontmatter, escribe en Markdown:
@@ -72,11 +83,104 @@ Aquí va el contenido de tu artículo. Puedes usar:
 ### Subsección
 
 También puedes incluir código:
+```
+
+#### Ejemplo de código Solidity:
 
 ```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
 contract HolaNodo {
     string public saludo = "¡Hola, Nodo Serrano!";
+    address public owner;
+    
+    constructor() {
+        owner = msg.sender;
+    }
+    
+    function cambiarSaludo(string memory _nuevoSaludo) public {
+        require(msg.sender == owner, "Solo el owner puede cambiar el saludo");
+        saludo = _nuevoSaludo;
+    }
+    
+    function obtenerSaludo() public view returns (string memory) {
+        return saludo;
+    }
 }
+```
+
+#### Ejemplo de código JavaScript:
+
+```javascript
+// Conectar a MetaMask
+async function conectarWallet() {
+    if (typeof window.ethereum !== 'undefined') {
+        try {
+            // Solicitar acceso a las cuentas
+            const accounts = await window.ethereum.request({
+                method: 'eth_requestAccounts'
+            });
+            
+            console.log('Conectado a:', accounts[0]);
+            return accounts[0];
+        } catch (error) {
+            console.error('Error conectando wallet:', error);
+        }
+    } else {
+        alert('MetaMask no está instalado!');
+    }
+}
+
+// Interactuar con el smart contract
+async function leerSaludo() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const contract = new ethers.Contract(contractAddress, abi, provider);
+    
+    const saludo = await contract.obtenerSaludo();
+    console.log('Saludo actual:', saludo);
+}
+```
+
+#### Ejemplo de configuración JSON:
+
+```json
+{
+    "name": "mi-dapp-nodo",
+    "version": "1.0.0",
+    "description": "Mi primera dApp desarrollada en Nodo Serrano",
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "deploy": "hardhat run scripts/deploy.js --network sepolia"
+    },
+    "dependencies": {
+        "@openzeppelin/contracts": "^4.9.0",
+        "ethers": "^6.0.0",
+        "hardhat": "^2.19.0",
+        "next": "^14.0.0"
+    }
+}
+```
+
+#### Comando de terminal:
+
+```bash
+# Instalar dependencias
+npm install
+
+# Compilar contratos
+npx hardhat compile
+
+# Ejecutar tests
+npx hardhat test
+
+# Deployar a testnet
+npx hardhat run scripts/deploy.js --network sepolia
+
+# Verificar contrato
+npx hardhat verify --network sepolia DEPLOYED_CONTRACT_ADDRESS "Hello Nodo Serrano"
 ```
 
 ## 💡 Tips para escribir contenido atractivo

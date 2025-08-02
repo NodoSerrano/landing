@@ -4,9 +4,52 @@ import matter from "gray-matter"
 import { remark } from "remark"
 import html from "remark-html"
 import gfm from "remark-gfm"
-import { rehypeSanitize } from "rehype-sanitize"
 import readingTime from "reading-time"
 import { blogPostSchema, type BlogPostWithSlug } from "./schema"
+
+// Helper function to extract excerpt from markdown content
+function extractExcerpt(content: string): string {
+  // Remove frontmatter if any
+  const withoutFrontmatter = content.replace(/^---[\s\S]*?---\s*/, '')
+  
+  // Split by paragraphs and get the first substantial one
+  const paragraphs = withoutFrontmatter
+    .split('\n\n')
+    .map(p => p.trim())
+    .filter(p => p.length > 0 && !p.startsWith('#') && !p.startsWith('```'))
+  
+  // Get first paragraph, strip markdown formatting
+  const firstParagraph = paragraphs[0] || ''
+  const cleanText = firstParagraph
+    .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
+    .replace(/\*(.*?)\*/g, '$1') // Remove italic
+    .replace(/`(.*?)`/g, '$1') // Remove inline code
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Remove links
+    .replace(/#+\s*/g, '') // Remove heading markers
+    .trim()
+  
+  // Limit to reasonable length
+  if (cleanText.length > 200) {
+    return cleanText.substring(0, 200).trim() + '...'
+  }
+  
+  return cleanText
+}
+
+// Helper function to resolve image URLs
+function resolveImageUrls(post: any): { thumbnailUrl?: string; coverUrl?: string } {
+  const result: { thumbnailUrl?: string; coverUrl?: string } = {}
+  
+  if (post.thumbnail) {
+    result.thumbnailUrl = `/blog/thumbnails/${post.thumbnail}`
+  }
+  
+  if (post.cover) {
+    result.coverUrl = `/blog/covers/${post.cover}`
+  }
+  
+  return result
+}
 
 const postsDirectory = path.join(process.cwd(), "content/blog")
 
@@ -30,19 +73,23 @@ export async function getPostBySlug(slug: string): Promise<BlogPostWithSlug | nu
       return null
     }
 
-    // Process markdown content with security
+    // Process markdown content
     const processedContent = await remark()
       .use(gfm) // GitHub Flavored Markdown
-      .use(html, { sanitize: true }) // Basic HTML sanitization
+      .use(html) // Convert to HTML without aggressive sanitization
       .process(content)
 
     const contentHtml = processedContent.toString()
     const stats = readingTime(content)
+    const excerpt = extractExcerpt(content)
+    const imageUrls = resolveImageUrls(validatedData)
 
     return {
       ...validatedData,
       slug: realSlug,
       content: contentHtml,
+      excerpt,
+      ...imageUrls,
       readingTime: stats,
     }
   } catch (error) {
