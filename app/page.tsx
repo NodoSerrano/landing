@@ -71,7 +71,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white flex flex-col">
+    <div id="top" className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white flex flex-col">
       <motion.header
         className="sticky top-0 z-50 w-full border-b border-violet-400/20 bg-slate-900/95 backdrop-blur supports-[backdrop-filter]:bg-slate-900/80"
         initial={{ y: -100 }}
@@ -88,6 +88,9 @@ export default function Home() {
             TANDIL
           </motion.div>
           <div className="hidden md:flex space-x-8 items-center justify-center flex-1">
+            <NavLink href="#top">Home</NavLink>
+            <NavLink href="/blog">Blog</NavLink>
+            <NavLink href="#events">Eventos</NavLink>
             <NavLink href="#about">Nosotros</NavLink>
             <NavLink href="#features">Características</NavLink>
             <NavLink href="#signup">Registro</NavLink>
@@ -156,7 +159,7 @@ export default function Home() {
         <BlogSectionClient />
 
         {/* Events Section */}
-        <section className="py-12 md:py-16 bg-gradient-to-b from-slate-700 to-slate-800">
+        <section id="events" className="py-12 md:py-16 bg-gradient-to-b from-slate-700 to-slate-800">
           <div className="container mx-auto px-4">
             <motion.div
               ref={eventsAnimation.ref}
