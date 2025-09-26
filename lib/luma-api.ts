@@ -32,30 +32,60 @@ export async function fetchLumaEvents(): Promise<LumaEvent[]> {
     // Only showing events from "Hosting" section of the Luma profile
     const mockEvents: LumaEvent[] = [
       {
-        id: "evt-lanzamiento-nodo-serrano",
-        title: "Lanzamiento Nodo Serrano",
-        description: "Nodo Serrano es un espacio abierto para aprender, desarrollar y construir con tecnología blockchain en el ecosistema de Ethereum. Únete a nosotros para el lanzamiento oficial con documental, networking, cena y música en vivo.",
-        start_at: "2025-07-30T20:00:00Z", // 5:00 PM Argentina time (UTC-3)
-        end_at: "2025-07-31T01:00:00Z", // 10:00 PM Argentina time (UTC-3)
+        id: "evt-ethereum-essentials-vol-1",
+        title: "Ethereum Essentials Vol. 1",
+        description: "Comenzamos con nuestros eventos de formación en el Hub del Nodo. Vení a aprender los conceptos básicos de Ethereum, cómo configurar tu wallet y explorar las posibilidades de esta tecnología revolucionaria. ¡Te esperamos!",
+        start_at: "2025-10-01T18:00:00Z", // 5:00 PM Argentina time (UTC-3)
+        end_at: "2025-10-01T21:00:00Z", // 10:00 PM Argentina time (UTC-3)
         location: {
           name: "San Martín 864",
           city: "Tandil, Buenos Aires"
         },
-        url: `https://lu.ma/lb7dtked?tk=DHF0Xm`,
-        cover_image: 'https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=400,height=400/event-covers/3g/f1541228-70de-43c4-a47f-bb4129154bda.jpg',
+        url: `https://luma.com/6uvzj0zg`,
+        cover_image: 'https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=400,height=400/event-covers/g9/ac8de036-e440-4597-b421-6eefd86ad8d5.jpg',
         featured: true
       },
       {
-        id: "evt-placeholder-1",
-        title: "Próximamente...",
-        description: "Estamos preparando más eventos increíbles. Mantente atento a nuestras redes sociales para conocer las próximas fechas.",
-        start_at: "2025-09-01T18:00:00Z",
-        end_at: "2025-09-01T20:00:00Z",
+        id: "evt-ethereum-essentials-vol-2",
+        title: "Ethereum Essentials Vol. 2",
+        description: "Seguimos en la carrera a DevConnect, y antes queremos sumar a mas gente a la comunidad. En este segundo volumen de Ethereum Essentials, profundizaremos en la arquitectura de blockchain. ¡No te lo pierdas!",
+        start_at: "2025-10-08T18:00:00Z", // 5:00 PM Argentina time (UTC-3)
+        end_at: "2025-10-08T21:00:00Z", // 10:00 PM Argentina time (UTC-3)
         location: {
-          name: "Por definir",
-          city: "Tandil"
+          name: "San Martín 864",
+          city: "Tandil, Buenos Aires"
         },
-        url: `https://lu.ma/user/usr-dJssfd2hL0CffxN`
+        url: `https://luma.com/2v183l8g`,
+        cover_image: 'https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=400,height=400/event-covers/g9/ac8de036-e440-4597-b421-6eefd86ad8d5.jpg',
+        featured: true
+      },
+      {
+        id: "evt-ethereum-essentials-vol-3",
+        title: "Ethereum Essentials Vol. 3",
+        description: "Ya adentrados en el Workshop, vamos a seguir indagando en los conceptos de Ethereum carrera a DevConnect.",
+        start_at: "2025-10-15T18:00:00Z", // 5:00 PM Argentina time (UTC-3)
+        end_at: "2025-10-15T21:00:00Z", // 10:00 PM Argentina time (UTC-3)
+        location: {
+          name: "San Martín 864",
+          city: "Tandil, Buenos Aires"
+        },
+        url: `https://luma.com/c1aao8cz`,
+        cover_image: 'https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=400,height=400/event-covers/g9/ac8de036-e440-4597-b421-6eefd86ad8d5.jpg',
+        featured: true
+      },
+      {
+        id: "evt-ethereum-essentials-vol-4",
+        title: "Ethereum Essentials Vol. 4",
+        description: "Último día en el Hub antes de DevConnect! Vení al sorteo y a saber lo que se viene próximamente.",
+        start_at: "2025-10-15T22:00:00Z", // 5:00 PM Argentina time (UTC-3)
+        end_at: "2025-10-15T22:00:00Z", // 10:00 PM Argentina time (UTC-3)
+        location: {
+          name: "San Martín 864",
+          city: "Tandil, Buenos Aires"
+        },
+        url: `https://luma.com/c3rxfdjd`,
+        cover_image: 'https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=400,height=400/event-covers/g9/ac8de036-e440-4597-b421-6eefd86ad8d5.jpg',
+        featured: true
       },
       {
         id: "evt-placeholder-2",

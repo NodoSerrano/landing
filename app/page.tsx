@@ -44,7 +44,7 @@ const itemFadeIn = {
 function useScrollAnimation() {
   const controls = useAnimation()
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, threshold: 0.2 })
+  const inView = useInView(ref, { once: true })
 
   useEffect(() => {
     if (inView) {
@@ -412,7 +412,7 @@ export default function Home() {
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, threshold: 0.2 }}
+              viewport={{ once: true }}
               variants={fadeIn}
               className="max-w-4xl mx-auto text-center"
             >
@@ -643,3 +643,4 @@ function SocialLink({
     </motion.div>
   )
 }
+

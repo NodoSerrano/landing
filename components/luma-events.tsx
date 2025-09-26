@@ -14,20 +14,35 @@ const itemFadeIn = {
 export default function LumaEvents() {
   const [events, setEvents] = useState<LumaEvent[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     async function loadEvents() {
       try {
+        console.log('Starting to fetch Luma events...')
         const eventData = await fetchLumaEvents()
-        setEvents(eventData)
+        console.log('Fetched events:', eventData)
+        console.log('Number of events:', eventData?.length || 0)
+        
+        if (eventData && Array.isArray(eventData)) {
+          setEvents(eventData)
+          console.log('Events set successfully:', eventData.length, 'events')
+        } else {
+          console.warn('Event data is not an array:', eventData)
+          setEvents([])
+        }
       } catch (error) {
         console.error('Failed to load events:', error)
+        setError(error instanceof Error ? error.message : 'Unknown error occurred')
       } finally {
         setLoading(false)
       }
     }
     loadEvents()
-  }, [])
+  }, []) // Remove events from dependency array - it causes infinite loop
+
+  // Debug render to show current state
+  console.log('Current render state:', { loading, events: events.length, error })
 
   if (loading) {
     return (
@@ -35,6 +50,9 @@ export default function LumaEvents() {
         <div className="lg:col-span-2">
           <div className="bg-slate-800/60 p-6 rounded-lg border border-violet-400/30 animate-pulse">
             <div className="h-40 bg-slate-700/60 rounded"></div>
+            <div className="mt-4 text-center text-slate-400">
+              Cargando eventos de Luma...
+            </div>
           </div>
         </div>
         <div className="space-y-4">
@@ -49,16 +67,61 @@ export default function LumaEvents() {
     )
   }
 
+  if (error) {
+    return (
+      <div className="grid lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-3">
+          <div className="bg-red-900/20 border border-red-500/30 p-6 rounded-lg">
+            <h3 className="text-red-400 font-semibold mb-2">Error loading events</h3>
+            <p className="text-red-300 text-sm">{error}</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (!events || events.length === 0) {
+    return (
+      <div className="grid lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-3">
+          <div className="bg-slate-800/60 p-6 rounded-lg border border-violet-400/30 text-center">
+            <p className="text-slate-400">No hay eventos disponibles en este momento.</p>
+            <p className="text-slate-500 text-sm mt-2">
+              Verifica la configuración de la API de Luma o intenta más tarde.
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const featuredEvent = events.find(event => event.featured) || events[0]
   const otherEvents = events.filter(event => event.id !== featuredEvent?.id)
 
   return (
     <div className="grid lg:grid-cols-3 gap-8">
+      {/* Debug info - remove in production */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="lg:col-span-3 mb-4">
+          <div className="bg-blue-900/20 border border-blue-500/30 p-4 rounded-lg">
+            <p className="text-blue-300 text-sm">
+              Debug: Loaded {events.length} events | Featured: {featuredEvent?.title || 'None'}
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Featured Event - Left Highlight */}
       {featuredEvent && (
         <div className="lg:col-span-2">
           <motion.div 
-            className="bg-slate-800/70 backdrop-blur-sm p-6 rounded-lg border border-violet-400/30 hover:border-violet-400/50 transition-colors h-full shadow-sm"
+            className="bg-slate-800/70 backdrop-blur-sm p-6 rounded-lg border border-violet-400/30 hover:border-violet-400/50 transition-colors shadow-sm flex flex-col justify-center items-center"
             variants={itemFadeIn}
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
           >
