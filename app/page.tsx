@@ -11,7 +11,6 @@ import { motion, useAnimation, useInView } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import MobileMenu from "@/components/mobile-menu"
 import NewsletterForm from "@/components/newsletter-form"
-import LumaEvents from "@/components/luma-events"
 import BlogSectionClient from "@/components/blog-section-client"
 
 // Variants for animations
@@ -157,35 +156,41 @@ export default function Home() {
 
         {/* Blog Section */}
         <BlogSectionClient />
-
+        
+        
         {/* Events Section */}
         <section id="events" className="py-12 md:py-16 bg-gradient-to-b from-slate-700 to-slate-800">
           <div className="container mx-auto px-4">
-            <motion.div
-              ref={eventsAnimation.ref}
-              initial="hidden"
-              animate={eventsAnimation.controls}
-              variants={fadeIn}
+            <div
               className="text-center mb-12"
             >
               <h2 className="text-2xl md:text-3xl font-bold mb-6 text-off-white">Próximos eventos</h2>
               <p className="text-lg text-off-white max-w-2xl mx-auto">
                 Participa en nuestros eventos y talleres sobre blockchain y Ethereum
               </p>
-            </motion.div>
+            </div>
             
-            <LumaEvents />
+            <iframe
+              src="https://luma.com/embed/calendar/cal-7uziZDmq9SFGggQ/events"
+              width="1200"
+              height="650"
+              frameBorder="0"
+              allowFullScreen
+              aria-hidden="false"
+              tabIndex={0}
+              className="mx-auto w-full max-w-4xl rounded-lg border border-violet-400/30 shadow-lg backdrop-blur-sm bg-slate-800/60"
+            />
             
             {/* Luma Profile Link */}
             <div className="text-center mt-8">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link 
-                  href="https://lu.ma/user/usr-dJssfd2hL0CffxN" 
+                  href="https://luma.com/nodoserrano" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-off-white font-medium rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-colors"
                 >
-                  Ver todos los eventos
+                  Suscribite a nuestro calendario
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
