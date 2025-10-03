@@ -23,7 +23,7 @@ This guide explains how to integrate Notion with your Nodo Serrano blog for a se
 
 Set up automatic synchronization using GitHub Actions and Notion API.
 
-## 🔧 Setting Up Automated Sync
+## Setting Up Automated Sync
 
 ### Prerequisites
 
