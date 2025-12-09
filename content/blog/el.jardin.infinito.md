@@ -1,0 +1,25 @@
+---
+title: "El jardín infinito"
+description: "Como empezó todo"
+date: "2025-10-01"
+author: "iberras"
+tags: ["ethereum", "our story", "community"]
+featured: false
+published: true
+---
+
+El jardin infinito
+
+Era enero del 2025, hacía calor y el verano argentino prometía aires de cambio. Matta hacía tiempo que me insistía en pasarme al mundo web3, pero como estaba concentrado en el mundo de experimentación estadística, no había bandwidth para ir en esa dirección. Pero cuando las startups se venden, aparecen nuevas oportunidades. Con ese calor de emprender, decidimos juntos empezar un nuevo proyecto a largo plazo: una comunidad educativa en Tandil centrada en la tecnología de Ethereum.
+
+Es muy personal cómo cada persona aprende cosas nuevas, y cómo va avanzando en conceptos que todavía no se entienden. Algunos son más autodidactas, otros son más de hacer cursos y otros simplemente se ensucian las manos. A mí me gusta leer papers académicos, y eso hice todo el verano. ¡Qué lindo volver a la matemática discreta! Me resultaba todo tan familiar, tan intuitivo. De a poco iba entendiendo de qué iba la máquina del mundo (world computer, como le decimos en el ecosistema) e iba comprendiendo las implicancias de una nueva plataforma de hacer computación a escala global.
+
+La siguiente etapa de aprender, en mi caso, es repetir, hacer ping pong, discutir con los que saben y entender con los otros. Me es imposible cristalizar los conceptos si no pongo a humanos de por medio. Necesito escuchar del otro que lo que estoy estudiando tiene sentido y que sea válido. Gracias Matta por esas charlas eternas explicándome acerca de criptografía y todas esas cosas del ecosistema que hasta ese entonces no me entraban en la cabeza.
+
+Hora de ir a eventos. De a poco, empecé a ser parte del ecosistema yendo a eventos, escuchando charlas y haciendo un nuevo networking en una nueva red. ¡Qué mundo apasionante me encontré en Buenos Aires, en Crecimiento y en Córdoba, con la comunidad de Ethereum Argentina! Hace tiempo que no participaba como voluntario y me llenó de energía poder sumar todo lo que sabía de eventos en estos rincones de la web3. En estas vueltas, conocí a Suka y Candu, dos grandes aliados que me ayudaron a expandirme en este ecosistema. Ellos me abrieron las puertas y me enseñaron el camino de la educación y gestión de eventos dentro de Blockchain. 
+
+“Hagamos algo en Tandil”, dijo Candu la segunda vez que nos vimos. Y así empezó la historia del Nodo Serrano. A fines de abril de 2025 ya estábamos organizando nuestro primer movimiento en la ciudad de Tandil. Me llenó de orgullo recibir al equipo de SEED, en el marco de su gira, en nuestra ciudad. El potencial que vimos en ese evento fue espectacular. Fue ese día que me di cuenta de que había un hambre de conocimiento, un hambre de algo nuevo, un hambre de innovar y había que usar ese momentum para crear nuestra comunidad. 
+
+La única tecnología que necesitas es un deadline, dice el dicho. Ethereum cumplía 10 años el 30 de julio, y nos pusimos esa fecha como objetivo para inaugurar nuestro espacio. Mucho trabajo de real-world-assets, es decir, caños de desagüe, mesas, paredes, ventanas y tantas cosas más, que nos pedía el espacio donde queríamos que el nodo comenzara sus pasos. Después de meses de obra, llegó el día de mostrar cuál es nuestra visión y a dónde queremos ir. Agradezco a todos nuestros amigos y a todos los que vinieron ese día y nos mostraron su entusiasmo en ser parte de esta nueva aventura.
+
+Ahora viene una nueva etapa, donde los cimientos nos sostienen. Esos cimientos están basados en toda nuestra experiencia en el mundo del software, haciendo proyectos, dando charlas y nuestras ganas de siempre aprender cosas nuevas. El jardín infinito está alrededor de nosotros. Es momento de sembrar las semillas en todas las plantas que queremos ver crecer. Somos todos jardineros de esta nueva forma de vivir, esta nueva forma de relacionarnos en el mundo digital. Esto no es el futuro, esto es el presente. Es hora de regar la tierra.
