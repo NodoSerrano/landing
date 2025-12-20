@@ -60,11 +60,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <article className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+    <article className="min-h-screen bg-slate-950">
       <div className="container mx-auto max-w-4xl px-4 py-12">
         <Link
           href="/blog"
-          className="mb-8 inline-flex items-center gap-2 text-sm text-slate-400 transition-colors hover:text-cyan-400"
+          className="mb-8 inline-flex items-center gap-2 text-sm opacity-80 transition-colors hover:text-cyan-400 hover:opacity-100"
         >
           <ArrowLeft className="h-4 w-4" />
           Volver al blog
@@ -72,7 +72,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <header className="mb-12">
           {post.featured && (
-            <div className="mb-6 inline-block rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 px-4 py-2 text-sm font-medium text-white shadow-lg">
+            <div className="mb-6 inline-block rounded-lg bg-cyan-600 px-4 py-2 text-sm font-medium shadow-lg">
               ⭐ Artículo destacado
             </div>
           )}
@@ -92,15 +92,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             
             {/* Content */}
             <div className="flex-1">
-              <h1 className="mb-6 bg-gradient-to-r from-white to-slate-200 bg-clip-text text-4xl font-bold leading-tight text-transparent md:text-5xl">
+              <h1 className="mb-6 text-4xl font-bold leading-tight md:text-5xl">
                 {post.title}
               </h1>
               
-              <p className="mb-8 text-xl leading-relaxed text-slate-300">
+              <p className="mb-8 text-xl leading-relaxed opacity-80">
                 {post.description}
               </p>
 
-              <div className="flex flex-wrap items-center gap-6 text-sm text-slate-400 mb-6">
+              <div className="flex flex-wrap items-center gap-6 text-sm opacity-80 mb-6">
                 <div className="flex items-center gap-2">
                   <User className="h-4 w-4" />
                   <span className="font-medium">{post.author}</span>
@@ -126,7 +126,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-slate-800/60 border border-slate-700 px-4 py-2 text-sm text-slate-300 backdrop-blur-sm transition-colors hover:bg-slate-700/60"
+                      className="rounded-full bg-slate-800/60 border border-slate-700 px-4 py-2 text-sm backdrop-blur-sm transition-colors hover:bg-slate-700/60"
                     >
                       #{tag}
                     </span>
@@ -139,8 +139,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-8 md:p-12 backdrop-blur-sm shadow-2xl">
           <div 
-            className="prose prose-lg max-w-none [&>*]:text-white [&_p]:!text-white [&_h1]:!text-white [&_h2]:!text-white [&_h3]:!text-white [&_h4]:!text-white [&_h5]:!text-white [&_h6]:!text-white [&_li]:!text-white [&_strong]:!text-white [&_em]:!text-slate-100 [&_blockquote]:!text-slate-100 [&_a]:!text-cyan-400 hover:[&_a]:!text-cyan-300 [&_code]:!text-cyan-300 [&_code]:!bg-slate-800 [&_pre]:!bg-slate-800 [&_pre]:!border-slate-700"
-            style={{ color: 'white' }}
+            className="prose prose-lg max-w-none [&_a]:!text-cyan-400 hover:[&_a]:!text-cyan-300 [&_code]:!text-cyan-300 [&_code]:!bg-slate-800 [&_pre]:!bg-slate-800 [&_pre]:!border-slate-700"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </div>
@@ -148,7 +147,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <footer className="mt-12 border-t border-slate-800 pt-8">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 rounded-lg bg-slate-800/60 px-4 py-3 text-slate-300 transition-all hover:bg-slate-700/60 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-lg bg-slate-800/60 px-4 py-3 transition-all hover:bg-slate-700/60"
           >
             <ArrowLeft className="h-4 w-4" />
             Ver más artículos

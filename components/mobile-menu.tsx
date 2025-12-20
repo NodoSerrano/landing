@@ -6,6 +6,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import { Button } from "@/components/ui/button"
 
 export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false)
@@ -15,13 +16,14 @@ export default function MobileMenu() {
 
   return (
     <div className="md:hidden">
-      <button
+      <Button
         onClick={toggleMenu}
-        className="p-2 text-off-white focus:outline-none"
+        variant="ghost"
+        size="icon"
         aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
       >
         {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-      </button>
+      </Button>
 
       <AnimatePresence>
         {isOpen && (

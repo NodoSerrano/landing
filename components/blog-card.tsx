@@ -25,40 +25,40 @@ export default function BlogCard({ post, index = 0, onOpen }: BlogCardProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      className="group relative"
+      className="relative"
     >
       <div onClick={handleClick} className="block cursor-pointer">
-        <div className="relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 p-4 backdrop-blur-sm transition-all duration-300 hover:border-slate-700 hover:bg-slate-900/80 hover:shadow-xl hover:shadow-slate-900/50 hover:-translate-y-1">
+        <div className="relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 p-4 backdrop-blur-sm">
           {post.featured && (
-            <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-gradient-to-r from-cyan-600 to-blue-600 flex items-center justify-center text-white text-sm z-10">
+            <div className="absolute top-2 right-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-cyan-600 text-sm">
               ⭐
             </div>
           )}
           
           <div className="flex gap-4">
             {/* Thumbnail - Always present, using placeholder if no image */}
-            <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden border border-slate-700">
+            <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border border-slate-700">
               <SafeImage
                 src={post.thumbnailUrl || '/blog/thumbnails/default-placeholder-square.svg'}
                 fallbackSrc="/blog/thumbnails/default-placeholder-square.svg"
                 alt={post.title}
                 fill
-                className="object-cover transition-transform group-hover:scale-105"
+                className="object-cover"
                 sizes="80px"
               />
             </div>
             
             {/* Content */}
-            <div className="flex-1 min-w-0">
-              <h3 className="mb-2 text-lg font-bold text-white transition-colors group-hover:text-cyan-400 leading-tight">
+            <div className="min-w-0 flex-1">
+              <h3 className="mb-2 text-lg font-bold leading-tight">
                 {post.title}
               </h3>
               
-              <p className="mb-3 line-clamp-2 text-sm text-slate-300 leading-relaxed">
+              <p className="mb-3 line-clamp-2 text-sm leading-relaxed">
                 {post.description}
               </p>
               
-              <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 mb-2">
+              <div className="mb-2 flex flex-wrap items-center gap-3 text-xs opacity-80">
                 <div className="flex items-center gap-1">
                   <User className="h-3 w-3" />
                   <span className="font-medium">{post.author}</span>
@@ -84,7 +84,7 @@ export default function BlogCard({ post, index = 0, onOpen }: BlogCardProps) {
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-slate-800/60 border border-slate-700 px-2 py-1 text-xs text-slate-400 transition-colors group-hover:text-slate-300"
+                      className="rounded-full border border-slate-700 bg-slate-800/60 px-2 py-1 text-xs opacity-80"
                     >
                       #{tag}
                     </span>

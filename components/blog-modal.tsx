@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { X, Calendar, Clock, User, ArrowLeft, ArrowRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import SafeImage from "./safe-image"
+import { Button } from "@/components/ui/button"
 import type { BlogPostWithSlug } from "@/lib/blog/schema"
 
 interface BlogModalProps {
@@ -79,39 +80,42 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
               <div className="flex items-center gap-4">
                 {onNavigate && (
                   <div className="flex items-center gap-2">
-                    <button
+                    <Button
                       onClick={() => onNavigate('prev')}
                       disabled={!canNavigate?.prev}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+                      variant="ghost"
+                      size="icon"
                       aria-label="Artículo anterior"
                     >
                       <ArrowLeft className="h-4 w-4" />
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       onClick={() => onNavigate('next')}
                       disabled={!canNavigate?.next}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+                      variant="ghost"
+                      size="icon"
                       aria-label="Artículo siguiente"
                     >
                       <ArrowRight className="h-4 w-4" />
-                    </button>
+                    </Button>
                   </div>
                 )}
                 
                 {post.featured && (
-                  <div className="rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 px-3 py-1 text-xs font-medium text-white">
+                  <div className="rounded-lg bg-cyan-600 px-3 py-1 text-xs font-medium text-white">
                     ⭐ Destacado
                   </div>
                 )}
               </div>
               
-              <button
+              <Button
                 onClick={onClose}
-                className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+                variant="ghost"
+                size="icon"
                 aria-label="Cerrar modal"
               >
                 <X className="h-4 w-4" />
-              </button>
+              </Button>
             </div>
 
             {/* Content */}
@@ -136,19 +140,19 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
                     <div className="flex-1">
                       <h1 
                         id="modal-title" 
-                        className="mb-4 bg-gradient-to-r from-white to-slate-200 bg-clip-text text-2xl font-bold leading-tight text-transparent md:text-3xl lg:text-4xl"
+                        className="mb-4 text-2xl font-bold leading-tight md:text-3xl lg:text-4xl"
                       >
                         {post.title}
                       </h1>
                       
                       <p 
                         id="modal-description"
-                        className="mb-6 text-lg leading-relaxed text-slate-300"
+                        className="mb-6 text-lg leading-relaxed opacity-80"
                       >
                         {post.description}
                       </p>
 
-                      <div className="flex flex-wrap items-center gap-6 text-sm text-slate-400 mb-4">
+                      <div className="flex flex-wrap items-center gap-6 text-sm opacity-80 mb-4">
                         <div className="flex items-center gap-2">
                           <User className="h-4 w-4" />
                           <span className="font-medium">{post.author}</span>
@@ -174,7 +178,7 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
                           {post.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="rounded-full bg-slate-800/60 border border-slate-700 px-3 py-1 text-sm text-slate-300"
+                              className="rounded-full bg-slate-800/60 border border-slate-700 px-3 py-1 text-sm"
                             >
                               #{tag}
                             </span>
@@ -188,8 +192,7 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
                 {/* Article Content */}
                 <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-6 md:p-8 backdrop-blur-sm">
                   <div 
-                    className="prose prose-lg max-w-none [&>*]:text-white [&_p]:!text-white [&_h1]:!text-white [&_h2]:!text-white [&_h3]:!text-white [&_h4]:!text-white [&_h5]:!text-white [&_h6]:!text-white [&_li]:!text-white [&_strong]:!text-white [&_em]:!text-slate-100 [&_blockquote]:!text-slate-100 [&_a]:!text-cyan-400 hover:[&_a]:!text-cyan-300 [&_code]:!text-cyan-300 [&_code]:!bg-slate-800 [&_pre]:!bg-slate-800 [&_pre]:!border-slate-700"
-                    style={{ color: 'white' }}
+                    className="prose prose-lg max-w-none [&_a]:!text-cyan-400 hover:[&_a]:!text-cyan-300 [&_code]:!text-cyan-300 [&_code]:!bg-slate-800 [&_pre]:!bg-slate-800 [&_pre]:!border-slate-700"
                     dangerouslySetInnerHTML={{ __html: post.content }}
                   />
                 </div>

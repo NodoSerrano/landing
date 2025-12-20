@@ -9,9 +9,12 @@ import { motion } from "framer-motion";
 import type { BlogPostWithSlug } from "@/lib/blog/schema";
 import { Button } from "@/components/ui/button";
 
-// Helper function for skeleton divs
-const SkeletonDiv = ({ className }: { className: string }) => (
-  <div className={`animate-pulse rounded bg-slate-700 ${className}`} />
+
+// Wrapper component for consistent section structure
+const SectionWrapper = ({ children }: { children: React.ReactNode }) => (
+  <section className="bg-slate-800 py-12 md:py-16">
+    <div className="container mx-auto px-4 max-w-content">{children}</div>
+  </section>
 );
 
 // Skeleton component for loading state
@@ -20,23 +23,23 @@ function BlogSectionSkeleton() {
     <div className="space-y-12">
       {/* Featured post skeleton */}
       <div className="overflow-hidden rounded-lg border border-slate-700 bg-slate-800/60 p-6 backdrop-blur-sm lg:p-8">
-        <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
-          <SkeletonDiv className="h-48 w-full rounded-lg lg:h-64 lg:w-80" />
+        <div className="flex flex-col gap-6 lg:flex-row lg:gap-8 mx-auto">
+          <div className="h-48 w-full rounded-lg lg:h-64 lg:w-80 animate-pulse bg-slate-700" />
           <div className="flex-1 space-y-4">
-            <SkeletonDiv className="h-3 w-20" />
-            <SkeletonDiv className="h-8 w-3/4" />
+            <div className="h-3 w-20 animate-pulse rounded bg-slate-700" />
+            <div className="h-8 w-3/4 animate-pulse rounded bg-slate-700" />
             <div className="space-y-2">
-              <SkeletonDiv className="h-4 w-full" />
-              <SkeletonDiv className="h-4 w-5/6" />
+              <div className="h-4 w-full animate-pulse rounded bg-slate-700" />
+              <div className="h-4 w-5/6 animate-pulse rounded bg-slate-700" />
             </div>
             <div className="flex gap-4 pt-4">
-              <SkeletonDiv className="h-4 w-24" />
-              <SkeletonDiv className="h-4 w-20" />
-              <SkeletonDiv className="h-4 w-16" />
+              <div className="h-4 w-24 animate-pulse rounded bg-slate-700" />
+              <div className="h-4 w-20 animate-pulse rounded bg-slate-700" />
+              <div className="h-4 w-16 animate-pulse rounded bg-slate-700" />
             </div>
             <div className="flex gap-2 pt-2">
-              <SkeletonDiv className="h-6 w-16 rounded-full" />
-              <SkeletonDiv className="h-6 w-20 rounded-full" />
+              <div className="h-6 w-16 rounded-full animate-pulse bg-slate-700" />
+              <div className="h-6 w-20 rounded-full animate-pulse bg-slate-700" />
             </div>
           </div>
         </div>
@@ -50,13 +53,13 @@ function BlogSectionSkeleton() {
             className="overflow-hidden rounded-lg border border-slate-700 bg-slate-800/60 p-4 backdrop-blur-sm"
           >
             <div className="flex gap-4">
-              <SkeletonDiv className="h-20 w-20 flex-shrink-0 rounded-lg" />
+              <div className="h-20 w-20 flex-shrink-0 rounded-lg animate-pulse bg-slate-700" />
               <div className="flex-1 space-y-2">
-                <SkeletonDiv className="h-5 w-full" />
-                <SkeletonDiv className="h-3 w-4/5" />
+                <div className="h-5 w-full animate-pulse bg-slate-700" />
+                <div className="h-3 w-4/5 animate-pulse bg-slate-700" />
                 <div className="flex gap-2 pt-2">
-                  <SkeletonDiv className="h-3 w-16" />
-                  <SkeletonDiv className="h-3 w-12" />
+                  <div className="h-3 w-16 animate-pulse bg-slate-700" />
+                  <div className="h-3 w-12 animate-pulse bg-slate-700" />
                 </div>
               </div>
             </div>
@@ -66,18 +69,12 @@ function BlogSectionSkeleton() {
 
       {/* Button skeleton */}
       <div className="text-center">
-        <SkeletonDiv className="inline-block h-12 w-48 rounded-lg" />
+        <div className="inline-block h-12 w-48 rounded-lg animate-pulse bg-slate-700" />
       </div>
     </div>
   );
 }
 
-// Wrapper component for consistent section structure
-const SectionWrapper = ({ children }: { children: React.ReactNode }) => (
-  <section className="bg-slate-800 py-12 md:py-16">
-    <div className="container mx-auto px-4">{children}</div>
-  </section>
-);
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -96,8 +93,10 @@ export default function BlogSection() {
   const [posts, setPosts] = useState<BlogPostWithSlug[]>([]);
   const [loading, setLoading] = useState(true);
   const [allPosts, setAllPosts] = useState<BlogPostWithSlug[]>([]);
-  const [modalPost, setModalPost] = useState<BlogPostWithSlug | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalState, setModalState] = useState<{
+    isOpen: boolean;
+    post: BlogPostWithSlug | null;
+  }>({ isOpen: false, post: null });
 
   useEffect(() => {
     async function fetchPosts() {
@@ -128,44 +127,25 @@ export default function BlogSection() {
   }, []);
 
   const openModal = (post: BlogPostWithSlug) => {
-    setModalPost(post);
-    setIsModalOpen(true);
+    setModalState({ isOpen: true, post });
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
-    setModalPost(null);
-  };
-
-  const getCurrentPostIndex = () => {
-    if (!modalPost) return -1;
-    return allPosts.findIndex((post) => post.slug === modalPost.slug);
+    setModalState({ isOpen: false, post: null });
   };
 
   const navigateModal = (direction: "prev" | "next") => {
-    if (allPosts.length === 0) return;
+    if (!modalState.post || allPosts.length === 0) return;
 
-    const currentIndex = getCurrentPostIndex();
+    const currentIndex = allPosts.findIndex((post) => post.slug === modalState.post!.slug);
     if (currentIndex === -1) return;
 
     const newIndex =
       direction === "prev"
-        ? currentIndex > 0
-          ? currentIndex - 1
-          : allPosts.length - 1
-        : currentIndex < allPosts.length - 1
-        ? currentIndex + 1
-        : 0;
+        ? currentIndex > 0 ? currentIndex - 1 : allPosts.length - 1
+        : currentIndex < allPosts.length - 1 ? currentIndex + 1 : 0;
 
-    setModalPost(allPosts[newIndex]);
-  };
-
-  const getNavigationState = () => {
-    const hasMultiplePosts = allPosts.length > 1;
-    return {
-      prev: hasMultiplePosts,
-      next: hasMultiplePosts,
-    };
+    setModalState({ ...modalState, post: allPosts[newIndex] });
   };
 
   if (loading) {
@@ -213,11 +193,14 @@ export default function BlogSection() {
       </Button>
 
       <BlogModal
-        isOpen={isModalOpen}
+        isOpen={modalState.isOpen}
         onClose={closeModal}
-        post={modalPost}
+        post={modalState.post}
         onNavigate={navigateModal}
-        canNavigate={getNavigationState()}
+        canNavigate={{
+          prev: allPosts.length > 1,
+          next: allPosts.length > 1,
+        }}
       />
     </SectionWrapper>
   );

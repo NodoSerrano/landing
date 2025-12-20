@@ -51,29 +51,23 @@ export default function NewsletterForm() {
 
   return (
     <div className="w-full">
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-5">
         <Input
           type="email"
           placeholder="tu@email.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={status === "loading"}
-          className="bg-slate-800/60 border-violet-500/40 text-off-white placeholder:text-cyan-300 focus:border-violet-500/60"
+          className="bg-slate-800/60 border-violet-500/40 placeholder:text-cyan-300 focus:border-violet-500/60"
           required
         />
-        <motion.div
-          whileHover={{ scale: status !== "loading" ? 1.02 : 1 }}
-          whileTap={{ scale: status !== "loading" ? 0.98 : 1 }}
+        <Button
+          type="submit"
+          disabled={status === "loading"}
         >
-          <Button
-            type="submit"
-            disabled={status === "loading"}
-            className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-off-white font-bold text-base whitespace-nowrap w-full sm:w-auto"
-          >
-            {status === "loading" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {status === "loading" ? "Enviando..." : "Suscribirse"}
-          </Button>
-        </motion.div>
+          {status === "loading" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          {status === "loading" ? "Enviando..." : "Suscribirse"}
+        </Button>
       </form>
 
       <AnimatePresence mode="wait">
