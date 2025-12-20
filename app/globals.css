@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Highlight.js syntax highlighting theme - VS Code Dark+ theme adapted for dark mode */
-@import 'highlight.js/styles/vs2015.css';
-
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
