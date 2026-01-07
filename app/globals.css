@@ -20,14 +20,29 @@ body {
 
   /* Sponsors Ticker Animation */
   .animate-marquee {
-    animation: marquee-scroll 20s linear infinite;
+    animation: marquee-scroll-mobile 20s linear infinite;
+  }
+
+  @media (min-width: 768px) {
+    .animate-marquee {
+      animation: marquee-scroll-desktop 20s linear infinite;
+    }
   }
 
   .pause-marquee:hover {
     animation-play-state: paused;
   }
 
-  @keyframes marquee-scroll {
+  @keyframes marquee-scroll-mobile {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-620px);
+    }
+  }
+
+  @keyframes marquee-scroll-desktop {
     0% {
       transform: translateX(0);
     }

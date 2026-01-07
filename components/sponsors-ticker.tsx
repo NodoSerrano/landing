@@ -15,13 +15,13 @@ interface Sponsor {
 const sponsors: Sponsor[] = [
   {
     name: "Ethereum Foundation",
-    logo: <EthereumLogo className="h-32 w-auto" />,
+    logo: <EthereumLogo className="h-20 md:h-32 w-auto" />,
     url: "https://ethereum.org/",
     alt: "Ethereum",
   },
   {
     name: "Ethereum Support Program",
-    logo: <ESPLogo className="h-32 w-auto" />,
+    logo: <ESPLogo className="h-20 md:h-32 w-auto" />,
     url: "https://esp.ethereum.foundation/",
     alt: "Ethereum Support Program",
   },
@@ -33,7 +33,7 @@ const sponsors: Sponsor[] = [
         alt="DevConnect"
         width={128}
         height={128}
-        className="h-32 w-auto object-contain"
+        className="h-20 md:h-32 w-auto object-contain"
       />
     ),
     url: "https://devconnect.org/",
@@ -47,7 +47,7 @@ const sponsors: Sponsor[] = [
         alt="The Red Guild"
         width={200}
         height={128}
-        className="h-32 w-auto object-contain"
+        className="h-20 md:h-32 w-auto object-contain"
       />
     ),
     url: "https://theredguild.org/",
@@ -66,12 +66,12 @@ export default function SponsorsTicker() {
   ];
 
   return (
-    <div className="w-full overflow-hidden py-8 relative">
-      <div className="flex items-center gap-20 animate-marquee hover:pause-marquee">
+    <div className="w-full overflow-hidden py-4 md:py-8 relative">
+      <div className="flex items-center gap-12 md:gap-20 animate-marquee hover:pause-marquee">
         {duplicatedSponsors.map((sponsor, index) => (
           <div
             key={`${sponsor.name}-${index}`}
-            className="flex-shrink-0 flex items-center gap-6 group cursor-pointer hover:scale-105 transition-transform duration-300"
+            className="flex-shrink-0 flex flex-col items-center md:flex-row md:items-center gap-3 md:gap-6 group cursor-pointer hover:scale-105 transition-transform duration-300"
             onClick={() =>
               window.open(sponsor.url, "_blank", "noopener,noreferrer")
             }
@@ -79,7 +79,7 @@ export default function SponsorsTicker() {
             <div className="transition-all duration-300 group-hover:brightness-110 flex-shrink-0">
               {sponsor.logo}
             </div>
-            <span className="text-lg font-bold text-left text-slate-300 group-hover:text-white transition-colors duration-300 max-w-[160px] leading-tight">
+            <span className="text-sm md:text-lg font-bold text-center md:text-left text-slate-300 group-hover:text-white transition-colors duration-300 max-w-[120px] md:max-w-[160px] leading-tight">
               {sponsor.name}
             </span>
           </div>
