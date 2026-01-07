@@ -4,7 +4,6 @@ import type React from "react";
 import Link from "next/link";
 import { Instagram, Twitter, MessageCircle, Mail } from "lucide-react";
 import { motion } from "framer-motion";
-import WhatsAppIcon from "@/components/svgs/whatsapp-icon";
 
 // Component for social links with animation
 function SocialLink({
