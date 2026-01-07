@@ -10,9 +10,8 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { features } from "@/lib/features-data";
 import { ExternalLinkIcon } from "@/components/feature-icons";
-import EthereumLogo from "@/components/svgs/ethereum-logo";
-import ESPLogo from "@/components/svgs/esp-logo";
 import { Button } from "@/components/ui/button";
+import SponsorsTicker from "@/components/sponsors-ticker";
 
 // Animation variant: fade in with slight Y movement
 const fadeInUp = {
@@ -181,46 +180,16 @@ export default function Home() {
 
         {/* Sponsors Section */}
         <section className="py-12 md:py-16 bg-slate-800">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <div className="max-w-4xl mx-auto text-center">
-              <div className="text-center mb-12 max-w-content px-4">
-                <h2 className="text-2xl md:text-3xl font-bold mb-6">
-                  Nos apoyan
-                </h2>
-              </div>
-
-              {/* All logos in a single row */}
-              <div className="flex flex-wrap items-center justify-center gap-9">
-                {/* Ethereum Logo */}
-                <EthereumLogo className="h-32 w-auto" />
-
-                {/* ESP - Ethereum Support Program */}
-                <ESPLogo className="h-32 w-auto" />
-
-                {/* Devconnect */}
-                <Image
-                  src="https://devconnect.org/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcube-logo.6e90fa94.png&w=384&q=75"
-                  alt="Devconnect"
-                  width={128}
-                  height={128}
-                  className="h-32 w-auto object-contain"
-                />
-
-                {/* TheRedGuild */}
-                <Image
-                  src="https://theredguild.org/assets/navbar-logo.svg"
-                  alt="TheRedGuild"
-                  width={200}
-                  height={128}
-                  className="h-32 w-auto object-contain"
-                />
-              </div>
+          <div className="text-center">
+            <div className="text-center mb-12 px-4">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">
+                Nos apoyan
+              </h2>
             </div>
-          </motion.div>
+
+            {/* Sponsors Ticker */}
+            <SponsorsTicker />
+          </div>
         </section>
 
         {/* Newsletter Section */}

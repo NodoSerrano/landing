@@ -17,6 +17,24 @@ body {
   .max-w-content {
     max-width: 85rem; /* 1360px */
   }
+
+  /* Sponsors Ticker Animation */
+  .animate-marquee {
+    animation: marquee-scroll 20s linear infinite;
+  }
+
+  .pause-marquee:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-1400px);
+    }
+  }
 }
 
 @layer base {

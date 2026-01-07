@@ -15,7 +15,7 @@ function NavLink({
   return (
     <Link
       href={href}
-      className="text-base font-bold text-violet-500 hover:text-violet-600 transition-colors"
+      className="text-base font-bold hover:text-gray-300 transition-colors"
     >
       {children}
     </Link>
