@@ -5,9 +5,10 @@ import Link from "next/link";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 
 const buttonVariants = cva(
-  "inline-flex w-full sm:w-fit items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "relative inline-flex w-full sm:w-fit items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -31,6 +32,10 @@ const buttonVariants = cva(
         true: "hover:scale-105 active:scale-95",
         false: "",
       },
+      loading: {
+        true: "grayscale opacity-50 cursor-not-allowed",
+        false: "",
+      },
     },
     defaultVariants: {
       variant: "default",
@@ -45,10 +50,9 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   href?: string;
-  icon?: React.ReactNode;
-  iconPosition?: "left" | "right";
   target?: string;
   rel?: string;
+  loading?: boolean;
 }
 
 const Button = React.forwardRef<
@@ -62,11 +66,10 @@ const Button = React.forwardRef<
       size,
       asChild = false,
       href,
-      icon,
-      iconPosition = "left",
       children,
       target,
       rel,
+      loading = false,
       ...props
     },
     ref
@@ -74,7 +77,7 @@ const Button = React.forwardRef<
     // If href is provided, check if it's an anchor link
     if (href && !asChild) {
       // Handle anchor links with scroll behavior
-      if (href.startsWith('#')) {
+      if (href.startsWith("#")) {
         const handleAnchorClick = () => {
           const element = document.querySelector(href);
           if (element) {
@@ -86,13 +89,32 @@ const Button = React.forwardRef<
 
         return (
           <button
-            className={cn(buttonVariants({ variant, size, className, interactive: !props.disabled }))}
+            className={cn(
+              buttonVariants({
+                variant,
+                size,
+                className,
+                interactive: !props.disabled && !loading,
+                loading,
+              })
+            )}
             onClick={handleAnchorClick}
+            disabled={props.disabled || loading}
             ref={ref as React.RefObject<HTMLButtonElement>}
           >
-            {iconPosition === "left" && icon && <span>{icon}</span>}
-            {children}
-            {iconPosition === "right" && icon && <span>{icon}</span>}
+            <span
+              className={`flex flex-row justify-center items-center gap-2 ${
+                loading ? "invisible" : ""
+              }`}
+            >
+              {children}
+            </span>
+            {loading && (
+              <Loader2
+                className="absolute inset-0 m-auto h-6 w-6 animate-spin"
+                strokeWidth={2.5}
+              />
+            )}
           </button>
         );
       }
@@ -102,15 +124,33 @@ const Button = React.forwardRef<
         href,
         target,
         rel,
-        className: cn(buttonVariants({ variant, size, className, interactive: true })),
+        className: cn(
+          buttonVariants({
+            variant,
+            size,
+            className,
+            interactive: !loading,
+            loading,
+          })
+        ),
         ...(ref && { ref: ref as React.Ref<HTMLAnchorElement> }),
       };
 
       return (
         <Link {...linkProps}>
-          {iconPosition === "left" && icon && <span>{icon}</span>}
-          {children}
-          {iconPosition === "right" && icon && <span>{icon}</span>}
+          <span
+            className={`flex flex-row justify-center items-center gap-2 ${
+              loading ? "invisible" : ""
+            }`}
+          >
+            {children}
+          </span>
+          {loading && (
+            <Loader2
+              className="absolute m-auto h-6 w-6 animate-spin"
+              strokeWidth={2.5}
+            />
+          )}
         </Link>
       );
     }
@@ -119,13 +159,32 @@ const Button = React.forwardRef<
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className, interactive: !props.disabled }))}
+        className={cn(
+          buttonVariants({
+            variant,
+            size,
+            className,
+            interactive: !props.disabled && !loading,
+            loading,
+          })
+        )}
         ref={ref as React.RefObject<HTMLButtonElement>}
+        disabled={props.disabled || loading}
         {...props}
       >
-        {iconPosition === "left" && icon && <span>{icon}</span>}
-        {children}
-        {iconPosition === "right" && icon && <span>{icon}</span>}
+        <span
+          className={`flex flex-row justify-center items-center gap-2 ${
+            loading ? "invisible" : ""
+          }`}
+        >
+          {children}
+        </span>
+        {loading && (
+          <Loader2
+            className="absolute m-auto h-6 w-6 animate-spin"
+            strokeWidth={2.5}
+          />
+        )}
       </Comp>
     );
   }
