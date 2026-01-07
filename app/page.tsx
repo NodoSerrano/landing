@@ -8,6 +8,7 @@ import NewsletterForm from "@/components/newsletter-form";
 import BlogSection from "@/components/blog-section";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import SocialSidebar from "@/components/social-sidebar";
 import { features } from "@/lib/features-data";
 import { ExternalLinkIcon } from "@/components/feature-icons";
 import { Button } from "@/components/ui/button";
@@ -219,6 +220,7 @@ export default function Home() {
       </main>
 
       <Footer />
+      <SocialSidebar />
     </div>
   );
 }
