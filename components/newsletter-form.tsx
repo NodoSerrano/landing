@@ -1,53 +1,55 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { subscribeToNewsletter } from "@/app/actions"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react"
+import type React from "react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { subscribeToNewsletter } from "@/app/actions";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 
 export default function NewsletterForm() {
-  const [email, setEmail] = useState("")
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
-  const [message, setMessage] = useState("")
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!email || email.trim() === "") {
-      setStatus("error")
-      setMessage("Por favor ingresa tu email")
-      return
+      setStatus("error");
+      setMessage("Por favor ingresa tu email");
+      return;
     }
 
-    setStatus("loading")
-    const formData = new FormData()
-    formData.append("email", email.trim())
+    setStatus("loading");
+    const formData = new FormData();
+    formData.append("email", email.trim());
 
     try {
-      const result = await subscribeToNewsletter(formData)
+      const result = await subscribeToNewsletter(formData);
 
       if (result.success) {
-        setStatus("success")
-        setMessage(result.message)
-        setEmail("")
-        
+        setStatus("success");
+        setMessage(result.message);
+        setEmail("");
+
         // Reset to idle after 5 seconds
         setTimeout(() => {
-          setStatus("idle")
-          setMessage("")
-        }, 5000)
+          setStatus("idle");
+          setMessage("");
+        }, 5000);
       } else {
-        setStatus("error")
-        setMessage(result.message)
+        setStatus("error");
+        setMessage(result.message);
       }
     } catch (error) {
-      setStatus("error")
-      setMessage("Ocurrió un error. Por favor intenta nuevamente.")
+      setStatus("error");
+      setMessage("Ocurrió un error. Por favor intenta nuevamente.");
     }
-  }
+  };
 
   return (
     <div className="w-full">
@@ -61,12 +63,8 @@ export default function NewsletterForm() {
           className="bg-slate-800/60 border-violet-500/40 placeholder:text-cyan-300 focus:border-violet-500/60"
           required
         />
-        <Button
-          type="submit"
-          disabled={status === "loading"}
-        >
-          {status === "loading" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {status === "loading" ? "Enviando..." : "Suscribirse"}
+        <Button type="submit" loading={status === "loading"}>
+          Suscribirse
         </Button>
       </form>
 
@@ -91,5 +89,5 @@ export default function NewsletterForm() {
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }
