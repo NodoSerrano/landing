@@ -18,6 +18,15 @@ body {
     max-width: 85rem; /* 1360px */
   }
 
+  /* Neumorphism Box Shadows */
+  .neumorphism-shadow {
+    box-shadow: inset 0px -2px 12px #181818;
+  }
+
+  .neumorphism-shadow-inset {
+    box-shadow: inset -6px -6px 12px #b8b9be, inset 6px 6px 12px #fff;
+  }
+
   /* Sponsors Ticker Animation */
   .animate-marquee {
     animation: marquee-scroll-mobile 20s linear infinite;

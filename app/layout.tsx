@@ -10,9 +10,9 @@ export const metadata = {
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/imagotipo-color.svg', type: 'image/svg+xml', sizes: 'any' }
+      { url: '/nodo-logo.svg', type: 'image/svg+xml', sizes: 'any' }
     ],
-    apple: '/imagotipo-color.svg',
+    apple: '/nodo-logo.svg',
   },
 }
 

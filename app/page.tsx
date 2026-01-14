@@ -1,7 +1,5 @@
 "use client";
 
-import type React from "react";
-
 import Image from "next/image";
 import { motion } from "framer-motion";
 import NewsletterForm from "@/components/newsletter-form";
@@ -13,20 +11,12 @@ import { features } from "@/lib/features-data";
 import { ExternalLinkIcon } from "@/components/feature-icons";
 import { Button } from "@/components/ui/button";
 import SponsorsTicker from "@/components/sponsors-ticker";
-
-// Animation variant: fade in with slight Y movement
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
-};
+import NodoLogoTop from "@/components/svgs/nodo-logo-top";
+import NodoLogoBottom from "@/components/svgs/nodo-logo-bottom";
 
 export default function Home() {
   return (
-    <div id="top" className="min-h-screen bg-slate-900 flex flex-col">
+    <div id="top" className="min-h-screen bg-[#26282C] flex flex-col">
       <Header />
 
       <main className="flex flex-col">
@@ -34,7 +24,7 @@ export default function Home() {
         <section className="relative w-full min-h-[30vh] md:min-h-[35vh] flex flex-col overflow-hidden">
           {/* Background */}
           <div className="absolute inset-0 z-0">
-            <div className="absolute inset-0 bg-slate-900" />
+            <div className="absolute inset-0 bg-[#26282C]" />
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full filter blur-[128px] animate-pulse" />
             <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-500/20 rounded-full filter blur-[128px] animate-pulse animation-delay-2000" />
           </div>
@@ -46,16 +36,36 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <div className="max-w-4xl mx-auto space-y-4">
-              <div className="flex flex-col items-center space-y-2">
-                <Image
-                  src="/imagotipo-color.svg"
-                  alt="Nodo Serrano Imagotipo"
-                  width={200}
-                  height={320}
-                  className="w-16 md:w-20 lg:w-24 h-auto drop-shadow-2xl"
-                  priority
-                />
+            <div className="max-w-4xl mx-auto">
+              <div className="flex flex-col items-center gap-4">
+                <div className="flex flex-col items-center py-8 h-[220px]">
+                  <motion.div
+                    animate={{
+                      y: [0, -6, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 0.5,
+                    }}
+                    className="z-10"
+                  >
+                    <NodoLogoTop className="w-28" />
+                  </motion.div>
+                  <motion.div
+                    animate={{
+                      y: [0, 6, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <NodoLogoBottom className="w-28 translate-y-[-48px]" />
+                  </motion.div>
+                </div>
                 <h1 className="text-xl md:text-2xl lg:text-2xl font-bold text-center drop-shadow-lg">
                   Nodo Serrano
                 </h1>
@@ -236,7 +246,7 @@ function FeatureCard({
   src?: string;
 }) {
   return (
-    <div className="bg-slate-800/60 backdrop-blur-sm rounded-lg border border-violet-400/30 hover:border-violet-400/50 transition-all duration-300 shadow-sm hover:shadow-lg overflow-hidden">
+    <div className="backdrop-blur-sm rounded-lg border border-violet-400/30 hover:border-violet-400/50 transition-all duration-300 shadow-sm hover:shadow-lg overflow-hidden">
       {/* Banner Image Area */}
       <div className="h-32 bg-gradient-to-br from-violet-500/20 to-violet-600/30 relative overflow-hidden">
         <div className="absolute inset-0 bg-slate-900/20" />

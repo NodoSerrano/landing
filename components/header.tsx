@@ -27,7 +27,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-violet-400/20 bg-slate-900/95 backdrop-blur supports-[backdrop-filter]:bg-slate-900/80">
       <div className="max-w-content mx-auto px-4 py-3 flex justify-between items-center">
         <Image
-          src="/imagotipo-color.svg"
+          src="/nodo-logo.svg"
           alt="Nodo Serrano Imagotipo"
           width={200}
           height={320}
