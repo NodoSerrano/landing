@@ -24,7 +24,7 @@ export default function FeaturedPost({ post, onOpen }: FeaturedPostProps) {
       className="relative"
     >
       <div onClick={handleClick} className="block cursor-pointer">
-        <div className="relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 p-8 backdrop-blur-sm">
+        <div className="relative overflow-hidden rounded-xl neumorphism-bg-raised neumorphism-border p-8">
           <div className="absolute right-4 top-4 rounded-full bg-cyan-600 border border-cyan-500 px-4 py-2 text-sm font-medium">
             ⭐ Destacado
           </div>
@@ -86,7 +86,7 @@ export default function FeaturedPost({ post, onOpen }: FeaturedPostProps) {
               {post.tags.slice(0, 4).map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full bg-slate-800/60 border border-slate-700 px-4 py-2 text-sm"
+                  className="rounded-full neumorphism-bg-raised neumorphism-border px-4 py-2 text-sm"
                 >
                   #{tag}
                 </span>
@@ -94,7 +94,7 @@ export default function FeaturedPost({ post, onOpen }: FeaturedPostProps) {
             </div>
           )}
 
-          <div className="flex items-center gap-3 rounded-lg bg-slate-800/40 px-4 py-3 text-cyan-400">
+          <div className="flex items-center gap-3 rounded-lg neumorphism-bg-raised neumorphism-border px-4 py-3 text-cyan-400">
             <span className="font-medium">Leer artículo completo</span>
             <ArrowRight className="h-4 w-4" />
           </div>

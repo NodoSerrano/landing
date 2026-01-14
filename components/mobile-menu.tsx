@@ -32,7 +32,7 @@ export default function MobileMenu() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-16 left-0 right-0 bg-slate-900/95 backdrop-blur border-b border-violet-500/40 shadow-lg z-50"
+            className="absolute top-16 left-0 right-0 neumorphism-bg-raised neumorphism-border shadow-lg z-50"
           >
             <motion.nav
               className="flex flex-col p-4 space-y-4"

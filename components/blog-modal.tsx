@@ -68,7 +68,7 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            className="fixed top-16 bottom-16 left-4 right-4 z-50 flex flex-col overflow-hidden rounded-xl border border-slate-700 bg-slate-900/95 backdrop-blur-xl shadow-2xl md:top-20 md:bottom-20 md:left-48 md:right-48 lg:top-24 lg:bottom-24 lg:left-72 lg:right-72 xl:top-28 xl:bottom-28 xl:left-96 xl:right-96 2xl:top-32 2xl:bottom-32 2xl:left-[30rem] 2xl:right-[30rem]"
+            className="fixed top-16 bottom-16 left-4 right-4 z-50 flex flex-col overflow-hidden rounded-xl neumorphism-bg-raised neumorphism-border shadow-2xl md:top-20 md:bottom-20 md:left-48 md:right-48 lg:top-24 lg:bottom-24 lg:left-72 lg:right-72 xl:top-28 xl:bottom-28 xl:left-96 xl:right-96 2xl:top-32 2xl:bottom-32 2xl:left-[30rem] 2xl:right-[30rem]"
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-title"
@@ -178,7 +178,7 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
                           {post.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="rounded-full bg-slate-800/60 border border-slate-700 px-3 py-1 text-sm"
+                              className="rounded-full neumorphism-bg-raised neumorphism-border px-3 py-1 text-sm"
                             >
                               #{tag}
                             </span>
@@ -190,7 +190,7 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
                 </header>
 
                 {/* Article Content */}
-                <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-6 md:p-8 backdrop-blur-sm">
+                <div className="rounded-xl neumorphism-bg-raised neumorphism-border p-6 md:p-8">
                   <div 
                     className="prose prose-lg max-w-none [&_a]:!text-cyan-400 hover:[&_a]:!text-cyan-300 [&_code]:!text-cyan-300 [&_code]:!bg-slate-800 [&_pre]:!bg-slate-800 [&_pre]:!border-slate-700"
                     dangerouslySetInnerHTML={{ __html: post.content }}

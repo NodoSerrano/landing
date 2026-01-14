@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className="scroll-smooth">
-      <body className={`${inter.className} text-foreground`}>{children}</body>
+      <body className={`${inter.className} text-foreground`} suppressHydrationWarning>{children}</body>
     </html>
   )
 }
