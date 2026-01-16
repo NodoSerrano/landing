@@ -16,22 +16,22 @@ import NodoLogoBottom from "@/components/svgs/nodo-logo-bottom";
 
 export default function Home() {
   return (
-    <div id="top" className="min-h-screen layer0 flex flex-col">
+    <div id="top" className="min-h-screen layer1 flex flex-col">
       <Header />
 
       <main className="flex flex-col">
         {/* Hero Section */}
-        <section className="relative w-full min-h-[30vh] md:min-h-[35vh] flex flex-col overflow-hidden">
+        <section className="relative w-full min-h-[40vh] md:min-h-[45vh] flex flex-col layer2 neumorphism-shadow neumorphism-border">
           {/* Background */}
-          <div className="absolute inset-0 z-0">
-            <div className="absolute inset-0 layer1" />
+          <div className="absolute inset-0 z-0 overflow-hidden">
+            <div className="absolute inset-0" />
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full filter blur-[128px] animate-pulse" />
             <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-500/20 rounded-full filter blur-[128px] animate-pulse animation-delay-2000" />
           </div>
 
           {/* Content */}
           <motion.div
-            className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-4 py-6 md:py-8"
+            className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-4 py-8 md:py-8"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -89,7 +89,7 @@ export default function Home() {
         {/* Events Section */}
         <section
           id="events"
-          className="py-12 md:py-16 layer0 flex flex-col items-center justify-center w-full"
+          className="py-12 md:py-16 flex flex-col items-center justify-center w-full"
         >
           <motion.div
             initial="hidden"
@@ -107,10 +107,8 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="rounded-lg overflow-hidden w-full max-w-4xl neumorphism-bg-raised  neumorphism-border">
-              <div className="bg-[#212325]">
-
-
+            <div className="rounded-lg overflow-hidden w-full max-w-4xl neumorphism-shadow  neumorphism-border">
+              <div className="bg-[#212325]"> {/* TODO: keep to mimic blog background color */}
               <iframe
                 src="https://luma.com/embed/calendar/cal-7uziZDmq9SFGggQ/events"
                 height="500"
@@ -138,7 +136,7 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="py-12 md:py-16 layer0">
+        <section id="features" className="py-12 md:py-16">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -165,7 +163,7 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section id="about" className="py-12 md:py-16 layer0">
+        <section id="about" className="py-12 md:py-16">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -193,7 +191,7 @@ export default function Home() {
         </section>
 
         {/* Sponsors Section */}
-        <section className="py-12 md:py-16 layer0">
+        <section className="py-12 md:py-16">
           <div className="text-center">
             <div className="text-center mb-12 px-4">
               <h2 className="text-2xl md:text-3xl font-bold mb-6">
@@ -207,7 +205,7 @@ export default function Home() {
         </section>
 
         {/* Newsletter Section */}
-        <section id="signup" className="py-12 md:py-16 layer0">
+        <section id="signup" className="py-12 md:py-16">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -249,7 +247,7 @@ function FeatureCard({
   src?: string;
 }) {
   return (
-    <div className="neumorphism-bg-raised rounded-lg neumorphism-border transition-all duration-300 overflow-hidden">
+    <div className="neumorphism-shadow layer2 rounded-lg neumorphism-border transition-all duration-300 overflow-hidden">
       {/* Banner Image Area */}
       <div className="h-32 bg-gradient-to-br from-violet-500/20 to-violet-600/30 relative overflow-hidden">
         <div className="absolute inset-0 bg-slate-900/20" />

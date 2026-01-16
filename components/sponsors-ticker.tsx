@@ -66,7 +66,7 @@ export default function SponsorsTicker() {
   ];
 
   return (
-    <div className="w-full overflow-hidden py-4 md:py-8 relative">
+    <div className="w-full overflow-hidden py-4 md:py-8 relative neumorphism-bg-inset layer1">
       <div className="flex items-center gap-12 md:gap-20 animate-marquee hover:pause-marquee">
         {duplicatedSponsors.map((sponsor, index) => (
           <div

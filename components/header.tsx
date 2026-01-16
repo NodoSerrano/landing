@@ -24,7 +24,7 @@ function NavLink({
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full neumorphism-bg-raised neumorphism-border">
+    <header className="sticky top-0 z-50 w-full layer3 neumorphism-shadow neumorphism-border">
       <div className="max-w-content mx-auto px-4 py-3 flex justify-between items-center">
         <Image
           src="/nodo-logo.svg"

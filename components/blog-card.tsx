@@ -28,7 +28,7 @@ export default function BlogCard({ post, index = 0, onOpen }: BlogCardProps) {
       className="relative h-full"
     >
       <div onClick={handleClick} className="block cursor-pointer h-full">
-        <div className="relative h-full overflow-hidden rounded-xl neumorphism-bg-raised neumorphism-border p-4">
+        <div className="relative h-full layer2 overflow-hidden rounded-xl neumorphism-shadow neumorphism-border p-4">
           {post.featured && (
             <div className="absolute top-2 right-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-cyan-600 text-sm">
               ⭐
@@ -87,7 +87,7 @@ export default function BlogCard({ post, index = 0, onOpen }: BlogCardProps) {
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full neumorphism-bg-raised neumorphism-border px-2 py-1 text-xs opacity-80"
+                      className="rounded-full layer3 neumorphism-shadow neumorphism-border px-2 py-1 text-xs opacity-80"
                     >
                       #{tag}
                     </span>

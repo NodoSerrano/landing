@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 
 // Wrapper component for consistent section structure
 const SectionWrapper = ({ children }: { children: React.ReactNode }) => (
-  <section className="layer0 py-12 md:py-16">
+  <section className="py-12 md:py-16">
     <div className="container mx-auto px-4 max-w-content">{children}</div>
   </section>
 );
@@ -22,7 +22,7 @@ function BlogSectionSkeleton() {
   return (
     <div className="space-y-12">
       {/* Featured post skeleton */}
-      <div className="overflow-hidden rounded-lg neumorphism-bg-raised neumorphism-border p-6 lg:p-8">
+      <div className="overflow-hidden rounded-lg neumorphism-shadow neumorphism-border p-6 lg:p-8 layer2">
         <div className="flex flex-col gap-6 lg:flex-row lg:gap-8 mx-auto">
           <div className="h-48 w-full rounded-lg lg:h-64 lg:w-80 animate-pulse bg-slate-700" />
           <div className="flex-1 space-y-4">
@@ -50,7 +50,7 @@ function BlogSectionSkeleton() {
         {[1, 2].map((i) => (
           <div
             key={i}
-            className="overflow-hidden rounded-lg neumorphism-bg-raised neumorphism-border p-4"
+            className="overflow-hidden rounded-lg neumorphism-shadow neumorphism-border p-4 layer2"
           >
             <div className="flex gap-4">
               <div className="h-20 w-20 flex-shrink-0 rounded-lg animate-pulse bg-slate-700" />

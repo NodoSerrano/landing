@@ -36,7 +36,7 @@ function SocialLink({
 export default function SocialSidebar() {
   return (
     <div className="fixed right-1 top-1/4 transform -translate-y-1/2 z-40">
-      <div className="neumorphism-bg-raised neumorphism-border rounded-lg px-3 py-4">
+      <div className="neumorphism-shadow neumorphism-border layer3 rounded-lg px-3 py-4">
         <div className="flex flex-col items-center gap-4">
           <SocialLink
             href="mailto:hey@nodoserrano.org"
