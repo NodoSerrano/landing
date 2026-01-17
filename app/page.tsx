@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import NewsletterForm from "@/components/newsletter-form";
 import BlogSection from "@/components/blog-section";
 import Header from "@/components/header";
@@ -108,16 +109,19 @@ export default function Home() {
             </div>
 
             <div className="rounded-lg overflow-hidden w-full max-w-4xl neumorphism-shadow  neumorphism-border">
-              <div className="bg-[#212325]"> {/* TODO: keep to mimic blog background color */}
-              <iframe
-                src="https://luma.com/embed/calendar/cal-7uziZDmq9SFGggQ/events"
-                height="500"
-                width="100%"
-                aria-hidden="false"
-                tabIndex={0}
-                className="overflow-hidden"
-                style={{ overflow: "hidden" }}
-              />              </div>
+              <div className="bg-[#212325]">
+                {" "}
+                {/* TODO: keep to mimic blog background color */}
+                <iframe
+                  src="https://luma.com/embed/calendar/cal-7uziZDmq9SFGggQ/events"
+                  height="500"
+                  width="100%"
+                  aria-hidden="false"
+                  tabIndex={0}
+                  className="overflow-hidden"
+                  style={{ overflow: "hidden" }}
+                />{" "}
+              </div>
             </div>
 
             {/* Luma Profile Link */}
@@ -175,17 +179,19 @@ export default function Home() {
                   Sobre el proyecto
                 </h2>
               </div>
-              <p className="text-base md:text-lg mb-8">
-                Nodo Serrano es una nueva iniciativa que se enfocará en la
-                investigación y educación sobre ethereum. Inspirados por las
-                tecnologías descentralizadas y la innovación digital moderna,
-                estamos creando una experiencia para fomentar esta floreciente
-                comunidad en nuestra ciudad: Tandil.
-              </p>
-              <p className="text-base md:text-lg">
-                Mantente atento para más actualizaciones a medida que nos
-                acercamos a nuestra fecha de lanzamiento.
-              </p>
+              <div className="mx-auto max-w-4xl flex flex-col items-center justify-center neumorphism-border  neumorphism-shadow layer2 rounded-xl px-6 py-8">
+                <p className="text-base md:text-lg mb-8">
+                  Nodo Serrano es una nueva iniciativa que se enfocará en la
+                  investigación y educación sobre ethereum. Inspirados por las
+                  tecnologías descentralizadas y la innovación digital moderna,
+                  estamos creando una experiencia para fomentar esta floreciente
+                  comunidad en nuestra ciudad: Tandil.
+                </p>
+                <p className="text-base md:text-lg">
+                  Mantente atento para más actualizaciones a medida que nos
+                  acercamos a nuestra fecha de lanzamiento.
+                </p>
+              </div>
             </div>
           </motion.div>
         </section>
@@ -213,17 +219,19 @@ export default function Home() {
           >
             <div className="mx-auto text-center max-w-content px-4">
               <div className="text-center mb-12">
-                <h2 className="text-2xl md:text-3xl font-bold mb-6">
+                <h2 className="text-2xl md:text-3xl font-bold mb-10">
                   Únete a nuestra comunidad
                 </h2>
-                <p className="text-lg max-w-2xl mx-auto">
-                  Sé parte de la revolución blockchain en Tandil. Regístrate
-                  para recibir novedades sobre eventos, talleres y
-                  oportunidades.
-                </p>
-              </div>
-              <div className="max-w-md mx-auto">
-                <NewsletterForm />
+                <div className="w-fit gap-8 mx-auto flex flex-col items-center justify-center neumorphism-border  neumorphism-shadow layer2 rounded-xl px-6 py-8">
+                  <p className="text-lg max-w-xl mx-auto">
+                    Sé parte de la revolución blockchain en Tandil. Regístrate
+                    para recibir novedades sobre eventos, talleres y
+                    oportunidades.
+                  </p>
+                  <div className="max-w-lg w-full">
+                    <NewsletterForm />
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -246,14 +254,16 @@ function FeatureCard({
   description: string;
   src?: string;
 }) {
+  const [imageError, setImageError] = useState(false);
+
+  const showFallback = !src || src === "/placeholder.jpg" || imageError;
+
   return (
     <div className="neumorphism-shadow layer2 rounded-lg neumorphism-border transition-all duration-300 overflow-hidden">
       {/* Banner Image Area */}
       <div className="h-32 bg-gradient-to-br from-violet-500/20 to-violet-600/30 relative overflow-hidden">
         <div className="absolute inset-0 bg-slate-900/20" />
-        {src && src !== "/placeholder.jpg" ? (
-          <Image src={src} alt={title} fill className="object-cover" />
-        ) : (
+        {showFallback ? (
           <div className="absolute inset-0 flex items-center justify-center">
             <svg
               className="w-12 h-12 text-violet-400/60"
@@ -270,6 +280,14 @@ function FeatureCard({
               />
             </svg>
           </div>
+        ) : (
+          <Image
+            src={src}
+            alt={title}
+            fill
+            className="object-cover"
+            onError={() => setImageError(true)}
+          />
         )}
       </div>
 
