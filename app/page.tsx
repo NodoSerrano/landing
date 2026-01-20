@@ -5,84 +5,28 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import NewsletterForm from "@/components/newsletter-form";
 import BlogSection from "@/components/blog-section";
-import Header from "@/components/header";
+import NavBar from "@/components/nav-bar";
 import Footer from "@/components/footer";
 import SocialSidebar from "@/components/social-sidebar";
 import { features } from "@/lib/features-data";
 import { ExternalLinkIcon } from "@/components/feature-icons";
 import { Button } from "@/components/ui/button";
 import SponsorsTicker from "@/components/sponsors-ticker";
-import NodoLogoTop from "@/components/svgs/nodo-logo-top";
-import NodoLogoBottom from "@/components/svgs/nodo-logo-bottom";
+import HeroSection from "@/components/hero-section";
+import { useScrollHash } from "@/lib/use-scroll-hash";
+
 
 export default function Home() {
+  // Enable scroll hash detection and updating
+  useScrollHash();
+
   return (
     <div id="top" className="min-h-screen layer1 flex flex-col">
-      <Header />
+      <NavBar />
 
       <main className="flex flex-col">
         {/* Hero Section */}
-        <section className="relative w-full min-h-[40vh] md:min-h-[45vh] flex flex-col layer2 neumorphism-shadow neumorphism-border">
-          {/* Background */}
-          <div className="absolute inset-0 z-0 overflow-hidden">
-            <div className="absolute inset-0" />
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full filter blur-[128px] animate-pulse" />
-            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-500/20 rounded-full filter blur-[128px] animate-pulse animation-delay-2000" />
-          </div>
-
-          {/* Content */}
-          <motion.div
-            className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-4 py-8 md:py-8"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <div className="max-w-4xl mx-auto">
-              <div className="flex flex-col items-center gap-4">
-                <div className="flex flex-col items-center py-8 h-[220px]">
-                  <motion.div
-                    animate={{
-                      y: [0, -6, 0],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 0.5,
-                    }}
-                    className="z-10"
-                  >
-                    <NodoLogoTop className="w-28" />
-                  </motion.div>
-                  <motion.div
-                    animate={{
-                      y: [0, 6, 0],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    <NodoLogoBottom className="w-28 translate-y-[-48px]" />
-                  </motion.div>
-                </div>
-                <h1 className="text-xl md:text-2xl lg:text-2xl font-bold text-center drop-shadow-lg">
-                  Nodo Serrano
-                </h1>
-              </div>
-              <p className="text-base md:text-lg lg:text-xl max-w-2xl mx-auto text-center drop-shadow leading-relaxed">
-                <span className="block sm:inline">
-                  Hackerspace y Semillero.
-                </span>{" "}
-                <span className="block sm:inline">
-                  Investigación y educación con foco en Ethereum Ecosystem
-                </span>{" "}
-                <span className="block sm:inline">en la ciudad de Tandil.</span>
-              </p>
-            </div>
-          </motion.div>
-        </section>
+        <HeroSection />
 
         {/* Blog Section */}
         <BlogSection />
