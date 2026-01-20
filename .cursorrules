@@ -1,0 +1,195 @@
+# Nodo Serrano Landing Page - Cursor Rules
+
+## Project Overview
+Nodo Serrano is a landing page for an Ethereum community initiative in Tandil, Argentina. It serves as a "Hackerspace y Semillero" (Hackerspace and Seedbed) focused on Ethereum research and education. The site features newsletter subscription, event information, and a blog system.
+
+## Tech Stack
+- **Framework**: Next.js 16 with App Router (React 19)
+- **Styling**: Tailwind CSS with custom neumorphism design system
+- **UI Components**: shadcn/ui with Radix UI primitives
+- **Database**: Neon PostgreSQL (serverless)
+- **Animations**: Framer Motion
+- **Content**: Markdown-based blog with remark/rehype processing
+- **Email**: Nodemailer for notifications
+- **Deployment**: Vercel with automatic deployments via GitHub Actions
+
+## Architecture
+
+### Frontend Structure
+```
+app/                          # Next.js App Router
+├── layout.tsx               # Root layout with Inter font
+├── page.tsx                 # Main landing page
+├── globals.css              # Custom neumorphism CSS system
+├── actions.ts               # Server actions (newsletter)
+└── api/                     # API routes
+    ├── subscribers/         # Newsletter subscription API
+    ├── blog/               # Blog content APIs
+    └── health/             # Health check
+
+components/                  # React components
+├── ui/                     # shadcn/ui components
+├── svgs/                   # Custom SVG components
+└── [feature components]    # Page-specific components
+```
+
+### Backend & Data
+```
+lib/                        # Utility libraries
+├── db.ts                  # Neon database connection
+├── blog/                  # Blog processing system
+│   ├── markdown.ts        # MDX processing with syntax highlighting
+│   ├── schema.ts          # Zod validation schemas
+│   └── static-data.ts     # Build-time data generation
+├── email.ts               # Email notification system
+└── [other utilities]
+```
+
+### Content Management
+```
+content/blog/              # Markdown blog posts
+database/schema.sql        # PostgreSQL schema
+```
+
+## Design System
+
+### Neumorphism Theme
+The site uses a custom neumorphism design system with layered backgrounds:
+- `layer0`: Darkest (#1a1c20) - page/section backgrounds
+- `layer1`: Medium (#1e2024) - neumorphism containers
+- `layer2`: Light (#26282C) - nested containers
+- `layer3`: Lightest (#2e3034) - deeply nested containers
+
+### Color Palette
+Custom cyan, violet, and blue color schemes with extended ranges (50-900), plus shadcn/ui CSS variables for theming.
+
+### Typography
+- **Primary Font**: Inter (Google Fonts)
+- **Fallback**: Arial, Helvetica, sans-serif
+- **Content**: @tailwindcss/typography for prose
+
+## Key Features
+
+### Newsletter System
+- Email validation and deduplication
+- PostgreSQL storage with Neon
+- Server actions for form handling
+- Duplicate email handling
+
+### Blog System
+- Markdown content with frontmatter
+- Syntax highlighting (highlight.js)
+- Reading time calculation
+- Image optimization with Next.js
+- SEO-friendly URLs (/blog/[slug])
+
+### Event Integration
+- Luma calendar embed for events
+- Responsive iframe integration
+
+### Responsive Design
+- Mobile-first approach
+- Custom breakpoint system
+- Touch-friendly navigation
+
+## Development Workflow
+
+### Commands
+```bash
+pnpm install          # Install dependencies
+pnpm dev             # Development server (port 3000)
+pnpm build           # Production build
+pnpm start           # Production server
+pnpm lint            # ESLint checking
+```
+
+### Environment Variables
+```env
+DATABASE_URL=        # Neon PostgreSQL connection string
+EMAIL_HOST=          # SMTP server for notifications
+EMAIL_PORT=          # SMTP port (587)
+EMAIL_USER=          # SMTP username
+EMAIL_PASS=          # SMTP password
+EMAIL_FROM=         # From email address
+WEBHOOK_URL=         # Optional webhook for notifications
+```
+
+### Content Creation
+Blog posts are created as `.md` files in `content/blog/` with frontmatter:
+```yaml
+---
+title: "Post Title"
+description: "Post description"
+date: "2024-01-01"
+author: "Author Name"
+tags: ["tag1", "tag2"]
+featured: true
+published: true
+image: "optional-image-url"
+thumbnail: "thumbnail-filename.jpg"
+cover: "cover-filename.jpg"
+---
+```
+
+## Deployment
+
+### Vercel Configuration
+- Automatic deployments via GitHub Actions
+- Static blog generation at build time
+- Security headers for blog routes
+- CSP headers configured
+
+### Build Optimization
+- ESLint and TypeScript checks disabled in build
+- Content tracing for blog files
+- Image optimization enabled
+
+## Code Style & Conventions
+
+### Naming Conventions
+- **Components**: PascalCase (e.g., `HeroSection`, `BlogCard`)
+- **Files**: kebab-case (e.g., `nav-bar.tsx`, `blog-section.tsx`)
+- **Functions**: camelCase (e.g., `getPostBySlug`, `subscribeToNewsletter`)
+
+### Component Patterns
+- Client components marked with `"use client"`
+- Server actions in `app/actions.ts`
+- Custom hooks in `lib/` directory
+- SVG components as React components
+
+### Error Handling
+- Graceful degradation for missing data
+- Comprehensive error logging
+- User-friendly error messages in Spanish
+
+### Security
+- DOMPurify for HTML sanitization
+- Zod schemas for validation
+- CSP headers configured
+- XSS prevention in blog content
+
+## Internationalization
+- Primary language: Spanish (Argentina)
+- All user-facing text in Spanish
+- HTML lang attribute set to "es"
+
+## Performance Considerations
+- Static blog data generation
+- Image optimization with Next.js
+- Framer Motion for smooth animations
+- Lazy loading for components
+- Minimal bundle size with tree shaking
+
+## Testing & Debugging
+- Health check endpoints (`/api/health`)
+- Debug routes for database (`/api/debug-db`)
+- Email testing routes (`/api/debug-email`)
+- Comprehensive error logging
+
+## Maintenance Notes
+- Blog posts require rebuild for static generation
+- Database schema changes need migration scripts
+- Email templates may need updates for branding changes
+- SVG logos are customizable React components
+
+This project represents a modern, well-architected Next.js application with excellent separation of concerns, security practices, and user experience considerations.

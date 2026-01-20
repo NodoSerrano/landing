@@ -1,0 +1,40 @@
+# Dependencies
+node_modules
+.pnpm-store
+.pnpm-debug.log*
+
+# Build outputs
+.next
+out
+dist
+build
+
+# Environment files
+.env*
+!.env.example
+
+# Cache and logs
+.cache
+*.log
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Package manager files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Documentation (if you want to keep manual formatting)
+*.md
+# Uncomment the line above if you want to exclude markdown files from formatting
+
+# Generated files
+content/blog/**/*.md

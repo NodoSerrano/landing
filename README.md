@@ -23,12 +23,39 @@ pnpm install
 # Run development server
 pnpm dev
 
+# Code Quality
+pnpm lint          # Run ESLint
+pnpm lint:fix      # Run ESLint with auto-fix
+pnpm format        # Format code with Prettier
+pnpm format:check  # Check code formatting
+
 # Build for production
 pnpm build
 
 # Run production build
 pnpm start
 ```
+
+### Code Quality Tools
+
+This project uses:
+- **ESLint** for JavaScript/TypeScript linting with Next.js rules and built-in formatting rules
+- **Prettier** for consistent code formatting (requires installation)
+
+**Current Setup:**
+- ESLint is fully configured and working with formatting rules
+- Prettier configuration is ready (packages need to be installed)
+
+**VSCode Extensions Recommended:**
+- ESLint (`dbaeumer.vscode-eslint`)
+- Prettier (`esbenp.prettier-vscode`)
+
+**To enable full Prettier-ESLint integration:**
+```bash
+pnpm install  # Install all dependencies including prettier packages
+```
+
+Once installed, Prettier will work alongside ESLint for comprehensive code formatting and linting.
 
 ## Features
 

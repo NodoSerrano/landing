@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { X, Calendar, Clock, User, ArrowLeft, ArrowRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import SafeImage from "./safe-image"
+import { Button } from "@/components/ui/button"
 import type { BlogPostWithSlug } from "@/lib/blog/schema"
 
 interface BlogModalProps {
@@ -67,7 +68,7 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            className="fixed top-16 bottom-16 left-4 right-4 z-50 flex flex-col overflow-hidden rounded-xl border border-slate-700 bg-slate-900/95 backdrop-blur-xl shadow-2xl md:top-20 md:bottom-20 md:left-48 md:right-48 lg:top-24 lg:bottom-24 lg:left-72 lg:right-72 xl:top-28 xl:bottom-28 xl:left-96 xl:right-96 2xl:top-32 2xl:bottom-32 2xl:left-[30rem] 2xl:right-[30rem]"
+            className=" max-w-6xl mx-auto fixed top-16 bottom-16 left-4 right-4 z-50 flex flex-col overflow-hidden rounded-xl neumorphism-shadow neumorphism-border layer2"
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-title"
@@ -75,48 +76,51 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
             tabIndex={-1}
           >
             {/* Header */}
-            <div className="flex-shrink-0 flex items-center justify-between border-b border-slate-700 p-3 md:p-4">
+            <div className="flex-shrink-0 flex items-center justify-between neumorphism-shadow p-3 md:p-4" style={{ borderBottom: '1px solid color-mix(in srgb, var(--bg-color) 70%, white 8%)' }}>
               <div className="flex items-center gap-4">
                 {onNavigate && (
                   <div className="flex items-center gap-2">
-                    <button
+                    <Button
                       onClick={() => onNavigate('prev')}
                       disabled={!canNavigate?.prev}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+                      variant="ghost"
+                      size="icon"
                       aria-label="Artículo anterior"
                     >
                       <ArrowLeft className="h-4 w-4" />
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       onClick={() => onNavigate('next')}
                       disabled={!canNavigate?.next}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+                      variant="ghost"
+                      size="icon"
                       aria-label="Artículo siguiente"
                     >
                       <ArrowRight className="h-4 w-4" />
-                    </button>
+                    </Button>
                   </div>
                 )}
                 
                 {post.featured && (
-                  <div className="rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 px-3 py-1 text-xs font-medium text-white">
+                  <div className="rounded-lg bg-cyan-600 px-2 py-1 text-xs font-medium text-white">
                     ⭐ Destacado
                   </div>
                 )}
               </div>
               
-              <button
+              <Button
                 onClick={onClose}
-                className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+                variant="ghost"
+                size="icon"
                 aria-label="Cerrar modal"
               >
                 <X className="h-4 w-4" />
-              </button>
+              </Button>
             </div>
 
             {/* Content */}
-            <div className="flex-1 overflow-y-auto scroll-smooth p-4 md:p-5" style={{ scrollbarWidth: 'thin', scrollbarColor: '#475569 #1e293b' }}>
-              <article className="mx-auto max-w-3xl">
+            <div className="flex-1 overflow-y-auto scroll-smooth p-4 md:p-5" style={{ scrollbarWidth: 'thin', scrollbarColor: 'color-mix(in srgb, var(--bg-color) 70%, white 8%) var(--bg-color)' }}>
+              <article className="mx-auto max-w-4xl">
                 {/* Article Header */}
                 <header className="mb-8">
                   <div className="flex flex-col lg:flex-row gap-6 mb-8">
@@ -134,14 +138,14 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
                     
                     {/* Content */}
                     <div className="flex-1">
-                      <h1 
-                        id="modal-title" 
-                        className="mb-4 bg-gradient-to-r from-white to-slate-200 bg-clip-text text-2xl font-bold leading-tight text-transparent md:text-3xl lg:text-4xl"
+                      <h1
+                        id="modal-title"
+                        className="mb-4 text-2xl font-bold leading-tight text-white md:text-3xl lg:text-4xl"
                       >
                         {post.title}
                       </h1>
-                      
-                      <p 
+
+                      <p
                         id="modal-description"
                         className="mb-6 text-lg leading-relaxed text-slate-300"
                       >
@@ -174,7 +178,7 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
                           {post.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="rounded-full bg-slate-800/60 border border-slate-700 px-3 py-1 text-sm text-slate-300"
+                              className="rounded-full neumorphism-shadow neumorphism-border px-3 py-1 text-sm text-white layer3"
                             >
                               #{tag}
                             </span>
@@ -186,10 +190,9 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
                 </header>
 
                 {/* Article Content */}
-                <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-6 md:p-8 backdrop-blur-sm">
-                  <div 
-                    className="prose prose-lg max-w-none [&>*]:text-white [&_p]:!text-white [&_h1]:!text-white [&_h2]:!text-white [&_h3]:!text-white [&_h4]:!text-white [&_h5]:!text-white [&_h6]:!text-white [&_li]:!text-white [&_strong]:!text-white [&_em]:!text-slate-100 [&_blockquote]:!text-slate-100 [&_a]:!text-cyan-400 hover:[&_a]:!text-cyan-300 [&_code]:!text-cyan-300 [&_code]:!bg-slate-800 [&_pre]:!bg-slate-800 [&_pre]:!border-slate-700"
-                    style={{ color: 'white' }}
+                <div className="rounded-xl neumorphism-shadow neumorphism-border p-6 md:p-8 layer2 text-white layer3">
+                  <div
+                    className="prose prose-lg max-w-none text-white [&_a]:!text-cyan-400 hover:[&_a]:!text-cyan-300 [&_code]:!text-cyan-300 [&_code]:!bg-slate-800 [&_pre]:!bg-slate-800 [&_pre]:!border-slate-700 [&_p]:!text-slate-200 [&_li]:!text-slate-200 [&_h1]:!text-white [&_h2]:!text-white [&_h3]:!text-white [&_h4]:!text-white [&_blockquote]:!text-slate-300 [&_strong]:!text-white"
                     dangerouslySetInnerHTML={{ __html: post.content }}
                   />
                 </div>
