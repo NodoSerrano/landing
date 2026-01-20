@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 
 // Wrapper component for consistent section structure
 const SectionWrapper = ({ children }: { children: React.ReactNode }) => (
-  <section className="py-12 md:py-16">
+  <section className="py-12 md:py-16" id="blog">
     <div className="container mx-auto px-4 max-w-content">{children}</div>
   </section>
 );
