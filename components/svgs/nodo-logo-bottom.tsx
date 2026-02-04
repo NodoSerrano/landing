@@ -2,15 +2,17 @@ import type React from "react";
 
 interface IconProps {
   className?: string;
+  style?: React.CSSProperties;
 }
 
-export default function NodoLogoBottom({ className = "w-8 h-8" }: IconProps) {
+export default function NodoLogoBottom({ className = "w-8 h-8", style }: IconProps) {
   return (
     <svg
       id="bottom_logo"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 260 495 540"
       className={className}
+      style={style}
     >
       <defs>
         <style>

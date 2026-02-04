@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import MobileMenu from "@/components/mobile-menu";
 import { useScrollHash } from "@/lib/use-scroll-hash";
+import FloatingLogo from "./FloatingLogo";
 
 // Component for regular navigation links (non-sections)
 function NavLink({
@@ -57,16 +58,9 @@ export default function NavBar() {
   return (
     <nav className="sticky top-0 z-50 w-full layer3 neumorphism-shadow neumorphism-border">
       <div className="max-w-content mx-auto px-4 py-3 flex justify-between items-center">
-        <SectionLink sectionId="top">
-        <Image
-          src="/nodo-logo.svg"
-          alt="Nodo Serrano Imagotipo"
-          width={200}
-          height={320}
-          className="h-10 w-auto"
-          priority
-        />
-        </SectionLink>
+        <div className="relative w-[30px] h-[40px]">
+          <FloatingLogo width={30} top={70} />
+        </div>
 
         <div className="hidden md:flex space-x-8 items-center justify-center flex-1">
           <NavLink href="/blog">Blog</NavLink>

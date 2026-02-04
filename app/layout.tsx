@@ -1,8 +1,8 @@
 import type React from "react"
-import { Inter } from "next/font/google"
+import { Spline_Sans } from "next/font/google"
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+const splineSans = Spline_Sans({ subsets: ["latin"] })
 
 export const metadata = {
   title: "Nodo Serrano",
@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className="scroll-smooth">
-      <body className={`${inter.className} text-foreground`} suppressHydrationWarning>{children}</body>
+      <body className={`${splineSans.className} text-foreground`} suppressHydrationWarning>{children}</body>
     </html>
   )
 }

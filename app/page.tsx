@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import SponsorsTicker from "@/components/sponsors-ticker";
 import HeroSection from "@/components/hero-section";
 import { useScrollHash } from "@/lib/use-scroll-hash";
+import FloatingLogo from "@/components/FloatingLogo";
 
 
 export default function Home() {
@@ -23,7 +24,7 @@ export default function Home() {
   return (
     <div id="top" className="min-h-screen layer1 flex flex-col">
       <NavBar />
-
+      {/* <FloatingLogo /> */}
       <main className="flex flex-col">
         {/* Hero Section */}
         <HeroSection />
