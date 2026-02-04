@@ -26,7 +26,7 @@
     "highlight.js": "^11.11.1",
     "isomorphic-dompurify": "^2.26.0",
     "lucide-react": "^0.263.1",
-    "next": "^16.1.0",
+    "next": "^16.1.6",
     "nodemailer": "latest",
     "react": "^19",
     "react-dom": "^19",
