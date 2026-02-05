@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import NewsletterForm from "@/components/newsletter-form";
-import BlogSection from "@/components/blog-section";
+import GhostBlogSection from "@/components/ghost-blog-section";
 import NavBar from "@/components/nav-bar";
 import Footer from "@/components/footer";
 import SocialSidebar from "@/components/social-sidebar";
@@ -24,13 +24,12 @@ export default function Home() {
   return (
     <div id="top" className="min-h-screen layer1 flex flex-col">
       <NavBar />
-      {/* <FloatingLogo /> */}
       <main className="flex flex-col">
         {/* Hero Section */}
         <HeroSection />
 
         {/* Blog Section */}
-        <BlogSection />
+        <GhostBlogSection />
 
         {/* Events Section */}
         <section
