@@ -2,12 +2,16 @@
   "name": "nodo-serrano-landing",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "build:with-static": "node scripts/generate-blog-data.js && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
@@ -22,7 +26,7 @@
     "highlight.js": "^11.11.1",
     "isomorphic-dompurify": "^2.26.0",
     "lucide-react": "^0.263.1",
-    "next": "15.2.4",
+    "next": "^16.1.6",
     "nodemailer": "latest",
     "react": "^19",
     "react-dom": "^19",
@@ -46,8 +50,11 @@
     "autoprefixer": "^10.4.16",
     "eslint": "^9.18.0",
     "eslint-config-next": "^15.4.5",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
     "postcss": "^8.4.31",
+    "prettier": "^3.3.3",
     "tailwindcss": "^3.3.5",
-    "typescript": "^5.2.2"
+    "typescript": "^5.9.3"
   }
 }

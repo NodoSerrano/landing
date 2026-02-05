@@ -1,8 +1,8 @@
 import type React from "react"
-import { Inter } from "next/font/google"
+import { Spline_Sans } from "next/font/google"
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+const splineSans = Spline_Sans({ subsets: ["latin"] })
 
 export const metadata = {
   title: "Nodo Serrano",
@@ -10,9 +10,9 @@ export const metadata = {
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/imagotipo-color.svg', type: 'image/svg+xml', sizes: 'any' }
+      { url: '/nodo-logo.svg', type: 'image/svg+xml', sizes: 'any' }
     ],
-    apple: '/imagotipo-color.svg',
+    apple: '/nodo-logo.svg',
   },
 }
 
@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className="scroll-smooth">
-      <body className={inter.className}>{children}</body>
+      <body className={`${splineSans.className} text-foreground`} suppressHydrationWarning>{children}</body>
     </html>
   )
 }

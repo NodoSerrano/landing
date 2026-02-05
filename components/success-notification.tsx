@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { CheckCircle, X } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 interface SuccessNotificationProps {
   show: boolean
@@ -36,7 +37,7 @@ export default function SuccessNotification({ show, message, onClose }: SuccessN
           exit={{ opacity: 0, y: -50 }}
           transition={{ duration: 0.3 }}
         >
-          <div className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white p-4 rounded-lg shadow-lg mx-4">
+          <div className="bg-cyan-500 text-white p-4 rounded-lg shadow-lg mx-4">
             <div className="flex items-start justify-between">
               <div className="flex items-center">
                 <CheckCircle className="h-6 w-6 mr-3 text-white" />
@@ -45,15 +46,16 @@ export default function SuccessNotification({ show, message, onClose }: SuccessN
                   <p className="text-white/90">{message}</p>
                 </div>
               </div>
-              <button
+              <Button
                 onClick={() => {
                   setIsVisible(false)
                   setTimeout(onClose, 500)
                 }}
-                className="text-white/80 hover:text-white transition-colors"
+                variant="ghost"
+                size="icon"
               >
                 <X className="h-5 w-5" />
-              </button>
+              </Button>
             </div>
           </div>
         </motion.div>

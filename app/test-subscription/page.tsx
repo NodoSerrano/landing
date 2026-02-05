@@ -44,9 +44,11 @@ export default function TestSubscriptionPage() {
         <div className="space-y-6">
           <div>
             <h2 className="text-lg font-semibold mb-3">Estado de la Base de Datos</h2>
-            <Button onClick={checkDBStatus} className="mb-3">
-              Verificar Estado de DB
-            </Button>
+            <div className="mb-3">
+              <Button onClick={checkDBStatus}>
+                Verificar Estado de DB
+              </Button>
+            </div>
             {dbStatus && (
               <pre className="bg-gray-100 p-3 rounded text-sm overflow-auto">{JSON.stringify(dbStatus, null, 2)}</pre>
             )}
