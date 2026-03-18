@@ -15,7 +15,7 @@ export const features: Feature[] = [
     title: "Eventos",
     description:
       "Escuelas, Universidades e instituciones privadas serán parte de nuestros encuentros.",
-    src: "/images/eventos.jpeg",
+    src: "/images/eventos.jpg",
   },
   {
     title: "Comunidad",
@@ -33,13 +33,13 @@ export const features: Feature[] = [
     title: "Educación",
     description:
       "Desde talleres prácticos de Ethereum y seguridad operacional hasta charlas espontáneas con expertos locales e internacionales que nos visitan.",
-    src: "/images/educacion.jpeg",
+    src: "/images/educacion.jpg",
   },
   {
     title: "Arte",
     description:
       "Un espacio creativo transversal donde la tecnología y el arte convergen. Ven a experimentar, jugar y expresarte.",
-    src: "/images/arte.jpeg",
+    src: "/images/arte.jpg",
   },
   {
     title: "Cowork",
@@ -51,6 +51,6 @@ export const features: Feature[] = [
     title: "After Office",
     description:
       "Sumate a relajar después del trabajo, con música, comida y mucho networking en un ambiente distendido.",
-    src: "/images/after-office.jpeg",
+    src: "/images/after-office.jpg",
   },
 ];
