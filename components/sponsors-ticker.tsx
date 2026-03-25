@@ -43,7 +43,7 @@ const sponsors: Sponsor[] = [
     name: "The Red Guild",
     logo: (
       <Image
-        src="https://theredguild.org/assets/navbar-logo.svg"
+        src="/red-guild-logo.svg"
         alt="The Red Guild"
         width={200}
         height={128}
