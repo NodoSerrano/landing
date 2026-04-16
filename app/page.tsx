@@ -14,8 +14,6 @@ import { Button } from "@/components/ui/button";
 import SponsorsTicker from "@/components/sponsors-ticker";
 import HeroSection from "@/components/hero-section";
 import { useScrollHash } from "@/lib/use-scroll-hash";
-import FloatingLogo from "@/components/FloatingLogo";
-
 
 export default function Home() {
   // Enable scroll hash detection and updating
@@ -126,7 +124,7 @@ export default function Home() {
               <div className="mx-auto max-w-4xl flex flex-col items-center justify-center neumorphism-border  neumorphism-shadow layer2 rounded-xl px-6 py-8">
                 <p className="text-base md:text-lg mb-8">
                   Nodo Serrano es una nueva iniciativa que se enfocará en la
-                  investigación y educación sobre ethereum. Inspirados por las
+                  investigación y educación sobre Ethereum. Inspirados por las
                   tecnologías descentralizadas y la innovación digital moderna,
                   estamos creando una experiencia para fomentar esta floreciente
                   comunidad en nuestra ciudad: Tandil.
