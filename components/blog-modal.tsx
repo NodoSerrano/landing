@@ -76,7 +76,7 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
             tabIndex={-1}
           >
             {/* Header */}
-            <div className="flex-shrink-0 flex items-center justify-between neumorphism-shadow p-3 md:p-4" style={{ borderBottom: '1px solid color-mix(in srgb, var(--bg-color) 70%, white 8%)' }}>
+            <div className="shrink-0 flex items-center justify-between neumorphism-shadow p-3 md:p-4" style={{ borderBottom: '1px solid color-mix(in srgb, var(--bg-color) 70%, white 8%)' }}>
               <div className="flex items-center gap-4">
                 {onNavigate && (
                   <div className="flex items-center gap-2">
@@ -125,7 +125,7 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
                 <header className="mb-8">
                   <div className="flex flex-col lg:flex-row gap-6 mb-8">
                     {/* Thumbnail */}
-                    <div className="w-full lg:w-48 h-48 flex-shrink-0 rounded-lg overflow-hidden border border-slate-700 shadow-lg">
+                    <div className="w-full lg:w-48 h-48 shrink-0 rounded-lg overflow-hidden border border-slate-700 shadow-lg">
                       <SafeImage
                         src={post.thumbnailUrl || '/blog/thumbnails/default-placeholder-square.svg'}
                         fallbackSrc="/blog/thumbnails/default-placeholder-square.svg"
@@ -192,7 +192,7 @@ export default function BlogModal({ isOpen, onClose, post, onNavigate, canNaviga
                 {/* Article Content */}
                 <div className="rounded-xl neumorphism-shadow neumorphism-border p-6 md:p-8 layer2 text-white layer3">
                   <div
-                    className="prose prose-lg max-w-none text-white [&_a]:!text-cyan-400 hover:[&_a]:!text-cyan-300 [&_code]:!text-cyan-300 [&_code]:!bg-slate-800 [&_pre]:!bg-slate-800 [&_pre]:!border-slate-700 [&_p]:!text-slate-200 [&_li]:!text-slate-200 [&_h1]:!text-white [&_h2]:!text-white [&_h3]:!text-white [&_h4]:!text-white [&_blockquote]:!text-slate-300 [&_strong]:!text-white"
+                    className="prose prose-lg max-w-none text-white [&_a]:text-cyan-400! [&_a]:hover:text-cyan-300! [&_code]:text-cyan-300! [&_code]:bg-slate-800! [&_pre]:bg-slate-800! [&_pre]:border-slate-700! [&_p]:text-slate-200! [&_li]:text-slate-200! [&_h1]:text-white! [&_h2]:text-white! [&_h3]:text-white! [&_h4]:text-white! [&_blockquote]:text-slate-300! [&_strong]:text-white!"
                     dangerouslySetInnerHTML={{ __html: post.content }}
                   />
                 </div>

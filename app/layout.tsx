@@ -4,7 +4,7 @@ import "./globals.css"
 
 const splineSans = Spline_Sans({ subsets: ["latin"] })
 // Fuentes del rediseño nuevo (hero/header); el resto del sitio sigue en Spline Sans
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter-base" })
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk" })
 
 export const metadata = {

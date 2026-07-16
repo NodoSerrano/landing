@@ -94,7 +94,7 @@ export default function GhostBlogModal({
           >
             {/* Header */}
             <div
-              className="flex-shrink-0 flex items-center justify-between neumorphism-shadow p-3 md:p-4"
+              className="shrink-0 flex items-center justify-between neumorphism-shadow p-3 md:p-4"
               style={{
                 borderBottom:
                   "1px solid color-mix(in srgb, var(--bg-color) 70%, white 8%)",
@@ -156,7 +156,7 @@ export default function GhostBlogModal({
                   <div className="flex flex-col lg:flex-row gap-6 mb-8">
                     {/* Thumbnail */}
                     {post.feature_image && (
-                      <div className="w-full lg:w-48 h-48 flex-shrink-0 rounded-lg overflow-hidden border border-slate-700 shadow-lg">
+                      <div className="w-full lg:w-48 h-48 shrink-0 rounded-lg overflow-hidden border border-slate-700 shadow-lg">
                         <Image
                           src={post.feature_image}
                           alt={post.title}
@@ -223,7 +223,7 @@ export default function GhostBlogModal({
                 {/* Article Content */}
                 <div className="rounded-xl neumorphism-shadow neumorphism-border p-6 md:p-8 layer2 text-white layer3">
                   <div
-                    className="prose prose-lg max-w-none text-white [&_a]:!text-cyan-400 hover:[&_a]:!text-cyan-300 [&_code]:!text-cyan-300 [&_code]:!bg-slate-800 [&_pre]:!bg-slate-800 [&_pre]:!border-slate-700 [&_p]:!text-slate-200 [&_li]:!text-slate-200 [&_h1]:!text-white [&_h2]:!text-white [&_h3]:!text-white [&_h4]:!text-white [&_blockquote]:!text-slate-300 [&_strong]:!text-white [&_img]:!rounded-lg [&_img]:!mx-auto [&_figure]:!my-8 [&_figcaption]:!text-center [&_figcaption]:!text-slate-400"
+                    className="prose prose-lg max-w-none text-white [&_a]:text-cyan-400! [&_a]:hover:text-cyan-300! [&_code]:text-cyan-300! [&_code]:bg-slate-800! [&_pre]:bg-slate-800! [&_pre]:border-slate-700! [&_p]:text-slate-200! [&_li]:text-slate-200! [&_h1]:text-white! [&_h2]:text-white! [&_h3]:text-white! [&_h4]:text-white! [&_blockquote]:text-slate-300! [&_strong]:text-white! [&_img]:rounded-lg! [&_img]:mx-auto! [&_figure]:my-8! [&_figcaption]:text-center! [&_figcaption]:text-slate-400!"
                     dangerouslySetInnerHTML={{ __html: post.html }}
                   />
                 </div>

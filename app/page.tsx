@@ -203,7 +203,7 @@ function FeatureCard({
   return (
     <div className="neumorphism-shadow layer2 rounded-lg neumorphism-border transition-all duration-300 overflow-hidden">
       {/* Banner Image Area */}
-      <div className="h-32 bg-gradient-to-br from-violet-500/20 to-violet-600/30 relative overflow-hidden">
+      <div className="h-32 bg-linear-to-br from-violet-500/20 to-violet-600/30 relative overflow-hidden">
         <div className="absolute inset-0 bg-slate-900/20" />
         {showFallback ? (
           <div className="absolute inset-0 flex items-center justify-center">

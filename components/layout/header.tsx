@@ -152,7 +152,7 @@ export default function Header() {
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? "bg-slate-900/95 backdrop-blur-sm border-b border-violet-400/20"
+          ? "bg-slate-900/95 backdrop-blur-xs border-b border-violet-400/20"
           : "bg-transparent"
       }`}
       initial={{ y: -100 }}
@@ -169,7 +169,7 @@ export default function Header() {
             height={36}
             className="h-9 w-auto"
           />
-          <span className="hidden sm:block text-lg font-bold bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+          <span className="hidden sm:block text-lg font-bold bg-linear-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
             Nodo Serrano
           </span>
         </Link>
@@ -242,7 +242,7 @@ export default function Header() {
                     onClick={() => setMobileMenuOpen(false)}
                     className="inline-block rounded-full bg-gradient-brand p-[1.5px]"
                   >
-                    <span className="block rounded-full bg-[var(--color-bg-elev-dark)] px-4 py-1.5 text-sm font-bold text-[var(--color-text-primary-dark)]">
+                    <span className="block rounded-full bg-(--color-bg-elev-dark) px-4 py-1.5 text-sm font-bold text-(--color-text-primary-dark)">
                       Nodo LABS
                     </span>
                   </Link>
@@ -255,7 +255,7 @@ export default function Header() {
                     >
                       <Link
                         href={href}
-                        className="text-lg font-bold text-[var(--color-text-primary-dark)] hover:opacity-70"
+                        className="text-lg font-bold text-(--color-text-primary-dark) hover:opacity-70"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         {label}
@@ -268,7 +268,7 @@ export default function Header() {
                     >
                       <button
                         onClick={() => scrollToSection(href)}
-                        className="text-lg font-bold text-[var(--color-text-primary-dark)] hover:opacity-70 text-left"
+                        className="text-lg font-bold text-(--color-text-primary-dark) hover:opacity-70 text-left"
                       >
                         {label}
                       </button>

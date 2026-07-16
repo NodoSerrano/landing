@@ -71,12 +71,12 @@ export default function SponsorsTicker() {
         {duplicatedSponsors.map((sponsor, index) => (
           <div
             key={`${sponsor.name}-${index}`}
-            className="flex-shrink-0 flex flex-col items-center md:flex-row md:items-center gap-3 md:gap-6 group cursor-pointer hover:scale-105 transition-transform duration-300"
+            className="shrink-0 flex flex-col items-center md:flex-row md:items-center gap-3 md:gap-6 group cursor-pointer hover:scale-105 transition-transform duration-300"
             onClick={() =>
               window.open(sponsor.url, "_blank", "noopener,noreferrer")
             }
           >
-            <div className="transition-all duration-300 group-hover:brightness-110 flex-shrink-0">
+            <div className="transition-all duration-300 group-hover:brightness-110 shrink-0">
               {sponsor.logo}
             </div>
             <span className="text-sm md:text-lg font-bold text-center md:text-left text-slate-300 group-hover:text-white transition-colors duration-300 max-w-[120px] md:max-w-[160px] leading-tight">
