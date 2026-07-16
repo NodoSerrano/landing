@@ -80,6 +80,118 @@
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
+}
+
+/* ============================================================
+   Design tokens — extraídos de Figma "web-nodo-final-a-produccion"
+   (fileKey gQStd2U3Y0TCbZp5cNJeux, canvas Web 2:1640, REST API,
+   lastModified 2026-07-10). Nombres de styles Figma entre paréntesis.
+   `static`: se emiten siempre — hay componentes que los consumen vía
+   var() en runtime (p.ej. el SVG del menú mobile en header.tsx).
+   ============================================================ */
+@theme static {
+
+  /* brand gradient stops (grad-primary (logo) / línea del header) */
+  --color-brand-mint: #4fe6c3;
+  --color-brand-blue: #2e9bff;
+  --color-brand-violet: #c87fe5;
+
+  /* warm gradient stops (grad-warm) */
+  --color-warm-yellow: #ff9728;
+  --color-warm-red: #ff3121;
+  --color-warm-violet: #9e1fd0;
+
+  /* gradiente alternativo del logo (Gradient logo) */
+  --color-logo-mint: #45f3c5;
+  --color-logo-pink: #f763ff;
+  --color-logo-sky: #5bbcff;
+
+  /* accents sueltos (colores sólidos del diseño) */
+  --color-accent-orange: #ff4d21; /* highlights de texto (LO NUEVO, etc.) */
+  --color-accent-violet: #b57fe0;
+  --color-accent-coral: #c70067;
+  --color-accent-teal: #0a8268;
+  --color-accent-brown: #b84e00; /* badge WORKSHOP */
+  --color-logo-blue: #1158b0;
+  --color-logo-violet: #6b3fa8;
+
+  /* surfaces + text (el diseño mezcla secciones light y dark, no es toggle) */
+  --color-bg-light: #f8f4ed;
+  --color-bg-warm-white: #fcfaf7;
+  --color-bg-elev-dark: #1a1614;
+  --color-text-primary-light: #1a1614;
+  --color-text-primary-dark: #f8f4ed;
+  --color-text-secondary-dark: #ff9728;
+  --color-text-muted: #5a5550;
+  --color-text-soft: #8a847c;
+
+  /* type scale desktop (styles: display-xl … micro) — display/h* = Space
+     Grotesk (--font-display), body* = Inter (--font-inter) */
+  --text-display-xl: 4.5rem;
+  --text-display-xl--line-height: 4.95rem;
+  --text-display-xl--letter-spacing: -0.09rem;
+  --text-display-xl--font-weight: 700;
+  --text-display-lg: 3.5rem;
+  --text-display-lg--line-height: 3.85rem;
+  --text-display-lg--letter-spacing: -0.07rem;
+  --text-display-lg--font-weight: 700;
+  --text-h1: 2.75rem;
+  --text-h1--line-height: 3.025rem;
+  --text-h1--font-weight: 700;
+  --text-h2: 2rem;
+  --text-h2--line-height: 2.2rem;
+  --text-h2--font-weight: 500;
+  --text-h3: 1.375rem;
+  --text-h3--line-height: 1.5125rem;
+  --text-h3--font-weight: 500;
+  --text-h4: 1.125rem;
+  --text-h4--line-height: 1.2375rem;
+  --text-h4--font-weight: 400;
+  --text-body-lg: 1.0625rem;
+  --text-body-lg--line-height: 1.16875rem;
+  --text-body: 0.875rem;
+  --text-body--line-height: 0.9625rem;
+  --text-body-sm: 0.8125rem;
+  --text-body-sm--line-height: 0.89375rem;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 0.825rem;
+  --text-caption--letter-spacing: 0.075rem;
+  --text-caption--font-weight: 500;
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 0.75625rem;
+  --text-micro--font-weight: 500;
+
+  /* type scale mobile (styles: mob-*) */
+  --text-mob-display-xl: 2.5rem;
+  --text-mob-display-xl--line-height: 3.75rem;
+  --text-mob-display-xl--letter-spacing: -0.09rem;
+  --text-mob-display-xl--font-weight: 700;
+  --text-mob-display-lg: 2rem;
+  --text-mob-display-lg--line-height: 3.85rem; /* así está en Figma */
+  --text-mob-display-lg--letter-spacing: -0.07rem;
+  --text-mob-display-lg--font-weight: 700;
+  --text-mob-h2: 1.375rem;
+  --text-mob-h2--line-height: 1.875rem;
+  --text-mob-h2--font-weight: 500;
+  --text-mob-h3: 1.125rem;
+  --text-mob-h3--line-height: 1.5125rem;
+  --text-mob-h3--font-weight: 500;
+  --text-mob-h4: 1rem;
+  --text-mob-h4--line-height: 1.2375rem;
+  --text-mob-h4--font-weight: 500;
+  --text-mob-body-lg: 1rem;
+  --text-mob-body-lg--line-height: 1.16875rem;
+
+  /* shadows — nombres de styles Figma entre paréntesis */
+  --shadow-neumorphic: 18px 18px 36px 0px #070f22, -18px -18px 36px 0px #393b5b96; /* Neomorfismo / Neumorf importado */
+  --shadow-neumorphic-pressed: inset -26px -26px 52px 0px #ffffff7d, inset 26px 26px 52px 0px #1d160640; /* Neomorfismo pressed */
+  --shadow-neumorphic-light: 4px 4px 8px 0px #070f22, -4px -4px 8px -2px #393b5b33; /* neomorfismo light mode */
+  --shadow-neumorphic-dark: inset -1px -1px 3px 0px #00000080, inset 1px 1px 2px 0px #ffffff0d,
+    5px 5px 14px 0px #000000ad, -4px -4px 10px 0px #ffffff0a; /* Neumorphic-dark */
+  --shadow-soft-top: 13.86px 13.86px 27.72px 0px #ff69b3b2, -13.86px -13.86px 27.72px 0px #775e4e33; /* capa superior suave */
+  --shadow-btn-warm: 1px 3px 12px 0px #d93188, -4px -4px 10px 0px #ff620066; /* Primary-Button-Red */
+  --shadow-btn-cool: 1px 3px 12px 0px #2e9bff66, -4px -4px 10px 0px #b57fe066; /* Primary-Button-Blue */
+  --shadow-cta-blue: 1px 3px 12.1px 0px #31d3d9; /* CTA azul */
 
   /* --font-inter-base/--font-space-grotesk las carga next/font en app/layout.tsx */
   --font-inter: var(--font-inter-base), ui-sans-serif, system-ui, sans-serif;
@@ -187,12 +299,22 @@
 }
 
 @utility bg-gradient-brand {
-  /* Gradiente de marca (línea del header, ref public/menu*.svg) */
+  /* Gradiente de marca (Figma: grad-primary (logo) — stops 0/46.66/93.25) */
   background-image: linear-gradient(
-    179.3deg,
+    131deg,
     var(--color-brand-mint) 0%,
-    var(--color-brand-blue) 43.825%,
-    var(--color-brand-violet) 87.581%
+    var(--color-brand-blue) 46.66%,
+    var(--color-brand-violet) 93.25%
+  );
+}
+
+@utility bg-gradient-warm {
+  /* Figma: grad-warm */
+  background-image: linear-gradient(
+    90deg,
+    var(--color-warm-yellow) 0%,
+    var(--color-warm-red) 50%,
+    var(--color-warm-violet) 100%
   );
 }
 
@@ -251,16 +373,6 @@
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
     --radius: 0.5rem;
-
-    /* Figma tokens — fuente: web-nodo-final-a-produccion (rediseño nuevo).
-       Usados por components/layout/header.tsx y components/sections/hero.tsx */
-    --color-brand-mint: #4fe6c3;
-    --color-brand-blue: #2e9bff;
-    --color-brand-violet: #c87fe5;
-    --color-bg-light: #f8f4ed;
-    --color-bg-elev-dark: #1a1614;
-    --color-text-primary-light: #1a1614;
-    --color-text-primary-dark: #f8f4ed;
   }
 
   .dark {
