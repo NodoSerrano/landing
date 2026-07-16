@@ -112,6 +112,16 @@ body {
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
     --radius: 0.5rem;
+
+    /* Figma tokens — fuente: web-nodo-final-a-produccion (rediseño nuevo).
+       Usados por components/layout/header.tsx y components/sections/hero.tsx */
+    --color-brand-mint: #4fe6c3;
+    --color-brand-blue: #2e9bff;
+    --color-brand-violet: #c87fe5;
+    --color-bg-light: #f8f4ed;
+    --color-bg-elev-dark: #1a1614;
+    --color-text-primary-light: #1a1614;
+    --color-text-primary-dark: #f8f4ed;
   }
 
   .dark {
@@ -144,5 +154,17 @@ body {
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  /* Gradiente de marca (línea del header, ref public/menu*.svg) */
+  .bg-gradient-brand {
+    background-image: linear-gradient(
+      179.3deg,
+      var(--color-brand-mint) 0%,
+      var(--color-brand-blue) 43.825%,
+      var(--color-brand-violet) 87.581%
+    );
   }
 }

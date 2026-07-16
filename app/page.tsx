@@ -5,14 +5,13 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import NewsletterForm from "@/components/newsletter-form";
 import GhostBlogSection from "@/components/ghost-blog-section";
-import NavBar from "@/components/nav-bar";
 import Footer from "@/components/footer";
 import SocialSidebar from "@/components/social-sidebar";
 import { features } from "@/lib/features-data";
 import { ExternalLinkIcon } from "@/components/feature-icons";
 import { Button } from "@/components/ui/button";
 import SponsorsTicker from "@/components/sponsors-ticker";
-import HeroSection from "@/components/hero-section";
+import Hero from "@/components/sections/hero";
 import { useScrollHash } from "@/lib/use-scroll-hash";
 
 export default function Home() {
@@ -21,10 +20,9 @@ export default function Home() {
 
   return (
     <div id="top" className="min-h-screen layer1 flex flex-col">
-      <NavBar />
       <main className="flex flex-col">
-        {/* Hero Section */}
-        <HeroSection />
+        {/* Hero Section (incluye el Header nuevo) */}
+        <Hero />
 
         {/* Blog Section */}
         <GhostBlogSection />
@@ -148,7 +146,9 @@ export default function Home() {
             </div>
 
             {/* Sponsors Ticker */}
-            <SponsorsTicker />
+            <div id="sponsors" className="scroll-mt-20">
+              <SponsorsTicker />
+            </div>
           </div>
         </section>
 
