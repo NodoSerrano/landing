@@ -24,7 +24,7 @@ export default function HeroSection() {
           <h1 className="text-4xl md:text-5xl font-semibold text-center drop-shadow-lg mb-4">
             Nodo Serrano
           </h1>
-          <p className="text-base md:text-lg lg:text-xl max-w-2xl mx-auto text-center drop-shadow leading-relaxed">
+          <p className="text-base md:text-lg lg:text-xl max-w-2xl mx-auto text-center drop-shadow-sm leading-relaxed">
             <span className="block sm:inline">
               Hackerspace y Semillero.{" "}
             </span>

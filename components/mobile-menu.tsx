@@ -22,7 +22,7 @@ export default function MobileMenu() {
         variant="ghost"
         size="icon"
         aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
-        className="hover:bg-[#fff]/10 text-white h-[38px] w-[38px]"
+        className="hover:bg-white/10 text-white h-[38px] w-[38px]"
       >
         {isOpen ? <X className="h-7 w-7 text-white" /> : <Menu className="h-6 w-6 text-white" />}
       </Button>

@@ -53,7 +53,7 @@ function BlogSectionSkeleton() {
             className="overflow-hidden rounded-lg neumorphism-shadow neumorphism-border p-4 layer2"
           >
             <div className="flex gap-4">
-              <div className="h-20 w-20 flex-shrink-0 rounded-lg animate-pulse bg-slate-700" />
+              <div className="h-20 w-20 shrink-0 rounded-lg animate-pulse bg-slate-700" />
               <div className="flex-1 space-y-2">
                 <div className="h-5 w-full animate-pulse bg-slate-700" />
                 <div className="h-3 w-4/5 animate-pulse bg-slate-700" />

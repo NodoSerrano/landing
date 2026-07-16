@@ -49,14 +49,14 @@ export default function BlogPage() {
         </div>
 
         {loading ? (
-          <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-12 text-center backdrop-blur-sm">
+          <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-12 text-center backdrop-blur-xs">
             <div className="animate-pulse">
               <div className="h-4 bg-slate-700 rounded w-1/3 mx-auto"></div>
             </div>
             <p className="mt-4 opacity-80">Cargando artículos...</p>
           </div>
         ) : posts.length === 0 ? (
-          <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-12 text-center backdrop-blur-sm">
+          <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-12 text-center backdrop-blur-xs">
             <p className="text-lg opacity-80">
               No hay artículos publicados todavía. ¡Vuelve pronto!
             </p>

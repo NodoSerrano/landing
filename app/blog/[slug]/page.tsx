@@ -79,7 +79,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Thumbnail */}
-            <div className="w-full lg:w-64 h-64 flex-shrink-0 rounded-xl overflow-hidden border border-slate-700 shadow-lg">
+            <div className="w-full lg:w-64 h-64 shrink-0 rounded-xl overflow-hidden border border-slate-700 shadow-lg">
               <SafeImage
                 src={post.thumbnailUrl || '/blog/thumbnails/default-placeholder-square.svg'}
                 fallbackSrc="/blog/thumbnails/default-placeholder-square.svg"
@@ -126,7 +126,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-slate-800/60 border border-slate-700 px-4 py-2 text-sm backdrop-blur-sm transition-colors hover:bg-slate-700/60"
+                      className="rounded-full bg-slate-800/60 border border-slate-700 px-4 py-2 text-sm backdrop-blur-xs transition-colors hover:bg-slate-700/60"
                     >
                       #{tag}
                     </span>
@@ -137,9 +137,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         </header>
 
-        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-8 md:p-12 backdrop-blur-sm shadow-2xl">
+        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-8 md:p-12 backdrop-blur-xs shadow-2xl">
           <div 
-            className="prose prose-lg max-w-none [&_a]:!text-cyan-400 hover:[&_a]:!text-cyan-300 [&_code]:!text-cyan-300 [&_code]:!bg-slate-800 [&_pre]:!bg-slate-800 [&_pre]:!border-slate-700"
+            className="prose prose-lg max-w-none [&_a]:text-cyan-400! [&_a]:hover:text-cyan-300! [&_code]:text-cyan-300! [&_code]:bg-slate-800! [&_pre]:bg-slate-800! [&_pre]:border-slate-700!"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </div>

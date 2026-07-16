@@ -37,7 +37,7 @@ export default function BlogCard({ post, index = 0, onOpen }: BlogCardProps) {
 
           <div className="flex gap-4">
             {/* Thumbnail - Always present, using placeholder if no image */}
-            <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg neumorphism-border">
+            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg neumorphism-border">
               <SafeImage
                 src={
                   post.thumbnailUrl ||

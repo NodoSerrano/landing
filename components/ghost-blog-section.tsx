@@ -73,7 +73,7 @@ function BlogSectionSkeleton() {
             className="overflow-hidden rounded-lg neumorphism-shadow neumorphism-border p-4 layer2"
           >
             <div className="flex gap-4">
-              <div className="h-20 w-20 flex-shrink-0 rounded-lg animate-pulse bg-slate-700" />
+              <div className="h-20 w-20 shrink-0 rounded-lg animate-pulse bg-slate-700" />
               <div className="flex-1 space-y-2">
                 <div className="h-5 w-full animate-pulse bg-slate-700" />
                 <div className="h-3 w-4/5 animate-pulse bg-slate-700" />
@@ -128,7 +128,7 @@ function FeaturedGhostPost({
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Thumbnail */}
             {post.feature_image && (
-              <div className="w-48 h-48 flex-shrink-0 rounded-lg overflow-hidden">
+              <div className="w-48 h-48 shrink-0 rounded-lg overflow-hidden">
                 <Image
                   src={post.feature_image}
                   alt={post.title}
@@ -232,7 +232,7 @@ function GhostBlogCard({
           <div className="flex gap-4">
             {/* Thumbnail */}
             {post.feature_image && (
-              <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg neumorphism-border">
+              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg neumorphism-border">
                 <Image
                   src={post.feature_image}
                   alt={post.title}

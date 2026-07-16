@@ -32,7 +32,7 @@ export default function FeaturedPost({ post, onOpen }: FeaturedPostProps) {
 
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Thumbnail - Always present, using placeholder if no image */}
-            <div className="w-48 h-48 flex-shrink-0 rounded-lg overflow-hidden">
+            <div className="w-48 h-48 shrink-0 rounded-lg overflow-hidden">
               <SafeImage
                 src={
                   post.thumbnailUrl ||
