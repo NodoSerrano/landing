@@ -33,7 +33,7 @@ export default function Hero() {
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 z-1">
-        <div className="absolute inset-0 bg-linear-to-br from-slate-900/85 via-violet-900/40 to-slate-900/85" />
+        <div className="absolute inset-0 bg-linear-to-br from-(--color-bg-elev-dark)/85 via-violet-900/40 to-(--color-bg-elev-dark)/85" />
         <div className="absolute inset-0 bg-linear-to-tr from-cyan-500/10 via-transparent to-blue-500/10" />
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full filter blur-[128px] animate-pulse" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full filter blur-[128px] animate-pulse animation-delay-2000" />
@@ -75,7 +75,7 @@ export default function Hero() {
           {/* Headings */}
           <div className="space-y-4">
             <motion.h1
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white"
+              className="font-display text-mob-display-xl md:text-display-xl text-(--color-text-primary-dark)"
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.4 } },
@@ -85,7 +85,7 @@ export default function Hero() {
             </motion.h1>
 
             <motion.h2
-              className="text-lg sm:text-xl md:text-2xl text-slate-300 max-w-2xl sm:mx-auto leading-relaxed"
+              className="text-mob-h3 md:text-h3 text-(--color-text-primary-dark)/80 max-w-2xl sm:mx-auto leading-relaxed"
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.6 } },
@@ -97,14 +97,14 @@ export default function Hero() {
 
           {/* Location */}
           <motion.div
-            className="flex items-center justify-start sm:justify-center gap-2 text-slate-400"
+            className="flex items-center justify-start sm:justify-center gap-2 text-(--color-text-soft)"
             variants={{
               hidden: { opacity: 0 },
               visible: { opacity: 1, transition: { duration: 0.4, delay: 0.8 } },
             }}
           >
             <MapPin className="h-5 w-5 text-violet-400" />
-            <span className="text-base md:text-lg font-medium">Tandil</span>
+            <span className="text-body-lg md:text-h4 font-medium">Tandil</span>
           </motion.div>
         </div>
       </motion.div>
