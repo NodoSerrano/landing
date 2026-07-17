@@ -235,6 +235,10 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
+
+  body {
+    font-family: var(--font-spline-sans), ui-sans-serif, system-ui, sans-serif;
+  }
 }
 
 @utility max-w-content {
@@ -322,10 +326,6 @@
   html {
     scroll-padding-top: 65px;
     /* to account for sticky header */
-  }
-
-  body {
-    font-family: 'Spline Sans', Arial, Helvetica, sans-serif;
   }
 }
 
