@@ -59,9 +59,9 @@ export default function Hero() {
           hidden: { opacity: 0, y: 30 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
         }}
-        className="relative z-10 flex-1 flex flex-col items-start justify-center text-left px-4 md:px-12 pt-20 pb-6 md:py-8"
+        className="relative z-10 flex-1 flex flex-col items-center justify-center text-left px-4 md:px-12 pt-20 pb-48 md:pt-8 md:pb-40"
       >
-        <div className="max-w-3xl sm:mx-auto md:mx-auto md:max-w-[654px] space-y-8 md:space-y-9">
+        <div className="max-w-3xl md:max-w-[654px] space-y-8 md:space-y-9">
           {/* Headings */}
           <div className="space-y-3 md:space-y-9">
             <motion.h1

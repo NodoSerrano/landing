@@ -11,6 +11,7 @@ import { ExternalLinkIcon } from "@/components/feature-icons";
 import { Button } from "@/components/ui/button";
 import SponsorsTicker from "@/components/sponsors-ticker";
 import Hero from "@/components/sections/hero";
+import Community from "@/components/sections/community";
 import { useScrollHash } from "@/lib/use-scroll-hash";
 
 export default function Home() {
@@ -22,6 +23,9 @@ export default function Home() {
       <main className="flex flex-col">
         {/* Hero Section (incluye el Header nuevo) */}
         <Hero />
+
+        {/* Community Section */}
+        <Community />
 
         {/* Blog Section */}
         <GhostBlogSection />
