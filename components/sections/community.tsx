@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
+import { Container } from "@/components/ui/container"
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
@@ -252,12 +253,13 @@ export default function Community() {
     <section className="relative isolate z-20 flex min-h-[80vh] flex-col">
       <BlobBackground />
 
+      <Container className="flex flex-1 flex-col">
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeInUp}
-        className="relative mx-auto flex w-full max-w-content flex-1 flex-col items-center px-4 pb-12 md:pb-10"
+        className="relative flex w-full flex-1 flex-col items-center pb-12 md:pb-10"
       >
         {/* Card straddles the hero/section transition line (its center on the blob's top edge) */}
         <div className="-mt-[190px] flex w-full justify-center md:-mt-[235px]">
@@ -294,6 +296,7 @@ export default function Community() {
           </div>
         </div>
       </motion.div>
+      </Container>
     </section>
   )
 }

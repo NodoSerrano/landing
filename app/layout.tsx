@@ -29,7 +29,7 @@ export default function RootLayout({
       lang="es"
       className={`scroll-smooth ${splineSans.variable} ${inter.variable} ${spaceGrotesk.variable}`}
     >
-      <body className="text-foreground" suppressHydrationWarning>
+      <body className="overflow-x-hidden text-foreground" suppressHydrationWarning>
         {children}
       </body>
     </html>
