@@ -192,6 +192,12 @@
   --shadow-btn-warm: 1px 3px 12px 0px #d93188, -4px -4px 10px 0px #ff620066; /* Primary-Button-Red */
   --shadow-btn-cool: 1px 3px 12px 0px #2e9bff66, -4px -4px 10px 0px #b57fe066; /* Primary-Button-Blue */
   --shadow-cta-blue: 1px 3px 12.1px 0px #31d3d9; /* CTA azul */
+  /* variante drop-shadow del neumórfico (para filtros SVG, ej. blobs Somos) */
+  --drop-shadow-neumorphic:
+    drop-shadow(18px 18px 36px #070f22) drop-shadow(-18px -18px 36px #393b5b96);
+  /* variante suave — sombra tenue para blobs decorativos (ej. Somos) */
+  --drop-shadow-neumorphic-soft:
+    drop-shadow(18px 18px 36px #070f2240) drop-shadow(-18px -18px 36px #393b5b33);
 
   /* --font-inter-base/--font-space-grotesk las carga next/font en app/layout.tsx */
   --font-inter: var(--font-inter-base), ui-sans-serif, system-ui, sans-serif;

@@ -92,7 +92,7 @@ function CardShape() {
             width: w,
             height: h,
             filter:
-              "drop-shadow(1px 3px 10px #31d3d8) drop-shadow(-6px -5px 12px #704fe7) drop-shadow(12px 14px 22px rgba(7,14,34,0.85))",
+              "drop-shadow(1px 3px 12px rgba(49,211,216,0.5)) drop-shadow(-6px -5px 14px rgba(112,79,231,0.5)) drop-shadow(12px 14px 22px rgba(7,14,34,0.85))",
           }}
           fill="none"
           aria-hidden="true"
@@ -133,13 +133,13 @@ function BlobShadowFilter({ id, width, height }: { id: string; width: number; he
       <feOffset dx="18" dy="18" />
       <feGaussianBlur stdDeviation="18" />
       <feComposite in2="hardAlpha" operator="out" />
-      <feColorMatrix type="matrix" values="0 0 0 0 0.0278291 0 0 0 0 0.0580852 0 0 0 0 0.134615 0 0 0 1 0" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.0278291 0 0 0 0 0.0580852 0 0 0 0 0.134615 0 0 0 0.4 0" />
       <feBlend mode="overlay" in2="BackgroundImageFix" result="effect1_dropShadow" />
       <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
       <feOffset dx="-18" dy="-18" />
       <feGaussianBlur stdDeviation="18" />
       <feComposite in2="hardAlpha" operator="out" />
-      <feColorMatrix type="matrix" values="0 0 0 0 0.224066 0 0 0 0 0.230651 0 0 0 0 0.355769 0 0 0 0.59 0" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.224066 0 0 0 0 0.230651 0 0 0 0 0.355769 0 0 0 0.35 0" />
       <feBlend mode="overlay" in2="effect1_dropShadow" result="effect2_dropShadow" />
       <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow" result="shape" />
     </filter>
@@ -199,7 +199,7 @@ function BlobBackground() {
 // glow, "Nodo LABS" lockup, and a skewed trapezoid button (hero button motif).
 function LabsCard() {
   return (
-    <div className="relative w-full max-w-[360px] md:max-w-[480px] lg:max-w-[814px]">
+    <div className="relative w-full lg:max-w-[814px]">
       <CardShape />
       <div className="relative flex flex-col items-center gap-6 px-8 py-9 text-center md:px-12 md:py-10 lg:gap-5 lg:py-12">
         <p className="font-inter text-[17px] uppercase tracking-[0.12em] text-(--color-warm-yellow)">
@@ -250,52 +250,52 @@ function LabsCard() {
 
 export default function Community() {
   return (
-    <section className="relative isolate z-20 flex min-h-[80vh] flex-col">
+    <section className="relative isolate z-20 flex min-h-[80vh] flex-col bg-(--color-bg-light) pb-[100px]">
       <BlobBackground />
 
       <Container className="flex flex-1 flex-col">
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeInUp}
-        className="relative flex w-full flex-1 flex-col items-center pb-12 md:pb-10"
-      >
-        {/* Card straddles the hero/section transition line (its center on the blob's top edge) */}
-        <div className="-mt-[190px] flex w-full justify-center md:-mt-[235px]">
-          <LabsCard />
-        </div>
-
-        {/* Text block (Figma node 14:138) — vertically centered in the cream area */}
-        <div className="flex flex-1 items-center">
-          <div className="flex max-w-[340px] flex-col items-center text-center md:max-w-[600px]">
-          <h2 className="font-display text-mob-h2 font-medium text-(--color-text-primary-light) md:text-h2">
-            Integramos el primer semillero dedicado a Ethereum en Tandil.
-          </h2>
-
-          <div className="my-6 h-[3px] w-[280px] max-w-full rounded-full bg-gradient-brand md:my-8" />
-
-          <div className="space-y-5 font-inter text-mob-body-lg leading-relaxed text-(--color-text-primary-light) md:text-body-lg">
-            <p>
-              Un lugar donde{" "}
-              <strong className="font-semibold">
-                la comunidad puede ser protagonista
-              </strong>{" "}
-              en el proceso de investigación y educación en el futuro
-              descentralizado.
-            </p>
-            <p>
-              Participamos en investigación, educación y desarrollo de la red,{" "}
-              <strong className="font-semibold">
-                contribuyendo activamente a la investigación educativa y
-                desarrollo ético
-              </strong>
-              .
-            </p>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+          className="relative flex w-full flex-1 flex-col items-center pb-12 md:pb-10"
+        >
+          {/* Card straddles the hero/section transition line (its center on the blob's top edge) */}
+          <div className="-mt-[190px] flex w-full justify-center md:-mt-[235px]">
+            <LabsCard />
           </div>
+
+          {/* Text block (Figma node 14:138) — vertically centered in the cream area */}
+          <div className="flex flex-1 items-center">
+            <div className="flex max-w-[340px] flex-col items-center text-center md:max-w-[600px]">
+              <h2 className="font-display text-mob-h2 font-medium text-(--color-text-primary-light) md:text-h2">
+                Integramos el primer semillero dedicado a Ethereum en Tandil.
+              </h2>
+
+              <div className="my-6 h-[3px] w-[280px] max-w-full rounded-full bg-gradient-brand md:my-8" />
+
+              <div className="space-y-5 font-inter text-mob-body-lg leading-relaxed text-(--color-text-primary-light) md:text-body-lg">
+                <p>
+                  Un lugar donde{" "}
+                  <strong className="font-semibold">
+                    la comunidad puede ser protagonista
+                  </strong>{" "}
+                  en el proceso de investigación y educación en el futuro
+                  descentralizado.
+                </p>
+                <p>
+                  Participamos en investigación, educación y desarrollo de la red,{" "}
+                  <strong className="font-semibold">
+                    contribuyendo activamente a la investigación educativa y
+                    desarrollo ético
+                  </strong>
+                  .
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
       </Container>
     </section>
   )

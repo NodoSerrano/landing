@@ -247,16 +247,15 @@ export default function Header() {
     >
       <div
         ref={toolbarRef}
-        className={`relative z-20 mx-1 mt-1 flex items-center justify-between gap-4 rounded-2xl border border-transparent px-3 py-3 transition-all duration-300 md:mx-6 md:px-4 lg:mx-auto lg:max-w-6xl ${
-          scrolled && !mobileMenuOpen ? "backdrop-blur-xl" : ""
-        }`}
+        className={`relative z-20 mx-4 my-2 flex items-center justify-between gap-4 rounded-2xl border border-transparent ${scrolled ? "px-3" : "px-0"}  py-3 transition-all duration-300 md:mx-6 md:px-4 lg:mx-auto lg:max-w-6xl ${scrolled && !mobileMenuOpen ? "backdrop-blur-xl" : ""
+          }`}
         style={
           scrolled && !mobileMenuOpen
             ? {
-                background:
-                  "linear-gradient(var(--color-bg-elev-dark), var(--color-bg-elev-dark)) padding-box, " +
-                  "linear-gradient(90deg, rgba(79,230,195,0.4) 0%, rgba(46,155,255,0.4) 50%, rgba(200,127,229,0.4) 100%) border-box",
-              }
+              background:
+                "linear-gradient(var(--color-bg-elev-dark), var(--color-bg-elev-dark)) padding-box, " +
+                "linear-gradient(90deg, rgba(79,230,195,0.4) 0%, rgba(46,155,255,0.4) 50%, rgba(200,127,229,0.4) 100%) border-box",
+            }
             : undefined
         }
       >
@@ -335,7 +334,7 @@ export default function Header() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
             onClick={() => setMobileMenuOpen(false)}
-            className="lg:hidden relative z-10 cursor-pointer px-4 pt-2 pb-4"
+            className={`${scrolled ? "mx-3" : "mx-0"} lg:hidden relative z-10 cursor-pointer px-4 pt-2 pb-4`}
             style={{ height: `calc(100dvh - ${toolbarHeight}px)` }}
           >
             <div
