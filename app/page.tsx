@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import SponsorsTicker from "@/components/sponsors-ticker";
 import Hero from "@/components/sections/hero";
 import Community from "@/components/sections/community";
+import Somos from "@/components/sections/somos";
+import { Container } from "@/components/ui/container";
 import { useScrollHash } from "@/lib/use-scroll-hash";
 
 export default function Home() {
@@ -27,6 +29,9 @@ export default function Home() {
         {/* Community Section */}
         <Community />
 
+        {/* About / Somos Section */}
+        <Somos />
+
         {/* Blog Section */}
         <GhostBlogSection />
 
@@ -35,11 +40,12 @@ export default function Home() {
           id="events"
           className="py-12 md:py-16 flex flex-col items-center justify-center w-full"
         >
+          <Container>
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="w-full max-w-content mx-auto px-4 flex flex-col items-center justify-center gap-10"
+            className="flex flex-col items-center justify-center gap-10"
           >
             <div className="text-center">
               <h2 className="text-2xl md:text-3xl font-bold mb-2">
@@ -80,6 +86,7 @@ export default function Home() {
               </Button>
             </div>
           </motion.div>
+          </Container>
         </section>
 
         {/* Features Section */}
@@ -89,7 +96,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <div className="space-y-12 max-w-content mx-auto px-4">
+            <Container className="space-y-12">
               <div className="text-center mb-12">
                 <h2 className="text-2xl md:text-3xl font-bold mb-6">
                   Qué se viene
@@ -105,50 +112,20 @@ export default function Home() {
                   />
                 ))}
               </div>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* About Section */}
-        <section id="about" className="py-12 md:py-16">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <div className="mx-auto text-center max-w-content px-4">
-              <div className="text-center mb-12">
-                <h2 className="text-2xl md:text-3xl font-bold mb-6">
-                  Sobre el proyecto
-                </h2>
-              </div>
-              <div className="mx-auto max-w-4xl flex flex-col items-center justify-center neumorphism-border  neumorphism-shadow layer2 rounded-xl px-6 py-8">
-                <p className="text-base md:text-lg mb-8">
-                  Nodo Serrano es una nueva iniciativa que se enfocará en la
-                  investigación y educación sobre Ethereum. Inspirados por las
-                  tecnologías descentralizadas y la innovación digital moderna,
-                  estamos creando una experiencia para fomentar esta floreciente
-                  comunidad en nuestra ciudad: Tandil.
-                </p>
-                <p className="text-base md:text-lg">
-                  Mantente atento para más actualizaciones a medida que nos
-                  acercamos a nuestra fecha de lanzamiento.
-                </p>
-              </div>
-            </div>
+            </Container>
           </motion.div>
         </section>
 
         {/* Sponsors Section */}
         <section className="py-12 md:py-16">
           <div className="text-center">
-            <div className="text-center mb-12 px-4">
+            <Container className="text-center mb-12">
               <h2 className="text-2xl md:text-3xl font-bold mb-6">
                 Nos apoyan
               </h2>
-            </div>
+            </Container>
 
-            {/* Sponsors Ticker */}
+            {/* Sponsors Ticker — full-bleed, sin Container a propósito */}
             <div id="sponsors" className="scroll-mt-20">
               <SponsorsTicker />
             </div>
@@ -162,7 +139,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <div className="mx-auto text-center max-w-content px-4">
+            <Container className="text-center">
               <div className="text-center mb-12">
                 <h2 className="text-2xl md:text-3xl font-bold mb-10">
                   Únete a nuestra comunidad
@@ -178,7 +155,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </Container>
           </motion.div>
         </section>
       </main>
