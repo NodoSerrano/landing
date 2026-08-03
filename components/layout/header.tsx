@@ -27,7 +27,7 @@ const MOBILE_MENU_GRADIENT_ID = "mobile-menu-brand-gradient"
 // Border weight + corner radius matched to the hamburger icon
 // (public/menu-header.svg: stroke-width 3, corner radius ≈6.4).
 const MOBILE_MENU_CORNER_RADIUS = 6.4
-const MOBILE_MENU_STROKE_WIDTH = 2
+const MOBILE_MENU_STROKE_WIDTH = 1
 // Skew ratios derived from the Figma menu container (node 84:259, box 361×483):
 // the right side is taller — the top edge rises toward the right and the bottom
 // edge drops toward the right, with the left edge vertical. Expressed as a
