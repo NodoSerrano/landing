@@ -8,7 +8,11 @@ import { Container } from "@/components/ui/container"
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" as const },
+  },
 }
 
 // Card trapezoid (Figma node 206:58): the card is not a rectangle — the right
@@ -87,37 +91,44 @@ function CardShape() {
   return (
     <div ref={containerRef} className="pointer-events-none absolute inset-0 h-full w-full">
       {path && (
-        <svg
-          style={{
-            width: w,
-            height: h,
-            filter:
-              "drop-shadow(1px 3px 12px rgba(49,211,216,0.5)) drop-shadow(-6px -5px 14px rgba(112,79,231,0.5)) drop-shadow(12px 14px 22px rgba(7,14,34,0.85))",
-          }}
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d={path}
-            fill="var(--color-bg-elev-dark)"
-            stroke={`url(#${CARD_GRADIENT_ID})`}
-            strokeWidth={CARD_STROKE_WIDTH}
-          />
-          <defs>
-            <linearGradient
-              id={CARD_GRADIENT_ID}
-              x1={w}
-              y1={h}
-              x2="0"
-              y2="0"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="var(--color-brand-mint)" />
-              <stop offset="0.466597" stopColor="var(--color-brand-blue)" />
-              <stop offset="0.932457" stopColor="var(--color-brand-violet)" />
-            </linearGradient>
-          </defs>
-        </svg>
+        <>
+          {/* En lg la sombra/glow vive en su propia capa detrás del blob crema
+              (-z-20 < blob -z-10 en el isolate de la sección): el glow se ve
+              contra el hero oscuro pero la crema opaca lo tapa — la sombra no
+              mancha el blob y la card queda encima. */}
+          <div className="absolute inset-0 -z-20 hidden lg:block" aria-hidden="true">
+            <svg style={{ width: w, height: h }} className="labs-card-glow" fill="none">
+              <path d={path} fill="var(--color-bg-elev-dark)" />
+            </svg>
+          </div>
+          <svg
+            style={{ width: w, height: h }}
+            className="labs-card-glow lg:filter-none"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d={path}
+              fill="var(--color-bg-elev-dark)"
+              stroke={`url(#${CARD_GRADIENT_ID})`}
+              strokeWidth={CARD_STROKE_WIDTH}
+            />
+            <defs>
+              <linearGradient
+                id={CARD_GRADIENT_ID}
+                x1={w}
+                y1={h}
+                x2="0"
+                y2="0"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stopColor="var(--color-brand-mint)" />
+                <stop offset="0.466597" stopColor="var(--color-brand-blue)" />
+                <stop offset="0.932457" stopColor="var(--color-brand-violet)" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </>
       )}
     </div>
   )
@@ -173,23 +184,29 @@ function BlobBackground() {
       </svg>
 
       {/* Desktop (Figma 38:83, near-square). Align top so the organic top edge
-          is the hero→section transition; the taller shape crops at the bottom. */}
+          is the hero→section transition; the taller shape crops at the bottom.
+          Figma frames the 1983px-wide blob on a 1280 viewport (155%): keep that
+          framing by stretching width to 155vw while pinning the height at the
+          native 1881px, so the top waves keep their exact Figma height at any
+          viewport width instead of scaling up and hiding behind the card.
+          Centered via left calc, NOT translate: Safari silently drops the
+          composited layer a transform creates on an svg this large. */}
       <svg
         viewBox="0 0 1983 1881"
-        preserveAspectRatio="xMidYMin slice"
+        preserveAspectRatio="none"
         fill="none"
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 -translate-x-1/2 transform-gpu -top-[220px] hidden h-[calc(100%+220px)] w-[140%] -z-10 lg:block"
+        className="pointer-events-none absolute left-[calc(50%-max(77.5vw,991.5px))] -top-[220px] hidden h-[1881px] w-[max(155vw,1983px)] z-0 lg:block"
       >
-        <g filter="url(#labs-blob-shadow-d)">
+        {/* CSS drop-shadow, not an SVG <filter>: Safari silently drops the
+            whole element when an SVG filter region is this large (the Somos
+            deco uses the same CSS pattern and renders fine there). */}
+        <g style={{ filter: "var(--drop-shadow-neumorphic-soft)" }}>
           <path
             d="M1846.81 629.655C1986.93 791.366 1925.92 1154.99 1826.8 1339.86C1657.37 1858.19 1054.98 1647.35 677.856 1797.81C300.734 1948.27 -78.8866 1469.29 99.305 1340.52C395.81 1126.27 -51.6497 693.497 96.4764 300.771C244.602 -91.9563 996.099 104.163 1194.34 94.8029C1627.23 74.3625 1863.95 198.479 1796.04 304.987C1724.16 417.713 1706.69 467.943 1846.81 629.655Z"
             fill="var(--color-bg-light)"
           />
         </g>
-        <defs>
-          <BlobShadowFilter id="labs-blob-shadow-d" width={1983} height={1880.75} />
-        </defs>
       </svg>
     </>
   )
@@ -250,7 +267,7 @@ function LabsCard() {
 
 export default function Community() {
   return (
-    <section className="relative isolate z-20 flex min-h-[80vh] flex-col bg-(--color-bg-light) pb-[100px]">
+    <section className="relative isolate z-20 flex min-h-[80vh] flex-col bg-(--color-bg-light) pb-[100px] lg:bg-transparent">
       <BlobBackground />
 
       <Container className="flex flex-1 flex-col">

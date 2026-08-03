@@ -293,6 +293,14 @@
   border: 1px solid color-mix(in srgb, var(--bg-color) 70%, white 8%);
 }
 
+/* Glow + sombra de la card Nodo LABS (community.tsx). Como @utility para poder
+   apagarla con lg:filter-none cuando la sombra se mueve a su propia capa. */
+@utility labs-card-glow {
+  filter: drop-shadow(1px 3px 12px rgba(49, 211, 216, 0.5))
+    drop-shadow(-6px -5px 14px rgba(112, 79, 231, 0.5))
+    drop-shadow(12px 14px 22px rgba(7, 14, 34, 0.85));
+}
+
 @utility animate-marquee {
   /* Sponsors Ticker Animation */
   animation: marquee-scroll-mobile 20s linear infinite;
