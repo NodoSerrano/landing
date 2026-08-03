@@ -198,6 +198,12 @@
   /* variante suave — sombra tenue para blobs decorativos (ej. Somos) */
   --drop-shadow-neumorphic-soft:
     drop-shadow(18px 18px 36px #070f2240) drop-shadow(-18px -18px 36px #393b5b33);
+  /* capas apiladas paper-cut (deco Somos desktop): más presente que -soft para
+     que se lea el relieve entre blobs superpuestos, pero difusa — con offsets
+     cortos y alpha alto el apilado se veía como un "telón 3D" contra la crema
+     lisa de Community */
+  --drop-shadow-somos-layer:
+    drop-shadow(8px 10px 28px #070f2240) drop-shadow(-6px -8px 22px #393b5b2e);
 
   /* --font-inter-base/--font-space-grotesk las carga next/font en app/layout.tsx */
   --font-inter: var(--font-inter-base), ui-sans-serif, system-ui, sans-serif;

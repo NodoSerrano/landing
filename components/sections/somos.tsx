@@ -3,11 +3,8 @@
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { Container } from "@/components/ui/container"
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-}
+import SomosDesktop from "./somos-desktop"
+import { fadeInUp, TaglineMark, CardUnderline } from "./somos-shared"
 
 // Card data (Figma frame 225:65 — Frame 32). Order top→bottom as in the design.
 const CARDS = [
@@ -37,66 +34,13 @@ const CARDS = [
   },
 ]
 
-// Tagline arrow mark (Figma "EthDiamond" → 2 triángulos) — flecha apuntando a la
-// derecha, gradiente de marca mint→blue→violet. Paths normalizados del export.
-function TaglineMark() {
-  return (
-    <svg
-      width="10"
-      height="12"
-      viewBox="0 0 9.44 11.08"
-      fill="none"
-      aria-hidden="true"
-      className="shrink-0"
-    >
-      <path d="M2.906 5.539L0 0H0.439L9.432 5.539Z" fill="url(#somos-arrow-grad)" />
-      <path d="M2.906 5.540L0 11.079H0.439L9.432 5.540Z" fill="url(#somos-arrow-grad)" />
-      <defs>
-        <linearGradient id="somos-arrow-grad" x1="0" y1="0" x2="5.13" y2="7.69" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#4FE6C3" />
-          <stop offset="0.4666" stopColor="#2E9BFF" />
-          <stop offset="0.9325" stopColor="#C87FE5" />
-        </linearGradient>
-      </defs>
-    </svg>
-  )
-}
-
-// Card title underline (Figma "Vector 121") — trazo fino curvado que sube leve a
-// la derecha. Path normalizado del export; se estira al ancho del título.
-function CardUnderline() {
-  return (
-    <svg
-      viewBox="0 0 47 6"
-      fill="none"
-      aria-hidden="true"
-      preserveAspectRatio="none"
-      className="mt-1 h-[6px] w-full"
-    >
-      <path
-        d="M0 5.002C36.983 5.002 46.088 1.668 46.018 0"
-        stroke="url(#somos-underline-grad)"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <defs>
-        <linearGradient id="somos-underline-grad" x1="0" y1="0" x2="1" y2="0">
-          <stop stopColor="#4FE6C3" />
-          <stop offset="0.4666" stopColor="#2E9BFF" />
-          <stop offset="0.9325" stopColor="#C87FE5" />
-        </linearGradient>
-      </defs>
-    </svg>
-  )
-}
-
 // Decorative background — blobs crema orgánicos + wires de colores (mint, rojo→
 // violeta, azul). SVG exportado de Figma (nodo 225:65, 9 vectores); las drop-
 // shadows de los filtros dd_ se tokenizaron a --drop-shadow-neumorphic (CSS).
 // Se posiciona por porcentajes de la columna de contenido:
 // el contenido (Frame 71) ocupa el sub-rect SVG x[448,801] y[0,1090] del viewBox
 // 1200×1890 → mapeado a [0,W]×[0,H] con preserveAspectRatio="none".
-// TODO(desktop): capa de decoración distinta para lg.
+// La capa de decoración desktop vive en somos-desktop.tsx.
 // filtros dd_ originales (drop-shadow doble neumórfico) reemplazados por el token
 // CSS --drop-shadow-neumorphic aplicado por <g> vía style="filter:var(...)".
 const DECO_SHADOW = "filter:var(--drop-shadow-neumorphic-soft)"
@@ -119,15 +63,19 @@ export default function Somos() {
   return (
     <section
       id="about"
-      className="font-inter relative isolate z-20 overflow-hidden bg-(--color-bg-light) py-16 md:py-20"
+      className="font-inter relative isolate z-20 overflow-hidden bg-(--color-bg-light) py-16 md:py-20 lg:overflow-visible lg:bg-transparent lg:py-0"
     >
       <Container>
+        {/* Desktop (lg+): composición freeform del Figma */}
+        <SomosDesktop />
+
+        {/* Mobile / tablet */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
-          className="relative mx-auto flex w-full  flex-col gap-9 md:max-w-none"
+          className="relative mx-auto flex w-full  flex-col gap-9 md:max-w-none lg:hidden"
         >
           <Decorations />
 
