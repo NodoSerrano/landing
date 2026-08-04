@@ -7,12 +7,11 @@ import NewsletterForm from "@/components/newsletter-form";
 import GhostBlogSection from "@/components/ghost-blog-section";
 import Footer from "@/components/footer";
 import { features } from "@/lib/features-data";
-import { ExternalLinkIcon } from "@/components/feature-icons";
-import { Button } from "@/components/ui/button";
 import SponsorsTicker from "@/components/sponsors-ticker";
 import Hero from "@/components/sections/hero";
 import Community from "@/components/sections/community";
 import Somos from "@/components/sections/somos";
+import Events from "@/components/sections/events";
 import { Container } from "@/components/ui/container";
 import { useScrollHash } from "@/lib/use-scroll-hash";
 
@@ -21,7 +20,7 @@ export default function Home() {
   useScrollHash();
 
   return (
-    <div id="top" className="min-h-screen layer1 flex flex-col">
+    <div id="top" className="min-h-screen flex flex-col">
       <main className="flex flex-col">
         {/* Hero Section (incluye el Header nuevo) */}
         <Hero />
@@ -32,62 +31,11 @@ export default function Home() {
         {/* About / Somos Section */}
         <Somos />
 
+        {/* Events Section */}
+        <Events />
+
         {/* Blog Section */}
         <GhostBlogSection />
-
-        {/* Events Section */}
-        <section
-          id="events"
-          className="py-12 md:py-16 flex flex-col items-center justify-center w-full"
-        >
-          <Container>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex flex-col items-center justify-center gap-10"
-          >
-            <div className="text-center">
-              <h2 className="text-2xl md:text-3xl font-bold mb-2">
-                Próximos eventos
-              </h2>
-              <p className="text-lg max-w-2xl mx-auto">
-                Participa en nuestros eventos y talleres sobre blockchain y
-                Ethereum
-              </p>
-            </div>
-
-            <div className="rounded-lg overflow-hidden w-full max-w-4xl neumorphism-shadow  neumorphism-border">
-              <div className="bg-[#212325]">
-                {" "}
-                {/* TODO: keep to mimic blog background color */}
-                <iframe
-                  src="https://luma.com/embed/calendar/cal-7uziZDmq9SFGggQ/events"
-                  height="500"
-                  width="100%"
-                  aria-hidden="false"
-                  tabIndex={0}
-                  className="overflow-hidden"
-                  style={{ overflow: "hidden" }}
-                />{" "}
-              </div>
-            </div>
-
-            {/* Luma Profile Link */}
-            <div className="text-center">
-              <Button
-                href="https://luma.com/nodoserrano"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
-                Suscribite a nuestro calendario
-                <ExternalLinkIcon className="w-4 h-4" />
-              </Button>
-            </div>
-          </motion.div>
-          </Container>
-        </section>
 
         {/* Features Section */}
         <section id="features" className="py-12 md:py-16">
