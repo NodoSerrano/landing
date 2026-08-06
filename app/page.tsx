@@ -7,11 +7,11 @@ import NewsletterForm from "@/components/newsletter-form";
 import GhostBlogSection from "@/components/ghost-blog-section";
 import Footer from "@/components/footer";
 import { features } from "@/lib/features-data";
-import SponsorsTicker from "@/components/sponsors-ticker";
 import Hero from "@/components/sections/hero";
 import Community from "@/components/sections/community";
 import Somos from "@/components/sections/somos";
 import Events from "@/components/sections/events";
+import Sponsors from "@/components/sections/sponsors";
 import { Container } from "@/components/ui/container";
 import { useScrollHash } from "@/lib/use-scroll-hash";
 
@@ -65,20 +65,7 @@ export default function Home() {
         </section>
 
         {/* Sponsors Section */}
-        <section className="py-12 md:py-16">
-          <div className="text-center">
-            <Container className="text-center mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold mb-6">
-                Nos apoyan
-              </h2>
-            </Container>
-
-            {/* Sponsors Ticker — full-bleed, sin Container a propósito */}
-            <div id="sponsors" className="scroll-mt-20">
-              <SponsorsTicker />
-            </div>
-          </div>
-        </section>
+        <Sponsors />
 
         {/* Newsletter Section */}
         <section id="signup" className="py-12 md:py-16">
