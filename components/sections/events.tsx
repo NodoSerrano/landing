@@ -20,7 +20,7 @@ function CurvedContainer() {
       preserveAspectRatio="xMidYMid slice"
       fill="none"
       aria-hidden="true"
-      className="pointer-events-none absolute left-1/2 top-1/2 -z-10 w-[140%] max-w-[1920px] max-[1199px]:w-[1680px] aspect-[2482/2320] -translate-x-1/2 -translate-y-1/2"
+      className="pointer-events-none absolute left-1/2 top-1/2 -z-10 w-[140%] max-w-[1920px] max-[1199px]:w-[1680px] aspect-[2482/2320] translate-x-[calc(-50%+40px)] -translate-y-1/2"
     >
       <defs>
         <filter id="events-blob-shadow" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
@@ -73,7 +73,7 @@ export default function Events() {
         initial="hidden"
         whileInView="visible"
         variants={stagger}
-        className="relative z-10 mx-auto px-5 w-full max-w-[720px] md:py-16"
+        className="relative z-10 mx-auto w-full max-w-[720px] md:py-16"
       >
         <div className="flex flex-col items-center gap-10 md:gap-12 pt-20">
           <motion.div

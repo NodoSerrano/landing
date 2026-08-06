@@ -307,21 +307,6 @@
     drop-shadow(12px 14px 22px rgba(7, 14, 34, 0.85));
 }
 
-@utility animate-marquee {
-  /* Sponsors Ticker Animation */
-  animation: marquee-scroll-mobile 20s linear infinite;
-
-  @media (min-width: 768px) {
-    animation: marquee-scroll-desktop 20s linear infinite;
-  }
-}
-
-@utility pause-marquee {
-  &:hover {
-    animation-play-state: paused;
-  }
-}
-
 @utility bg-gradient-brand {
   /* Gradiente de marca (Figma: grad-primary (logo) — stops 0/46.66/93.25) */
   background-image: linear-gradient(
@@ -346,28 +331,6 @@
   html {
     scroll-padding-top: 65px;
     /* to account for sticky header */
-  }
-}
-
-@layer utilities {
-  @keyframes marquee-scroll-mobile {
-    0% {
-      transform: translateX(0);
-    }
-
-    100% {
-      transform: translateX(-620px);
-    }
-  }
-
-  @keyframes marquee-scroll-desktop {
-    0% {
-      transform: translateX(0);
-    }
-
-    100% {
-      transform: translateX(-1400px);
-    }
   }
 }
 
