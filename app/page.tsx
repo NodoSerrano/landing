@@ -4,13 +4,14 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import NewsletterForm from "@/components/newsletter-form";
-import GhostBlogSection from "@/components/ghost-blog-section";
 import Footer from "@/components/footer";
 import { features } from "@/lib/features-data";
 import Hero from "@/components/sections/hero";
 import Community from "@/components/sections/community";
 import Somos from "@/components/sections/somos";
 import Events from "@/components/sections/events";
+import ConstruirTitle from "@/components/sections/construir-title";
+import Blog from "@/components/sections/blog";
 import Sponsors from "@/components/sections/sponsors";
 import { Container } from "@/components/ui/container";
 import { useScrollHash } from "@/lib/use-scroll-hash";
@@ -34,35 +35,10 @@ export default function Home() {
         {/* Events Section */}
         <Events />
 
-        {/* Blog Section */}
-        <GhostBlogSection />
+        <ConstruirTitle />
 
-        {/* Features Section */}
-        <section id="features" className="py-12 md:py-16">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <Container className="space-y-12">
-              <div className="text-center mb-12">
-                <h2 className="text-2xl md:text-3xl font-bold mb-6">
-                  Qué se viene
-                </h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                {features.map((feature) => (
-                  <FeatureCard
-                    key={feature.title}
-                    title={feature.title}
-                    description={feature.description}
-                    src={feature.src}
-                  />
-                ))}
-              </div>
-            </Container>
-          </motion.div>
-        </section>
+        {/* Blog Section */}
+        <Blog />
 
         {/* Sponsors Section */}
         <Sponsors />

@@ -65,7 +65,7 @@ export default function Events() {
   return (
     <section
       id="events"
-      className="relative isolate z-30 flex flex-col justify-center py-38 my-20"
+      className="relative isolate z-30 flex flex-col justify-center py-38 mt-20 mb-32"
     >
       <CurvedContainer />
 
