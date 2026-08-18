@@ -203,11 +203,12 @@ function MenuToggleIcon({ open }: { open: boolean }) {
   )
 }
 
-export default function Header() {
+export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean } = {}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const toolbarRef = useRef<HTMLDivElement>(null)
   const [toolbarHeight, setToolbarHeight] = useState(0)
+  const isSolid = alwaysSolid || scrolled
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -245,71 +246,77 @@ export default function Header() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div
-        ref={toolbarRef}
-        className={`relative z-20 mx-4 my-2 flex items-center justify-between gap-4 rounded-2xl border border-transparent ${scrolled ? "px-3" : "px-0"}  py-3 transition-all duration-300 md:mx-6 md:px-4 lg:mx-auto lg:max-w-6xl ${scrolled && !mobileMenuOpen ? "backdrop-blur-xl" : ""
-          }`}
-        style={
-          scrolled && !mobileMenuOpen
-            ? {
-              background:
-                "linear-gradient(var(--color-bg-elev-dark), var(--color-bg-elev-dark)) padding-box, " +
-                "linear-gradient(90deg, rgba(79,230,195,0.4) 0%, rgba(46,155,255,0.4) 50%, rgba(200,127,229,0.4) 100%) border-box",
-            }
-            : undefined
-        }
-      >
-        {/* Logo / Brand */}
-        <Link href="/" className="flex items-center gap-2">
-          <Image
-            src="/downloads/logo-serrano.svg"
-            alt="Nodo Serrano"
-            width={97}
-            height={45}
-            className="h-[45px] w-auto"
-          />
-        </Link>
+      {/* Permanent horizontal gutter so the bar never touches the viewport edge —
+          kept separate from the toolbar's own mx-auto/max-w-6xl (which only
+          centers/caps it once there's enough room), and separate from the
+          mobile overlay below (which needs the true full-bleed viewport). */}
+      <div className="px-4">
+        <div
+          ref={toolbarRef}
+          className={`relative z-20 mx-auto my-2 flex items-center justify-between gap-4 rounded-2xl border border-transparent ${isSolid ? "px-3" : "px-0"}  py-3 transition-all duration-300 md:px-4 lg:max-w-6xl ${isSolid && !mobileMenuOpen ? "backdrop-blur-xl" : ""
+            }`}
+          style={
+            isSolid && !mobileMenuOpen
+              ? {
+                background:
+                  "linear-gradient(var(--color-bg-elev-dark), var(--color-bg-elev-dark)) padding-box, " +
+                  "linear-gradient(90deg, rgba(79,230,195,0.4) 0%, rgba(46,155,255,0.4) 50%, rgba(200,127,229,0.4) 100%) border-box",
+              }
+              : undefined
+          }
+        >
+          {/* Logo / Brand */}
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/downloads/logo-serrano.svg"
+              alt="Nodo Serrano"
+              width={97}
+              height={45}
+              className="h-[45px] w-auto"
+            />
+          </Link>
 
-        {/* Desktop Nav + CTA */}
-        <div className="hidden lg:flex items-center gap-8 xl:gap-[92px]">
-          <nav className="flex items-center gap-6 xl:gap-12">
-            {DESKTOP_NAV_ITEMS.map(({ label, href }) =>
-              href.startsWith("/blog") ? (
-                <Link
-                  key={label}
-                  href={href}
-                  className="text-body font-bold text-(--color-text-primary-dark) hover:opacity-70 transition-opacity"
-                >
-                  {label}
-                </Link>
-              ) : (
-                <button
-                  key={label}
-                  onClick={() => scrollToSection(href)}
-                  className="text-body font-bold text-(--color-text-primary-dark) hover:opacity-70 transition-opacity cursor-pointer"
-                >
-                  {label}
-                </button>
-              )
-            )}
-          </nav>
+          {/* Desktop Nav + CTA */}
+          <div className="hidden lg:flex items-center gap-8 xl:gap-[92px]">
+            <nav className="flex items-center gap-6 xl:gap-12">
+              {DESKTOP_NAV_ITEMS.map(({ label, href }) =>
+                href.startsWith("/blog") ? (
+                  <Link
+                    key={label}
+                    href={href}
+                    className="text-body font-bold text-(--color-text-primary-dark) hover:opacity-70 transition-opacity"
+                  >
+                    {label}
+                  </Link>
+                ) : (
+                  <button
+                    key={label}
+                    onClick={() => scrollToSection(href)}
+                    className="text-body font-bold text-(--color-text-primary-dark) hover:opacity-70 transition-opacity cursor-pointer"
+                  >
+                    {label}
+                  </button>
+                )
+              )}
+            </nav>
 
+            <button
+              onClick={() => scrollToSection("#signup")}
+              className="rounded-tl-[10px] rounded-br-[10px] bg-gradient-brand px-6 py-3 text-body text-(--color-text-primary-dark) hover:opacity-90 transition-opacity cursor-pointer"
+            >
+              SUSCRIBITE
+            </button>
+          </div>
+
+          {/* Mobile Menu Toggle */}
           <button
-            onClick={() => scrollToSection("#signup")}
-            className="rounded-tl-[10px] rounded-br-[10px] bg-gradient-brand px-6 py-3 text-body text-(--color-text-primary-dark) hover:opacity-90 transition-opacity cursor-pointer"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden cursor-pointer"
+            aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
           >
-            SUSCRIBITE
+            <MenuToggleIcon open={mobileMenuOpen} />
           </button>
         </div>
-
-        {/* Mobile Menu Toggle */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden cursor-pointer"
-          aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
-        >
-          <MenuToggleIcon open={mobileMenuOpen} />
-        </button>
       </div>
 
       {/* Mobile Menu Dropdown */}
@@ -334,7 +341,7 @@ export default function Header() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
             onClick={() => setMobileMenuOpen(false)}
-            className={`${scrolled ? "mx-3" : "mx-0"} lg:hidden relative z-10 cursor-pointer px-4 pt-2 pb-4`}
+            className={`${isSolid ? "mx-3" : "mx-0"} lg:hidden relative z-10 cursor-pointer px-4 pt-2 pb-4`}
             style={{ height: `calc(100dvh - ${toolbarHeight}px)` }}
           >
             <div

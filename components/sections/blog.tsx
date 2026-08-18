@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import GhostBlogModal from "@/components/ghost-blog-modal"
-import type { GhostAPIResponse, GhostPost } from "@/lib/ghost"
+import Link from "next/link"
+import { getGhostPosts, type GhostPost } from "@/lib/ghost"
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
@@ -63,12 +63,10 @@ function FeaturedPostCard({
   post,
   loading,
   error,
-  onOpen,
 }: {
   post: GhostPost | null
   loading: boolean
   error: string | null
-  onOpen: () => void
 }) {
   if (loading) {
     return (
@@ -99,9 +97,8 @@ function FeaturedPostCard({
   })
 
   return (
-    <button
-      type="button"
-      onClick={onOpen}
+    <Link
+      href={`/blog/${post.slug}`}
       className="flex w-full cursor-pointer flex-col overflow-hidden rounded-[24px] rounded-tr-none border border-(--color-warm-yellow) text-left md:h-[290px] md:flex-row"
       style={{ boxShadow: "var(--shadow-neumorphic-dark)" }}
     >
@@ -131,7 +128,7 @@ function FeaturedPostCard({
           {formattedDate} · {post.reading_time} min de lectura
         </time>
       </div>
-    </button>
+    </Link>
   )
 }
 
@@ -139,27 +136,11 @@ export default function Blog() {
   const [post, setPost] = useState<GhostPost | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [modalOpen, setModalOpen] = useState(false)
 
   useEffect(() => {
     async function fetchLatestPost() {
       try {
-        const ghostUrl = process.env.NEXT_PUBLIC_GHOST_URL || "https://blog.nodoserrano.org"
-        const apiKey = process.env.NEXT_PUBLIC_GHOST_CONTENT_API_KEY
-
-        if (!apiKey) {
-          setError("Blog configuration pending")
-          return
-        }
-
-        const apiUrl = `${ghostUrl}/ghost/api/content/posts/?key=${apiKey}&include=tags,authors&limit=1&order=published_at%20DESC`
-        const response = await fetch(apiUrl)
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch posts: ${response.status} ${response.statusText}`)
-        }
-
-        const data: GhostAPIResponse = await response.json()
+        const data = await getGhostPosts({ limit: 1 })
 
         if (!data.posts || data.posts.length === 0) {
           setError("No posts available")
@@ -204,34 +185,21 @@ export default function Blog() {
             </motion.div>
 
             <motion.div variants={fadeInUp} className="w-full">
-              <FeaturedPostCard
-                post={post}
-                loading={loading}
-                error={error}
-                onOpen={() => setModalOpen(true)}
-              />
+              <FeaturedPostCard post={post} loading={loading} error={error} />
             </motion.div>
 
             <motion.div variants={fadeInUp}>
-              <a
-                href="https://blog.nodoserrano.org"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/blog"
                 className="inline-flex items-center justify-center rounded-br-[10px] rounded-tl-[10px] border-2 border-(--color-warm-yellow) px-[26px] py-[14px] font-inter text-body text-(--color-text-primary-light) transition-opacity hover:opacity-90"
                 style={{ boxShadow: "var(--shadow-btn-warm)" }}
               >
                 Visitar el blog
-              </a>
+              </Link>
             </motion.div>
           </div>
         </motion.div>
       </div>
-
-      <GhostBlogModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        post={post}
-      />
     </section>
   )
 }
