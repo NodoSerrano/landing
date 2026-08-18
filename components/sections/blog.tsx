@@ -1,0 +1,237 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
+import Image from "next/image"
+import GhostBlogModal from "@/components/ghost-blog-modal"
+import type { GhostAPIResponse, GhostPost } from "@/lib/ghost"
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+}
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.1 } },
+}
+
+function CurvedContainer() {
+  return (
+    <svg
+      viewBox="0 130 1676 1436"
+      preserveAspectRatio="xMidYMid slice"
+      fill="none"
+      aria-hidden="true"
+      className="pointer-events-none absolute left-1/2 top-1/2 -z-10 w-[140%] max-w-[1720px] max-[1199px]:w-[1680px] aspect-[1676/1436] -translate-x-1/2 -translate-y-1/2"
+    >
+      <defs>
+        <filter id="blog-blob-shadow" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
+          <feDropShadow dx="7" dy="7" stdDeviation="7" floodColor="#070F22" floodOpacity="0.2" />
+          <feDropShadow dx="-6" dy="-6" stdDeviation="6" floodColor="#393B5B" floodOpacity="0.2" />
+        </filter>
+        <filter id="blog-blob-glow" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
+          <feDropShadow dx="6" dy="6" stdDeviation="6" floodColor="#FF69B3" floodOpacity="0.35" />
+          <feDropShadow dx="-6" dy="-6" stdDeviation="6" floodColor="#775E4E" floodOpacity="0.15" />
+        </filter>
+        <linearGradient id="blog-grad-line1" x1="281.799" y1="904.916" x2="1500.23" y2="548.945" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FF9728" />
+          <stop offset="0.5" stopColor="#FF3121" />
+          <stop offset="1" stopColor="#9E1FD0" />
+        </linearGradient>
+        <linearGradient id="blog-grad-line2" x1="197.483" y1="1014.16" x2="1204.85" y2="638.014" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FF9728" />
+          <stop offset="0.5" stopColor="#FF3121" />
+          <stop offset="1" stopColor="#9E1FD0" />
+        </linearGradient>
+        <linearGradient id="blog-grad-fill" x1="894.752" y1="390.183" x2="894.752" y2="1457.18" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FF9728" />
+          <stop offset="0.5" stopColor="#FF3121" />
+          <stop offset="1" stopColor="#9E1FD0" />
+        </linearGradient>
+      </defs>
+
+      <path filter="url(#blog-blob-shadow)" d="M1296.75 1144.19C1520.83 1261.42 1697.25 548.188 1459.25 353.188C1363.25 210.687 1085.75 412.688 833.749 396.188C581.748 379.688 307.136 177.688 151.749 396.188C-34.2186 657.688 44.5649 1027.32 393.252 1091.19C741.939 1155.05 1005.89 992.018 1296.75 1144.19Z" fill="#F8F4ED" />
+      <path d="M532.535 342.152C351.316 273.754 253.897 371.593 209.873 416.46C186.936 449.303 163.708 605.117 208.849 603.08C318.49 598.134 321.765 761.425 463.878 775.278C605.992 789.131 539.653 896.128 945.729 1091.03C1351.8 1285.94 1479.04 958.259 1536.74 778.246C1594.45 598.234 1377.21 552.664 1108.05 587.422C838.903 622.18 759.059 427.65 532.535 342.152Z" stroke="url(#blog-grad-line1)" strokeWidth="3" />
+      <path filter="url(#blog-blob-glow)" d="M361.267 487.772C205.021 444.123 131.756 540.807 98.6996 585.082C82.2314 616.6 75.3221 757.906 112.722 751.754C203.561 736.81 219.301 882.247 338.659 880.965C458.018 879.683 411.345 981.557 764.779 1116.53C1118.21 1251.51 1197.97 946.807 1231.64 780.59C1265.3 614.373 1080.91 594.56 859.712 651.43C638.518 708.3 556.574 542.333 361.267 487.772Z" fill="#F8F4ED" stroke="url(#blog-grad-line2)" strokeWidth="3" />
+      <path filter="url(#blog-blob-shadow)" d="M1528.95 788.185C1639.9 885.328 1716.78 1314.9 1361.4 1420.72C1006.02 1526.55 920.681 1359.15 656.064 1448.98C557.62 1482.4 365.417 1346.8 227.907 1181C91.0295 1015.96 216.227 837.268 321.344 592.874C426.462 348.481 514.881 393.909 666.01 462.847C859.412 551.068 997.881 335.332 1304.43 403.867C1418.21 429.304 1417.99 691.041 1528.95 788.185Z" fill="url(#blog-grad-fill)" />
+      <path filter="url(#blog-blob-shadow)" d="M1513.46 783.108C1619.48 883.064 1582.28 1114.54 1513.46 1233.44C1445.04 1442.61 1202.74 1589.61 910.718 1465.89C758.005 1401.19 401.633 1357.9 270.234 1187.29C139.439 1017.47 259.073 833.612 359.519 582.143C459.965 330.674 608.748 542.789 813.075 453.847C986.854 378.202 1229.6 386.507 1304 453.846C1378.41 521.185 1407.43 683.151 1513.46 783.108Z" fill="#F8F4ED" />
+    </svg>
+  )
+}
+
+function FeaturedPostCard({
+  post,
+  loading,
+  error,
+  onOpen,
+}: {
+  post: GhostPost | null
+  loading: boolean
+  error: string | null
+  onOpen: () => void
+}) {
+  if (loading) {
+    return (
+      <div className="h-[290px] w-full animate-pulse rounded-[24px] rounded-tr-none bg-(--color-bg-elev-dark)/40" />
+    )
+  }
+
+  if (error || !post) {
+    return (
+      <div
+        className="flex h-[290px] w-full flex-col items-center justify-center gap-2 rounded-[24px] rounded-tr-none border border-(--color-warm-yellow) bg-(--color-bg-elev-dark) px-6 text-center"
+        style={{ boxShadow: "var(--shadow-neumorphic-dark)" }}
+      >
+        <p className="font-display text-h4 font-medium text-(--color-text-primary-dark)">
+          Todavía no hay artículos publicados
+        </p>
+        <p className="font-inter text-body-sm text-(--color-text-secondary-dark)">
+          Volvé pronto para leer las últimas novedades
+        </p>
+      </div>
+    )
+  }
+
+  const formattedDate = new Date(post.published_at).toLocaleDateString("es-AR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
+
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className="flex w-full cursor-pointer flex-col overflow-hidden rounded-[24px] rounded-tr-none border border-(--color-warm-yellow) text-left md:h-[290px] md:flex-row"
+      style={{ boxShadow: "var(--shadow-neumorphic-dark)" }}
+    >
+      <div className="relative h-56 w-full shrink-0 overflow-hidden md:h-full md:w-[57%]">
+        <Image
+          src={post.feature_image || "/images/cowork.jpeg"}
+          alt={post.title}
+          fill
+          sizes="(min-width: 768px) 57vw, 100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-warm mix-blend-overlay" />
+      </div>
+
+      <div className="flex flex-1 flex-col justify-center gap-3 bg-(--color-bg-elev-dark) p-6">
+        <p className="font-inter text-body font-medium text-(--color-accent-orange)">
+          Reflexiones desde el nodo
+        </p>
+        <div className="h-[2px] w-full bg-gradient-warm" />
+        <h3 className="font-display text-h4 font-bold leading-tight text-(--color-text-primary-dark)">
+          {post.title}
+        </h3>
+        <p className="line-clamp-2 font-inter text-body-sm text-(--color-text-primary-dark)">
+          {post.excerpt}
+        </p>
+        <time dateTime={post.published_at} className="font-inter text-caption uppercase tracking-wide text-(--color-text-secondary-dark)">
+          {formattedDate} · {post.reading_time} min de lectura
+        </time>
+      </div>
+    </button>
+  )
+}
+
+export default function Blog() {
+  const [post, setPost] = useState<GhostPost | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [modalOpen, setModalOpen] = useState(false)
+
+  useEffect(() => {
+    async function fetchLatestPost() {
+      try {
+        const ghostUrl = process.env.NEXT_PUBLIC_GHOST_URL || "https://blog.nodoserrano.org"
+        const apiKey = process.env.NEXT_PUBLIC_GHOST_CONTENT_API_KEY
+
+        if (!apiKey) {
+          setError("Blog configuration pending")
+          return
+        }
+
+        const apiUrl = `${ghostUrl}/ghost/api/content/posts/?key=${apiKey}&include=tags,authors&limit=1&order=published_at%20DESC`
+        const response = await fetch(apiUrl)
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch posts: ${response.status} ${response.statusText}`)
+        }
+
+        const data: GhostAPIResponse = await response.json()
+
+        if (!data.posts || data.posts.length === 0) {
+          setError("No posts available")
+          return
+        }
+
+        setPost(data.posts[0])
+      } catch (err) {
+        console.error("Error fetching Ghost blog post:", err)
+        setError(err instanceof Error ? err.message : "Failed to load blog post")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchLatestPost()
+  }, [])
+
+  return (
+    <section id="blog" className="relative isolate z-30 flex flex-col justify-center py-20 md:pt-52 md:pb-62 mt-20 mb-42">
+      <div className="relative">
+        <CurvedContainer />
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={stagger}
+          className="relative z-10 mx-auto w-full max-w-[720px] px-5 pt-24 md:max-w-[860px] md:pt-32"
+        >
+          <div className="flex flex-col items-center gap-10 md:gap-12">
+            <motion.div variants={fadeInUp} className="flex flex-col items-center gap-2 text-center">
+              <h2 className="font-display text-h1 font-bold">
+                <span className="text-(--color-text-primary-light)">Nuestro</span>{" "}
+                <span className="inline-block rounded-[4px] bg-gradient-warm px-3 py-1 text-(--color-text-primary-dark)">
+                  BLOG
+                </span>
+              </h2>
+              <p className="font-display text-h3 font-medium text-(--color-warm-violet)">
+                Pensamientos, notas y experimentos
+              </p>
+            </motion.div>
+
+            <motion.div variants={fadeInUp} className="w-full">
+              <FeaturedPostCard
+                post={post}
+                loading={loading}
+                error={error}
+                onOpen={() => setModalOpen(true)}
+              />
+            </motion.div>
+
+            <motion.div variants={fadeInUp}>
+              <a
+                href="https://blog.nodoserrano.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-br-[10px] rounded-tl-[10px] border-2 border-(--color-warm-yellow) px-[26px] py-[14px] font-inter text-body text-(--color-text-primary-light) transition-opacity hover:opacity-90"
+                style={{ boxShadow: "var(--shadow-btn-warm)" }}
+              >
+                Visitar el blog
+              </a>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+
+      <GhostBlogModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        post={post}
+      />
+    </section>
+  )
+}

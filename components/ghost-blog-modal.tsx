@@ -5,7 +5,7 @@ import { X, Calendar, Clock, User, ArrowLeft, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import type { GhostPost } from "./ghost-blog-section";
+import type { GhostPost } from "@/lib/ghost";
 
 interface GhostBlogModalProps {
   isOpen: boolean;
