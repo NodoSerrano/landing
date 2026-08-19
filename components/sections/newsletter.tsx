@@ -83,9 +83,8 @@ function SignupForm() {
             initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
-            className={`flex items-center justify-center gap-1.5 font-inter text-body-sm ${
-              status === "error" ? "text-(--color-warm-red)" : "text-(--color-accent-teal)"
-            }`}
+            className={`flex items-center justify-center gap-1.5 font-inter text-body-sm ${status === "error" ? "text-(--color-warm-red)" : "text-(--color-accent-teal)"
+              }`}
           >
             {status === "error" ? (
               <AlertCircle className="h-4 w-4 shrink-0" />
@@ -128,7 +127,7 @@ export default function Newsletter() {
           style={{ boxShadow: "var(--shadow-neumorphic-dark)" }}
         >
           <p className="max-w-md font-inter text-body text-(--color-text-primary-dark)">
-            Sé parte de la revolución blockchain en Tandil. Registrate para recibir novedades
+            Sé parte de la revolución digital en Tandil. Registrate para recibir novedades
             sobre eventos, talleres y oportunidades.
           </p>
           <SignupForm />
