@@ -250,9 +250,14 @@ function SponsorsCarousel() {
 
 export default function Sponsors() {
   return (
+    // overflow-clip + padding/negative-margin: same technique as events.tsx —
+    // required to keep mobile's viewport-meta negotiation from being hijacked
+    // by CurvedContainer's fixed width, while growing the box enough to fully
+    // contain the curve's bleed (worst case ~57px) so the y-clip never
+    // actually cuts anything. No pre-existing mb, so -mb is added fresh.
     <section
       id="sponsors"
-      className="relative isolate z-30 flex flex-col justify-center py-70 mt-10"
+      className="relative isolate z-30 flex flex-col justify-center overflow-clip pt-[345px] pb-[345px] -mt-[25px] -mb-[65px]"
     >
       <CurvedContainer />
 

@@ -160,7 +160,12 @@ export default function Blog() {
   }, [])
 
   return (
-    <section id="blog" className="relative isolate z-30 flex flex-col justify-center py-20 md:pt-52 md:pb-62 mt-20 mb-42">
+    // overflow-clip + padding/negative-margin: same technique as events.tsx —
+    // required to keep mobile's viewport-meta negotiation from being hijacked
+    // by CurvedContainer's fixed width, while growing the box enough to fully
+    // contain the curve's bleed (worst case ~270px, at mobile) so the y-clip
+    // never actually cuts anything.
+    <section id="blog" className="relative isolate z-30 flex flex-col justify-center overflow-clip pt-[360px] md:pt-[488px] pb-[360px] md:pb-[528px] -mt-[200px] -mb-[112px]">
       <div className="relative">
         <CurvedContainer />
 

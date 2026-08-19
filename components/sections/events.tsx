@@ -63,9 +63,18 @@ function CurvedContainer() {
 
 export default function Events() {
   return (
+    // overflow-clip is required (not just body's overflow-x-hidden) — mobile
+    // Safari/Chrome's viewport-meta negotiation gets hijacked by CurvedContainer's
+    // fixed 1680px width otherwise (window.innerWidth balloons to fit it). But
+    // clip cuts both axes, and the curve deliberately bleeds ~323px above/below
+    // this section into its neighbors — so pt/pb grow the box enough to fully
+    // contain that bleed (measured empirically), each paired with an equal
+    // negative margin to cancel the growth back out. Net effect: box is tall
+    // enough internally for nothing to overflow (so the y-clip is a no-op), but
+    // the section's flow position/height on the page is unchanged.
     <section
       id="events"
-      className="relative isolate z-30 flex flex-col justify-center py-38 mt-20 mb-32"
+      className="relative isolate z-30 flex flex-col justify-center overflow-clip pt-[482px] -mt-[250px] pb-[482px] -mb-[202px]"
     >
       <CurvedContainer />
 
