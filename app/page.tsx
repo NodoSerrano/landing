@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NewsletterForm from "@/components/newsletter-form";
 import Footer from "@/components/footer";
 import { features } from "@/lib/features-data";
@@ -19,6 +19,15 @@ import { useScrollHash } from "@/lib/use-scroll-hash";
 export default function Home() {
   // Enable scroll hash detection and updating
   useScrollHash();
+
+  // Arriving from another page (e.g. header links on /blog) navigates to
+  // "/#section" via client-side routing, which doesn't trigger the browser's
+  // native scroll-to-fragment behavior — so do it manually on mount.
+  useEffect(() => {
+    const id = window.location.hash.replace("#", "");
+    if (!id) return;
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   return (
     <div id="top" className="min-h-screen flex flex-col">
@@ -42,33 +51,6 @@ export default function Home() {
 
         {/* Sponsors Section */}
         <Sponsors />
-
-        {/* Newsletter Section */}
-        <section id="signup" className="py-12 md:py-16">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <Container className="text-center">
-              <div className="text-center mb-12">
-                <h2 className="text-2xl md:text-3xl font-bold mb-10">
-                  Únete a nuestra comunidad
-                </h2>
-                <div className="w-fit gap-8 mx-auto flex flex-col items-center justify-center neumorphism-border  neumorphism-shadow layer2 rounded-xl px-6 py-8">
-                  <p className="text-lg max-w-xl mx-auto">
-                    Sé parte de la revolución blockchain en Tandil. Regístrate
-                    para recibir novedades sobre eventos, talleres y
-                    oportunidades.
-                  </p>
-                  <div className="max-w-lg w-full">
-                    <NewsletterForm />
-                  </div>
-                </div>
-              </div>
-            </Container>
-          </motion.div>
-        </section>
       </main>
 
       <Footer />

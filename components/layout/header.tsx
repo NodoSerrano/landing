@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname, useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 
 const NAV_ITEMS: { label: string; href: string }[] = [
@@ -209,6 +210,8 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
   const toolbarRef = useRef<HTMLDivElement>(null)
   const [toolbarHeight, setToolbarHeight] = useState(0)
   const isSolid = alwaysSolid || scrolled
+  const pathname = usePathname()
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -234,9 +237,14 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
   }, [mobileMenuOpen])
 
   const scrollToSection = (sectionId: string) => {
-    const el = document.getElementById(sectionId.replace("#", ""))
-    el?.scrollIntoView({ behavior: "smooth" })
+    const id = sectionId.replace("#", "")
     setMobileMenuOpen(false)
+    if (!id) return
+    if (pathname !== "/") {
+      router.push(`/#${id}`)
+      return
+    }
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
   }
 
   return (
