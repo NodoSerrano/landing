@@ -1,9 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import NewsletterForm from "@/components/newsletter-form";
 import Footer from "@/components/footer";
 import { features } from "@/lib/features-data";
 import Hero from "@/components/sections/hero";
@@ -13,7 +11,7 @@ import Events from "@/components/sections/events";
 import ConstruirTitle from "@/components/sections/construir-title";
 import Blog from "@/components/sections/blog";
 import Sponsors from "@/components/sections/sponsors";
-import { Container } from "@/components/ui/container";
+import Newsletter from "@/components/sections/newsletter";
 import { useScrollHash } from "@/lib/use-scroll-hash";
 
 export default function Home() {
@@ -51,6 +49,9 @@ export default function Home() {
 
         {/* Sponsors Section */}
         <Sponsors />
+
+        {/* Newsletter Section */}
+        <Newsletter />
       </main>
 
       <Footer />
