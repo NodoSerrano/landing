@@ -204,8 +204,14 @@ function MenuToggleIcon({ open }: { open: boolean }) {
   )
 }
 
+// Tailwind's default `lg` breakpoint — the mobile toggle/dropdown are
+// `lg:hidden`, so the menu's actual on-screen visibility must key off the
+// same threshold, not just the `mobileMenuOpen` click state (see below).
+const LG_BREAKPOINT_QUERY = "(min-width: 1024px)"
+
 export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean } = {}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const toolbarRef = useRef<HTMLDivElement>(null)
   const [toolbarHeight, setToolbarHeight] = useState(0)
@@ -213,10 +219,27 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
   const pathname = usePathname()
   const router = useRouter()
 
+  // Derived, not stored: whether the mobile dropdown is actually visible.
+  // `mobileMenuOpen` alone isn't enough — if it's opened on mobile and the
+  // viewport is then resized past `lg` (e.g. dragging the devtools width),
+  // `lg:hidden` hides the panel and its toggle button, but the click state
+  // stays true, leaving `body.overflow: hidden` stuck with no visible way
+  // to undo it. Gating on the real breakpoint keeps this correct regardless
+  // of how the viewport got there.
+  const mobileMenuActive = mobileMenuOpen && !isDesktop
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  useEffect(() => {
+    const mql = window.matchMedia(LG_BREAKPOINT_QUERY)
+    setIsDesktop(mql.matches)
+    const handleChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches)
+    mql.addEventListener("change", handleChange)
+    return () => mql.removeEventListener("change", handleChange)
   }, [])
 
   useLayoutEffect(() => {
@@ -230,11 +253,11 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
   }, [])
 
   useEffect(() => {
-    document.body.style.overflow = mobileMenuOpen ? "hidden" : ""
+    document.body.style.overflow = mobileMenuActive ? "hidden" : ""
     return () => {
       document.body.style.overflow = ""
     }
-  }, [mobileMenuOpen])
+  }, [mobileMenuActive])
 
   const scrollToSection = (sectionId: string) => {
     const id = sectionId.replace("#", "")
@@ -329,7 +352,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
 
       {/* Mobile Menu Dropdown */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {mobileMenuActive && (
           <motion.div
             key="mobile-overlay"
             initial={{ opacity: 0 }}
@@ -341,7 +364,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
             className="lg:hidden absolute inset-0 z-0 bg-gradient-to-t from-black/85 via-black/55 to-black/15 backdrop-blur-sm"
           />
         )}
-        {mobileMenuOpen && (
+        {mobileMenuActive && (
           <motion.div
             key="mobile-panel"
             initial={{ opacity: 0, y: -10 }}

@@ -102,9 +102,17 @@ function CurvedContainer() {
 
 export default function Footer() {
   return (
+    // overflow-clip is required (not just body's overflow-x-hidden) — mobile
+    // viewport-meta negotiation gets hijacked by CurvedContainer's fixed
+    // width otherwise (see events.tsx for the full explanation). Unlike the
+    // other sections, footer doesn't grow to contain its curve's bottom
+    // bleed: it's the last thing on the page, nothing below it to blend
+    // into, so letting the clip cut the curve's tail flush at the bottom
+    // just means the page ends cleanly instead of trailing off into extra
+    // scroll space.
     <footer
       id="footer"
-      className="relative isolate z-10 overflow-hidden pt-64 pb-8"
+      className="relative isolate z-10 overflow-clip pt-64 pb-8"
     >
       <CurvedContainer />
 
