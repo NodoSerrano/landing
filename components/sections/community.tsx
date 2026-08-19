@@ -134,23 +134,30 @@ function CardShape() {
   )
 }
 
-// Neumorphic double drop-shadow filter shared by both blob variants (the exact
-// filter Figma exports on the cream vectors).
+// Doble drop-shadow neumórfico del blob crema mobile. La estructura es la que
+// exporta Figma; los offsets/blur/alpha están recalibrados hacia abajo (alphas
+// 0.4/0.35 → 0.24/0.21, blur 18 → 24, offsets 18 → 13) porque la sombra original
+// se leía como una banda gris ancha en el borde del blob, en vez de relieve.
+// Mismo criterio que el pase de Somos (blob-shadow-filter.tsx).
+//
+// La región es el viewBox exacto (userSpaceOnUse 1062.53×812): la sombra queda
+// recortada ahí, pero el <svg> ya recorta en el mismo borde, así que ampliarla
+// no cambiaría nada visible.
 function BlobShadowFilter({ id, width, height }: { id: string; width: number; height: number }) {
   return (
     <filter id={id} x="0" y="0" width={width} height={height} filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
       <feFlood floodOpacity="0" result="BackgroundImageFix" />
       <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-      <feOffset dx="18" dy="18" />
-      <feGaussianBlur stdDeviation="18" />
+      <feOffset dx="13" dy="13" />
+      <feGaussianBlur stdDeviation="24" />
       <feComposite in2="hardAlpha" operator="out" />
-      <feColorMatrix type="matrix" values="0 0 0 0 0.0278291 0 0 0 0 0.0580852 0 0 0 0 0.134615 0 0 0 0.4 0" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.0278291 0 0 0 0 0.0580852 0 0 0 0 0.134615 0 0 0 0.24 0" />
       <feBlend mode="overlay" in2="BackgroundImageFix" result="effect1_dropShadow" />
       <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-      <feOffset dx="-18" dy="-18" />
-      <feGaussianBlur stdDeviation="18" />
+      <feOffset dx="-13" dy="-13" />
+      <feGaussianBlur stdDeviation="24" />
       <feComposite in2="hardAlpha" operator="out" />
-      <feColorMatrix type="matrix" values="0 0 0 0 0.224066 0 0 0 0 0.230651 0 0 0 0 0.355769 0 0 0 0.35 0" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.224066 0 0 0 0 0.230651 0 0 0 0 0.355769 0 0 0 0.21 0" />
       <feBlend mode="overlay" in2="effect1_dropShadow" result="effect2_dropShadow" />
       <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow" result="shape" />
     </filter>
@@ -184,29 +191,55 @@ function BlobBackground() {
       </svg>
 
       {/* Desktop (Figma 38:83, near-square). Align top so the organic top edge
-          is the hero→section transition; the taller shape crops at the bottom.
+          is the hero→section transition.
           Figma frames the 1983px-wide blob on a 1280 viewport (155%): keep that
-          framing by stretching width to 155vw while pinning the height at the
-          native 1881px, so the top waves keep their exact Figma height at any
+          framing by stretching width to 155vw while pinning the height 1:1 with
+          the viewBox, so the top waves keep their exact Figma height at any
           viewport width instead of scaling up and hiding behind the card.
           Centered via left calc, NOT translate: Safari silently drops the
-          composited layer a transform creates on an svg this large. */}
+          composited layer a transform creates on an svg this large.
+
+          Va en DOS capas y no en una con `filter` sobre el <g>:
+
+          El body ya es crema (--color-bg-light), así que fuera del hero el
+          relleno del blob es del mismo color que el fondo y lo único que dibuja
+          es su sombra. Con una sola capa, el borde inferior del blob proyectaba
+          sombra sobre ese crema y se leía como una línea recta a todo el ancho
+          cruzando la sección Somos (medido: escalón de 248→220 en el canal R).
+
+          Capa 1 (sombra): mismo path pero con el viewBox recortado a los
+          primeros 700px, que es donde la sombra hace falta — el filo orgánico
+          contra la foto oscura del hero. Su corte recto abajo también proyecta,
+          pero cae dentro de la silueta de la capa 2.
+          Capa 2 (relleno): la forma completa, opaca y sin filtro, pintada
+          encima; tapa el corte de la capa 1. A y=700 el path ya desborda los dos
+          lados del viewBox (x va de −51 a 1987), así que lo tapa a todo el ancho.
+
+          El alto del relleno es 1950 y no el 1881 del export porque el path baja
+          hasta y=1948: con 1881 la forma perdía sus últimos ~69px de curva.
+          viewBox y alto CSS cambian juntos para que la escala vertical siga 1:1. */}
       <svg
-        viewBox="0 0 1983 1881"
+        viewBox="0 0 1983 700"
         preserveAspectRatio="none"
         fill="none"
         aria-hidden="true"
-        className="pointer-events-none absolute left-[calc(50%-max(77.5vw,991.5px))] -top-[220px] hidden h-[1881px] w-[max(155vw,1983px)] z-0 lg:block"
+        className="pointer-events-none absolute left-[calc(50%-max(77.5vw,991.5px))] -top-[220px] hidden h-[700px] w-[max(155vw,1983px)] z-0 lg:block"
       >
         {/* CSS drop-shadow, not an SVG <filter>: Safari silently drops the
             whole element when an SVG filter region is this large (the Somos
             deco uses the same CSS pattern and renders fine there). */}
         <g style={{ filter: "var(--drop-shadow-neumorphic-soft)" }}>
-          <path
-            d="M1846.81 629.655C1986.93 791.366 1925.92 1154.99 1826.8 1339.86C1657.37 1858.19 1054.98 1647.35 677.856 1797.81C300.734 1948.27 -78.8866 1469.29 99.305 1340.52C395.81 1126.27 -51.6497 693.497 96.4764 300.771C244.602 -91.9563 996.099 104.163 1194.34 94.8029C1627.23 74.3625 1863.95 198.479 1796.04 304.987C1724.16 417.713 1706.69 467.943 1846.81 629.655Z"
-            fill="var(--color-bg-light)"
-          />
+          <path d="M1846.81 629.655C1986.93 791.366 1925.92 1154.99 1826.8 1339.86C1657.37 1858.19 1054.98 1647.35 677.856 1797.81C300.734 1948.27 -78.8866 1469.29 99.305 1340.52C395.81 1126.27 -51.6497 693.497 96.4764 300.771C244.602 -91.9563 996.099 104.163 1194.34 94.8029C1627.23 74.3625 1863.95 198.479 1796.04 304.987C1724.16 417.713 1706.69 467.943 1846.81 629.655Z" fill="var(--color-bg-light)" />
         </g>
+      </svg>
+      <svg
+        viewBox="0 0 1983 1950"
+        preserveAspectRatio="none"
+        fill="none"
+        aria-hidden="true"
+        className="pointer-events-none absolute left-[calc(50%-max(77.5vw,991.5px))] -top-[220px] hidden h-[1950px] w-[max(155vw,1983px)] z-0 lg:block"
+      >
+        <path d="M1846.81 629.655C1986.93 791.366 1925.92 1154.99 1826.8 1339.86C1657.37 1858.19 1054.98 1647.35 677.856 1797.81C300.734 1948.27 -78.8866 1469.29 99.305 1340.52C395.81 1126.27 -51.6497 693.497 96.4764 300.771C244.602 -91.9563 996.099 104.163 1194.34 94.8029C1627.23 74.3625 1863.95 198.479 1796.04 304.987C1724.16 417.713 1706.69 467.943 1846.81 629.655Z" fill="var(--color-bg-light)" />
       </svg>
     </>
   )
