@@ -7,6 +7,7 @@ import Header from "@/components/layout/header"
 import Footer from "@/components/footer"
 import { FadeIn } from "@/components/motion/fade-in"
 import { ArticleBody } from "@/components/blog/article-body"
+import { Breadcrumb } from "@/components/blog/breadcrumb"
 import { getGhostPostBySlug } from "@/lib/ghost"
 
 interface BlogPostPageProps {
@@ -55,6 +56,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       <main className="flex-1 px-4 pt-28 pb-20 md:pt-36">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
+          <Breadcrumb
+            items={[
+              { label: "Inicio", href: "/" },
+              { label: "Blog", href: "/blog" },
+              { label: post.title },
+            ]}
+          />
+
           <FadeIn className="flex flex-col gap-6">
             <div className="relative h-64 w-full overflow-hidden rounded-[24px] rounded-tr-none border border-(--color-warm-yellow) md:h-96">
               <Image

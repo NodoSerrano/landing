@@ -4,6 +4,7 @@ import Footer from "@/components/footer"
 import { FadeIn } from "@/components/motion/fade-in"
 import { PostCard } from "@/components/blog/post-card"
 import { PaginationControls } from "@/components/blog/pagination-controls"
+import { Breadcrumb } from "@/components/blog/breadcrumb"
 import { getGhostPosts } from "@/lib/ghost"
 
 export const metadata: Metadata = {
@@ -26,6 +27,10 @@ export default async function BlogPage({
 
       <main className="flex-1 px-4 pt-28 pb-20 md:pt-36">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-12">
+          <Breadcrumb
+            items={[{ label: "Inicio", href: "/" }, { label: "Blog" }]}
+          />
+
           <FadeIn className="flex flex-col items-center gap-2 text-center">
             <h1 className="font-display text-h1 font-bold">
               <span className="text-(--color-text-primary-light)">Nuestro</span>{" "}
