@@ -19,7 +19,7 @@ function NavLink({
   return (
     <Link
       href={href}
-      className="text-base font-bold hover:text-gray-300 transition-colors"
+      className="font-work-sans text-base font-medium hover:text-gray-300 transition-colors"
     >
       {children}
     </Link>
@@ -47,7 +47,7 @@ function SectionLink({
   return (
     <button
       onClick={handleClick}
-      className="text-base font-bold hover:text-gray-300 transition-colors"
+      className="font-work-sans text-base font-normal hover:text-gray-300 transition-colors"
     >
       {children}
     </button>

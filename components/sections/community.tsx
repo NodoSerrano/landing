@@ -253,7 +253,7 @@ function LabsCard() {
       <CardShape />
       <div className="relative flex flex-col items-center gap-6 px-8 py-9 text-center md:px-12 md:py-10 lg:gap-5 lg:py-12">
         <p className="font-inter text-[17px] uppercase tracking-[0.12em] text-(--color-warm-yellow)">
-          LO NUEVO
+          DESARROLLO
         </p>
 
         {/* Nodo LABS lockup */}
@@ -279,7 +279,7 @@ function LabsCard() {
           >
             <span className="flex items-center rounded-tl-[7px] bg-(--color-bg-elev-dark) px-5 py-2.5">
               <span className="skew-x-[10deg] font-display text-body font-medium text-(--color-text-primary-dark)">
-                Quiero conocer más
+                Quiero conectar
               </span>
             </span>
           </span>

@@ -28,9 +28,9 @@ export default async function BlogPage({
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-12">
           <FadeIn className="flex flex-col items-center gap-2 text-center">
             <h1 className="font-display text-h1 font-bold">
-              <span className="text-(--color-text-primary-light)">Todos los</span>{" "}
+              <span className="text-(--color-text-primary-light)">Nuestro</span>{" "}
               <span className="inline-block rounded-[4px] bg-gradient-warm px-3 py-1 text-(--color-text-primary-dark)">
-                ARTÍCULOS
+                BLOG
               </span>
             </h1>
             <p className="font-display text-h3 font-medium text-(--color-warm-violet)">

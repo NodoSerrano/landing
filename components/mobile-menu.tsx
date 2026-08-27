@@ -94,14 +94,14 @@ function MenuItem({
       {href.startsWith("#") ? (
         <button
           onClick={handleClick}
-          className="block py-2 px-4 font-bold transition-colors w-fit text-left hover:text-gray-300"
+          className="block py-2 px-4 font-work-sans font-normal transition-colors w-fit text-left hover:text-gray-300"
         >
           {children}
         </button>
       ) : (
         <Link
           href={href}
-          className="block py-2 px-4 font-bold transition-colors w-fit"
+          className="block py-2 px-4 font-work-sans font-normal transition-colors w-fit"
           onClick={onClick}
         >
           {children}

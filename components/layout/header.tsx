@@ -24,6 +24,18 @@ const DESKTOP_NAV_ITEMS: { label: string; href: string }[] = [
   { label: "Nos BANCAN", href: "#sponsors" },
 ]
 
+// Section ids the nav links point at — used for scroll-spy on the home page so
+// the matching link shows a "selected" underline. Note "Nodo LABS" (href="#")
+// has no target and is deliberately excluded here and in isNavItemActive.
+const NAV_SECTION_IDS = Array.from(
+  new Set(
+    [...DESKTOP_NAV_ITEMS, ...NAV_ITEMS]
+      .map((i) => i.href)
+      .filter((h) => h.startsWith("#") && h.length > 1)
+      .map((h) => h.slice(1))
+  )
+)
+
 const MOBILE_MENU_GRADIENT_ID = "mobile-menu-brand-gradient"
 // Border weight + corner radius matched to the hamburger icon
 // (public/menu-header.svg: stroke-width 3, corner radius ≈6.4).
@@ -213,6 +225,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isDesktop, setIsDesktop] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState<string | null>(null)
   const toolbarRef = useRef<HTMLDivElement>(null)
   const [toolbarHeight, setToolbarHeight] = useState(0)
   const isSolid = alwaysSolid || scrolled
@@ -258,6 +271,45 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
       document.body.style.overflow = ""
     }
   }, [mobileMenuActive])
+
+  // Scroll-spy: on the home page, mark whichever section is crossing the
+  // vertical centre of the viewport as active. Off the home page there is no
+  // active section (route links handle their own selected state).
+  useEffect(() => {
+    if (pathname !== "/") {
+      setActiveSection(null)
+      return
+    }
+    const sections = NAV_SECTION_IDS.map((id) => document.getElementById(id)).filter(
+      (el): el is HTMLElement => el !== null
+    )
+    if (sections.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection(entry.target.id)
+        }
+      },
+      // Collapse the root to a thin band at the centre so exactly one section
+      // is intersecting at a time.
+      { rootMargin: "-50% 0px -50% 0px" }
+    )
+    sections.forEach((s) => observer.observe(s))
+    return () => observer.disconnect()
+  }, [pathname])
+
+  // A route link (e.g. /blog) is active by pathname; a section link is active
+  // only on the home page when its section is in view. "Nodo LABS" (href="#")
+  // has no target, so it never lights up.
+  const isNavItemActive = (href: string) => {
+    if (href.startsWith("/")) {
+      return pathname === href || pathname.startsWith(`${href}/`)
+    }
+    const id = href.slice(1)
+    if (!id) return false
+    return pathname === "/" && activeSection === id
+  }
 
   const scrollToSection = (sectionId: string) => {
     const id = sectionId.replace("#", "")
@@ -310,25 +362,40 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
           {/* Desktop Nav + CTA */}
           <div className="hidden lg:flex items-center gap-8 xl:gap-[92px]">
             <nav className="flex items-center gap-6 xl:gap-12">
-              {DESKTOP_NAV_ITEMS.map(({ label, href }) =>
-                href.startsWith("/blog") ? (
-                  <Link
-                    key={label}
-                    href={href}
-                    className="text-body font-bold text-(--color-text-primary-dark) hover:opacity-70 transition-opacity"
-                  >
+              {DESKTOP_NAV_ITEMS.map(({ label, href }) => {
+                const active = isNavItemActive(href)
+                const underline = (
+                  <AnimatePresence>
+                    {active && (
+                      <motion.span
+                        className="absolute -bottom-1.5 left-0 right-0 h-[2px] rounded-full bg-gradient-brand"
+                        initial={{ opacity: 0, scaleX: 0 }}
+                        animate={{ opacity: 1, scaleX: 1 }}
+                        exit={{ opacity: 0, scaleX: 0 }}
+                        style={{ transformOrigin: "left" }}
+                        transition={{ duration: 0.35, ease: "easeOut" }}
+                      />
+                    )}
+                  </AnimatePresence>
+                )
+                const className =
+                  "relative font-work-sans text-body font-normal text-(--color-text-primary-dark) hover:opacity-70 transition-opacity"
+                return href.startsWith("/") ? (
+                  <Link key={label} href={href} className={className}>
                     {label}
+                    {underline}
                   </Link>
                 ) : (
                   <button
                     key={label}
                     onClick={() => scrollToSection(href)}
-                    className="text-body font-bold text-(--color-text-primary-dark) hover:opacity-70 transition-opacity cursor-pointer"
+                    className={`${className} cursor-pointer`}
                   >
                     {label}
+                    {underline}
                   </button>
                 )
-              )}
+              })}
             </nav>
 
             <button
@@ -405,34 +472,47 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                     </span>
                   </Link>
                 </motion.div>
-                {NAV_ITEMS.map(({ label, href }) =>
-                  href.startsWith("/blog") ? (
+                {NAV_ITEMS.map(({ label, href }) => {
+                  const active = isNavItemActive(href)
+                  const className =
+                    "relative font-work-sans text-[18px] leading-[33.3px] font-normal text-(--color-text-primary-dark) hover:opacity-70 text-center cursor-pointer"
+                  const underline = (
+                    <AnimatePresence>
+                      {active && (
+                        <motion.span
+                          className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-gradient-brand"
+                          initial={{ opacity: 0, scaleX: 0 }}
+                          animate={{ opacity: 1, scaleX: 1 }}
+                          exit={{ opacity: 0, scaleX: 0 }}
+                          style={{ transformOrigin: "left" }}
+                          transition={{ duration: 0.35, ease: "easeOut" }}
+                        />
+                      )}
+                    </AnimatePresence>
+                  )
+                  return (
                     <motion.div
                       key={label}
                       variants={{ open: { opacity: 1, y: 0 }, closed: { opacity: 0, y: -10 } }}
                     >
-                      <Link
-                        href={href}
-                        className="font-display text-[18px] leading-[33.3px] font-normal text-(--color-text-primary-dark) hover:opacity-70 text-center cursor-pointer"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {label}
-                      </Link>
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key={label}
-                      variants={{ open: { opacity: 1, y: 0 }, closed: { opacity: 0, y: -10 } }}
-                    >
-                      <button
-                        onClick={() => scrollToSection(href)}
-                        className="font-display text-[18px] leading-[33.3px] font-normal text-(--color-text-primary-dark) hover:opacity-70 text-center cursor-pointer"
-                      >
-                        {label}
-                      </button>
+                      {href.startsWith("/") ? (
+                        <Link
+                          href={href}
+                          className={className}
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {label}
+                          {underline}
+                        </Link>
+                      ) : (
+                        <button onClick={() => scrollToSection(href)} className={className}>
+                          {label}
+                          {underline}
+                        </button>
+                      )}
                     </motion.div>
                   )
-                )}
+                })}
               </motion.nav>
             </div>
           </motion.div>
