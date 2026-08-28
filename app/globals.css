@@ -333,8 +333,8 @@
 
 @layer utilities {
   html {
-    scroll-padding-top: 65px;
-    /* to account for sticky header */
+    scroll-padding-top: 90px;
+    /* to account for the solid sticky header (~85px: my-2 + py-3 + 45px logo) */
   }
 }
 

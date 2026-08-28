@@ -25,46 +25,48 @@ export default async function BlogPage({
     <div className="flex min-h-screen flex-col bg-(--color-bg-light)">
       <Header alwaysSolid />
 
-      <main className="flex-1 px-4 pt-28 pb-20 md:pt-36">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-12">
+      <main className="flex-1 px-4 pt-32 pb-20 md:pt-40">
+        <div className="mx-auto flex w-full max-w-6xl flex-col">
           <Breadcrumb
             items={[{ label: "Inicio", href: "/" }, { label: "Blog" }]}
           />
 
-          <FadeIn className="flex flex-col items-center gap-2 text-center">
-            <h1 className="font-display text-h1 font-bold">
-              <span className="text-(--color-text-primary-light)">Nuestro</span>{" "}
-              <span className="inline-block rounded-[4px] bg-gradient-warm px-3 py-1 text-(--color-text-primary-dark)">
-                BLOG
-              </span>
-            </h1>
-            <p className="font-display text-h3 font-medium text-(--color-warm-violet)">
-              Pensamientos, notas y experimentos
-            </p>
-          </FadeIn>
-
-          {posts.length === 0 ? (
-            <FadeIn
-              className="flex flex-col items-center justify-center gap-2 rounded-[24px] rounded-tr-none border border-(--color-warm-yellow) bg-(--color-bg-elev-dark) px-6 py-16 text-center"
-            >
-              <p className="font-display text-h4 font-medium text-(--color-text-primary-dark)">
-                Todavía no hay artículos publicados
-              </p>
-              <p className="font-inter text-body-sm text-(--color-text-secondary-dark)">
-                Volvé pronto para leer las últimas novedades
+          <div className="mt-16 flex flex-col gap-12 md:mt-24">
+            <FadeIn className="flex flex-col items-center gap-2 text-center">
+              <h1 className="font-display text-h1 font-bold">
+                <span className="text-(--color-text-primary-light)">Nuestro</span>{" "}
+                <span className="inline-block rounded-[4px] bg-gradient-warm px-3 py-1 text-(--color-text-primary-dark)">
+                  BLOG
+                </span>
+              </h1>
+              <p className="font-display text-h3 font-medium text-(--color-warm-violet)">
+                Pensamientos, notas y experimentos
               </p>
             </FadeIn>
-          ) : (
-            <FadeIn className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
-                <PostCard key={post.id} post={post} />
-              ))}
-            </FadeIn>
-          )}
 
-          <FadeIn>
-            <PaginationControls page={meta.pagination.page} pages={meta.pagination.pages} />
-          </FadeIn>
+            {posts.length === 0 ? (
+              <FadeIn
+                className="flex flex-col items-center justify-center gap-2 rounded-[24px] rounded-tr-none border border-(--color-warm-yellow) bg-(--color-bg-elev-dark) px-6 py-16 text-center"
+              >
+                <p className="font-display text-h4 font-medium text-(--color-text-primary-dark)">
+                  Todavía no hay artículos publicados
+                </p>
+                <p className="font-inter text-body-sm text-(--color-text-secondary-dark)">
+                  Volvé pronto para leer las últimas novedades
+                </p>
+              </FadeIn>
+            ) : (
+              <FadeIn className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {posts.map((post) => (
+                  <PostCard key={post.id} post={post} />
+                ))}
+              </FadeIn>
+            )}
+
+            <FadeIn>
+              <PaginationControls page={meta.pagination.page} pages={meta.pagination.pages} />
+            </FadeIn>
+          </div>
         </div>
       </main>
 

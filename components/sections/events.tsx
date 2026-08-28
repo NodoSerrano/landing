@@ -95,7 +95,7 @@ export default function Events() {
               </span>
             </h2>
             <p className="font-display text-h3 font-medium text-(--color-text-secondary-dark)">
-              Lo que se viene y lo que hicimos
+              Lo que se viene
             </p>
           </motion.div>
 

@@ -2,26 +2,29 @@
 
 import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
+import FloatingLogo from "@/components/FloatingLogo"
 
-const NAV_ITEMS: { label: string; href: string }[] = [
+// Mobile dropdown items. Same labels/order as desktop, plus a trailing
+// SUSCRIBITE that renders as the boxed gradient button (`cta`).
+const NAV_ITEMS: { label: string; href: string; cta?: boolean }[] = [
+  { label: "Nodo LABS", href: "#" },
   { label: "SOMOS", href: "#about" },
-  { label: "Próximos EVENTOS", href: "#events" },
+  { label: "EVENTOS", href: "#events" },
   { label: "BLOG", href: "/blog" },
   { label: "Nos APOYAN", href: "#sponsors" },
-  { label: "Contactanos", href: "#signup" },
+  { label: "SUSCRIBITE", href: "#signup", cta: true },
 ]
 
-// Desktop nav labels/order match the Figma desktop header spec (node 84:288),
-// which differs from the mobile dropdown above (Nodo LABS as its own item, no separate "Contactanos").
+// Desktop nav — same items minus SUSCRIBITE, which lives in its own button
+// next to the nav on desktop.
 const DESKTOP_NAV_ITEMS: { label: string; href: string }[] = [
   { label: "Nodo LABS", href: "#" },
   { label: "SOMOS", href: "#about" },
-  { label: "Próximos EVENTOS", href: "#events" },
-  { label: "Nuestro BLOG", href: "/blog" },
-  { label: "Nos BANCAN", href: "#sponsors" },
+  { label: "EVENTOS", href: "#events" },
+  { label: "BLOG", href: "/blog" },
+  { label: "Nos APOYAN", href: "#sponsors" },
 ]
 
 // Section ids the nav links point at — used for scroll-spy on the home page so
@@ -227,6 +230,8 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const toolbarRef = useRef<HTMLDivElement>(null)
+  const menuToggleRef = useRef<HTMLButtonElement>(null)
+  const menuPanelRef = useRef<HTMLDivElement>(null)
   const [toolbarHeight, setToolbarHeight] = useState(0)
   const isSolid = alwaysSolid || scrolled
   const pathname = usePathname()
@@ -270,6 +275,21 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
     return () => {
       document.body.style.overflow = ""
     }
+  }, [mobileMenuActive])
+
+  // Close the mobile dropdown on Escape and return focus to the toggle, so
+  // keyboard users aren't stranded behind the overlay.
+  useEffect(() => {
+    if (!mobileMenuActive) return
+    menuPanelRef.current?.focus()
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMobileMenuOpen(false)
+        menuToggleRef.current?.focus()
+      }
+    }
+    document.addEventListener("keydown", handleKeyDown)
+    return () => document.removeEventListener("keydown", handleKeyDown)
   }, [mobileMenuActive])
 
   // Scroll-spy: on the home page, mark whichever section is crossing the
@@ -329,6 +349,15 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
+      {/* Legibility scrim for the transparent state: keeps the white logo/nav
+          readable regardless of what the hero renders behind them. */}
+      {!isSolid && !mobileMenuActive && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-28 bg-gradient-to-b from-black/25 to-transparent"
+        />
+      )}
+
       {/* Permanent horizontal gutter so the bar never touches the viewport edge —
           kept separate from the toolbar's own mx-auto/max-w-6xl (which only
           centers/caps it once there's enough room), and separate from the
@@ -348,20 +377,25 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               : undefined
           }
         >
-          {/* Logo / Brand */}
-          <Link href="/" className="flex items-center gap-2">
-            <Image
-              src="/downloads/logo-serrano.svg"
-              alt="Nodo Serrano"
-              width={97}
-              height={45}
-              className="h-[45px] w-auto"
-            />
+          {/* Logo / Brand — animated two-part gem + wordmark */}
+          <Link
+            href="/"
+            aria-label="Nodo Serrano — inicio"
+            className="flex items-center gap-2"
+          >
+            <div className="relative h-[45px] w-[34px] shrink-0 translate-y-[7px]">
+              <FloatingLogo width={34} top={50} />
+            </div>
+            <span className="font-display text-[22px] font-medium leading-[24.2px] text-(--color-bg-light)">
+              Nodo
+              <br />
+              Serrano
+            </span>
           </Link>
 
           {/* Desktop Nav + CTA */}
-          <div className="hidden lg:flex items-center gap-8 xl:gap-[92px]">
-            <nav className="flex items-center gap-6 xl:gap-12">
+          <div className="hidden lg:flex items-center gap-10 xl:gap-16">
+            <nav aria-label="Navegación principal" className="flex items-center gap-6 xl:gap-10">
               {DESKTOP_NAV_ITEMS.map(({ label, href }) => {
                 const active = isNavItemActive(href)
                 const underline = (
@@ -378,12 +412,21 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                     )}
                   </AnimatePresence>
                 )
+                // Hover preview of the active underline (fainter, no motion lib) —
+                // only when the item isn't already active, to avoid double-drawing.
+                const hoverUnderline = !active && (
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -bottom-1.5 left-0 right-0 h-[2px] origin-left scale-x-0 rounded-full bg-gradient-brand opacity-0 transition-all duration-300 group-hover:scale-x-100 group-hover:opacity-60"
+                  />
+                )
                 const className =
-                  "relative font-work-sans text-body font-normal text-(--color-text-primary-dark) hover:opacity-70 transition-opacity"
+                  "group relative font-work-sans text-body font-normal text-(--color-text-primary-dark) transition-opacity hover:opacity-90"
                 return href.startsWith("/") ? (
                   <Link key={label} href={href} className={className}>
                     {label}
                     {underline}
+                    {hoverUnderline}
                   </Link>
                 ) : (
                   <button
@@ -393,6 +436,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                   >
                     {label}
                     {underline}
+                    {hoverUnderline}
                   </button>
                 )
               })}
@@ -408,9 +452,12 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
 
           {/* Mobile Menu Toggle */}
           <button
+            ref={menuToggleRef}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden cursor-pointer"
             aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             <MenuToggleIcon open={mobileMenuOpen} />
           </button>
@@ -434,12 +481,18 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
         {mobileMenuActive && (
           <motion.div
             key="mobile-panel"
+            ref={menuPanelRef}
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menú principal"
+            tabIndex={-1}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
             onClick={() => setMobileMenuOpen(false)}
-            className={`${isSolid ? "mx-3" : "mx-0"} lg:hidden relative z-10 cursor-pointer px-4 pt-2 pb-4`}
+            className={`${isSolid ? "mx-3" : "mx-0"} lg:hidden relative z-10 cursor-pointer px-4 pt-2 pb-4 outline-none`}
             style={{ height: `calc(100dvh - ${toolbarHeight}px)` }}
           >
             <div
@@ -456,24 +509,30 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                   closed: {},
                 }}
               >
-                <motion.div
-                  className="w-full"
-                  variants={{ open: { opacity: 1, y: 0 }, closed: { opacity: 0, y: -10 } }}
-                >
-                  <Link
-                    href="#"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="block w-full cursor-pointer rounded-[8px] bg-gradient-brand p-[1.5px]"
-                  >
-                    <span className="block rounded-[7px] bg-(--color-bg-elev-dark) px-4 py-1.5 text-center text-[18px] font-bold">
-                      <span className="bg-gradient-brand bg-clip-text text-transparent">
-                        Nodo LABS
-                      </span>
-                    </span>
-                  </Link>
-                </motion.div>
-                {NAV_ITEMS.map(({ label, href }) => {
+                {NAV_ITEMS.map(({ label, href, cta }) => {
                   const active = isNavItemActive(href)
+                  const itemVariants = {
+                    open: { opacity: 1, y: 0 },
+                    closed: { opacity: 0, y: -10 },
+                  }
+
+                  if (cta) {
+                    return (
+                      <motion.div key={label} className="w-full" variants={itemVariants}>
+                        <button
+                          onClick={() => scrollToSection(href)}
+                          className="block w-full cursor-pointer rounded-[8px] bg-gradient-brand p-[1.5px]"
+                        >
+                          <span className="block rounded-[7px] bg-(--color-bg-elev-dark) px-4 py-1.5 text-center text-[18px] font-bold">
+                            <span className="bg-gradient-brand bg-clip-text text-transparent">
+                              {label}
+                            </span>
+                          </span>
+                        </button>
+                      </motion.div>
+                    )
+                  }
+
                   const className =
                     "relative font-work-sans text-[18px] leading-[33.3px] font-normal text-(--color-text-primary-dark) hover:opacity-70 text-center cursor-pointer"
                   const underline = (
@@ -491,10 +550,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                     </AnimatePresence>
                   )
                   return (
-                    <motion.div
-                      key={label}
-                      variants={{ open: { opacity: 1, y: 0 }, closed: { opacity: 0, y: -10 } }}
-                    >
+                    <motion.div key={label} variants={itemVariants}>
                       {href.startsWith("/") ? (
                         <Link
                           href={href}
