@@ -35,12 +35,17 @@ function emptyResponse(page: number, limit: number): GhostAPIResponse {
 export async function getGhostPosts({
   page = 1,
   limit = 6,
-}: { page?: number; limit?: number } = {}): Promise<GhostAPIResponse> {
+  fields,
+}: { page?: number; limit?: number; fields?: string[] } = {}): Promise<GhostAPIResponse> {
   if (!GHOST_KEY) {
     return emptyResponse(page, limit);
   }
 
-  const url = `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_KEY}&include=tags,authors&limit=${limit}&page=${page}&order=published_at%20DESC`;
+  // `fields` trims the payload to what a caller actually renders. The homepage
+  // teaser passes a card-only list so the full post `html` (kilobytes of
+  // article body) never gets serialised into the RSC/HTML document.
+  const fieldsParam = fields?.length ? `&fields=${fields.join(",")}` : "";
+  const url = `${GHOST_URL}/ghost/api/content/posts/?key=${GHOST_KEY}&include=tags,authors${fieldsParam}&limit=${limit}&page=${page}&order=published_at%20DESC`;
 
   try {
     const response = await fetch(url, { next: { revalidate: 60 } });

@@ -1,12 +1,12 @@
 import type React from "react"
-import { Spline_Sans, Inter, Space_Grotesk, Work_Sans } from "next/font/google"
+import { Inter, Space_Grotesk, Work_Sans } from "next/font/google"
 import "./globals.css"
 
 // Only Inter + Space Grotesk render above the fold (hero copy + headings), so
-// those are the only two we let next/font preload. Spline Sans (legacy body
-// default) and Work Sans (desktop nav, hidden behind the hamburger on mobile)
-// load without a preload hint to keep the LCP image from queuing behind them.
-const splineSans = Spline_Sans({ subsets: ["latin"], variable: "--font-spline-sans", display: "swap", preload: false })
+// those are the only two we let next/font preload. Inter is also the body
+// default (globals.css). Work Sans (desktop nav, hidden behind the hamburger
+// on mobile) loads without a preload hint to keep the LCP image from queuing
+// behind it.
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter-base", display: "swap" })
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk", display: "swap" })
 const workSans = Work_Sans({ subsets: ["latin"], variable: "--font-work-sans-base", display: "swap", preload: false })
@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`scroll-smooth ${splineSans.variable} ${inter.variable} ${spaceGrotesk.variable} ${workSans.variable}`}
+      className={`scroll-smooth ${inter.variable} ${spaceGrotesk.variable} ${workSans.variable}`}
     >
       <body className="overflow-x-hidden bg-bg-light text-foreground" suppressHydrationWarning>
         {children}
