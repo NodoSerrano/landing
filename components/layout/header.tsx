@@ -13,7 +13,7 @@ const NAV_ITEMS: { label: string; href: string; cta?: boolean }[] = [
   { label: "SOMOS", href: "#about" },
   { label: "EVENTOS", href: "#events" },
   { label: "BLOG", href: "/blog" },
-  { label: "Nos APOYAN", href: "#sponsors" },
+  { label: "Nos BANCAN", href: "#sponsors" },
   { label: "SUSCRIBITE", href: "#signup", cta: true },
 ]
 
@@ -24,7 +24,7 @@ const DESKTOP_NAV_ITEMS: { label: string; href: string }[] = [
   { label: "SOMOS", href: "#about" },
   { label: "EVENTOS", href: "#events" },
   { label: "BLOG", href: "/blog" },
-  { label: "Nos APOYAN", href: "#sponsors" },
+  { label: "Nos BANCAN", href: "#sponsors" },
 ]
 
 // Section ids the nav links point at — used for scroll-spy on the home page so
@@ -339,7 +339,13 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
       router.push(`/#${id}`)
       return
     }
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
+    // These sections are short enough to sit nicely centered; every other
+    // section keeps the default top-alignment.
+    const centeredSections = new Set(["events", "sponsors"])
+    document.getElementById(id)?.scrollIntoView({
+      behavior: "smooth",
+      block: centeredSections.has(id) ? "center" : "start",
+    })
   }
 
   return (
