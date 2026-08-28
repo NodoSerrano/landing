@@ -443,7 +443,10 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                 const className =
                   "group relative font-work-sans text-body font-normal text-(--color-text-primary-dark) transition-opacity hover:opacity-90"
                 return href.startsWith("/") ? (
-                  <Link key={label} href={href} className={className}>
+                  // prefetch disabled: the header is always in view, so Next
+                  // was eagerly pulling the /labs + /blog route bundles (a
+                  // ~130 KB chunk, ~100% unused on the landing page) on load.
+                  <Link key={label} href={href} prefetch={false} className={className}>
                     {label}
                     {underline}
                     {hoverUnderline}
@@ -574,6 +577,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                       {href.startsWith("/") ? (
                         <Link
                           href={href}
+                          prefetch={false}
                           className={className}
                           onClick={() => setMobileMenuOpen(false)}
                         >

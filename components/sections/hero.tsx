@@ -1,7 +1,6 @@
 "use client"
 
 import { useRef, useEffect } from "react"
-import Image from "next/image"
 import { motion, useAnimation, useInView } from "framer-motion"
 import Header from "@/components/layout/header"
 import LocationFilledIcon from "@/components/svgs/location-filled-icon"
@@ -19,25 +18,41 @@ export default function Hero() {
     <section
       className="font-inter relative w-full min-h-[80vh] md:min-h-[85vh] flex flex-col overflow-hidden"
     >
-      {/* Background layers */}
-      {/* Background Image */}
+      {/* Preload the mobile hero crop only — it's the LCP element on phones and
+          this is the throttled-mobile metric Lighthouse scores. Desktop gets
+          its crop from <picture> without a competing preload. */}
+      <link
+        rel="preload"
+        as="image"
+        href="/downloads/hero-image-1080.webp"
+        imageSrcSet="/downloads/hero-image-640.webp 640w, /downloads/hero-image-828.webp 828w, /downloads/hero-image-1080.webp 1080w"
+        imageSizes="100vw"
+        media="(max-width: 767px)"
+        fetchPriority="high"
+      />
+
+      {/* Background Image — native <picture> for art direction. A hand-rolled
+          <img> (not next/image) so we control fetchpriority and emit exactly
+          one preload. The crops are pre-resized WebP; they sit under a dark
+          gradient + blur so quality 78 is plenty. */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/downloads/hero-image.webp"
-          alt="Nodo Serrano background"
-          fill
-          sizes="100vw"
-          className="object-cover object-center md:hidden"
-          priority
-        />
-        <Image
-          src="/downloads/hero-desktop.webp"
-          alt="Nodo Serrano background"
-          fill
-          sizes="100vw"
-          className="hidden object-cover object-center md:block"
-          priority
-        />
+        <picture>
+          <source
+            media="(min-width: 768px)"
+            type="image/webp"
+            srcSet="/downloads/hero-desktop-1280.webp 1280w, /downloads/hero-desktop-1920.webp 1920w"
+            sizes="100vw"
+          />
+          <img
+            src="/downloads/hero-image-1080.webp"
+            srcSet="/downloads/hero-image-640.webp 640w, /downloads/hero-image-828.webp 828w, /downloads/hero-image-1080.webp 1080w"
+            sizes="100vw"
+            alt="Nodo Serrano background"
+            fetchPriority="high"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover object-center"
+          />
+        </picture>
       </div>
 
       {/* Gradient Overlay — small desktop-only backdrop blur softens the low-res bg image */}

@@ -38,7 +38,7 @@ const sponsors: Sponsor[] = [
     logo: (
       <Image
         src="/devconnect-logo.png"
-        alt="DevConnect"
+        alt=""
         width={163}
         height={185}
         className="h-20 w-auto object-contain md:h-24"
@@ -51,7 +51,7 @@ const sponsors: Sponsor[] = [
     logo: (
       <Image
         src="/red-guild-logo.svg"
-        alt="The Red Guild"
+        alt=""
         width={200}
         height={128}
         className="h-20 w-auto object-contain md:h-24"
