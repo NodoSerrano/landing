@@ -9,7 +9,7 @@ import FloatingLogo from "@/components/FloatingLogo"
 // Mobile dropdown items. Same labels/order as desktop, plus a trailing
 // SUSCRIBITE that renders as the boxed gradient button (`cta`).
 const NAV_ITEMS: { label: string; href: string; cta?: boolean }[] = [
-  { label: "Nodo LABS", href: "#" },
+  { label: "Nodo LABS", href: "/labs" },
   { label: "SOMOS", href: "#about" },
   { label: "EVENTOS", href: "#events" },
   { label: "BLOG", href: "/blog" },
@@ -20,7 +20,7 @@ const NAV_ITEMS: { label: string; href: string; cta?: boolean }[] = [
 // Desktop nav — same items minus SUSCRIBITE, which lives in its own button
 // next to the nav on desktop.
 const DESKTOP_NAV_ITEMS: { label: string; href: string }[] = [
-  { label: "Nodo LABS", href: "#" },
+  { label: "Nodo LABS", href: "/labs" },
   { label: "SOMOS", href: "#about" },
   { label: "EVENTOS", href: "#events" },
   { label: "BLOG", href: "/blog" },
@@ -28,8 +28,9 @@ const DESKTOP_NAV_ITEMS: { label: string; href: string }[] = [
 ]
 
 // Section ids the nav links point at — used for scroll-spy on the home page so
-// the matching link shows a "selected" underline. Note "Nodo LABS" (href="#")
-// has no target and is deliberately excluded here and in isNavItemActive.
+// the matching link shows a "selected" underline. Route links ("Nodo LABS" →
+// /labs, "BLOG" → /blog) aren't section ids, so they're filtered out here and
+// handled by pathname in isNavItemActive.
 const NAV_SECTION_IDS = Array.from(
   new Set(
     [...DESKTOP_NAV_ITEMS, ...NAV_ITEMS]
@@ -319,9 +320,8 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
     return () => observer.disconnect()
   }, [pathname])
 
-  // A route link (e.g. /blog) is active by pathname; a section link is active
-  // only on the home page when its section is in view. "Nodo LABS" (href="#")
-  // has no target, so it never lights up.
+  // A route link (e.g. /blog, /labs) is active by pathname; a section link is
+  // active only on the home page when its section is in view.
   const isNavItemActive = (href: string) => {
     if (href.startsWith("/")) {
       return pathname === href || pathname.startsWith(`${href}/`)

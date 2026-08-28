@@ -10,7 +10,27 @@ export interface BreadcrumbItem {
 // construir las URLs absolutas del JSON-LD de BreadcrumbList.
 const SITE_URL = "https://nodoserrano.org"
 
-export function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
+export function Breadcrumb({
+  items,
+  tone = "light",
+}: {
+  items: BreadcrumbItem[]
+  tone?: "light" | "dark"
+}) {
+  const isDark = tone === "dark"
+  const linkClass = isDark
+    ? "text-(--color-text-primary-dark)/70 transition-colors hover:text-(--color-warm-yellow)"
+    : "text-(--color-text-soft) transition-colors hover:text-(--color-warm-red)"
+  const currentClass = isDark
+    ? "max-w-[60vw] truncate font-normal text-(--color-text-primary-dark) sm:max-w-sm"
+    : "max-w-[60vw] truncate font-normal text-(--color-text-primary-light) sm:max-w-sm"
+  const mutedClass = isDark
+    ? "text-(--color-text-primary-dark)/60"
+    : "text-(--color-text-soft)"
+  const chevronClass = isDark
+    ? "h-3.5 w-3.5 shrink-0 text-(--color-text-primary-dark)/40"
+    : "h-3.5 w-3.5 shrink-0 text-(--color-text-soft)/60"
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -35,30 +55,20 @@ export function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
           return (
             <li key={`${item.label}-${index}`} className="flex items-center gap-1">
               {item.href && !isLast ? (
-                <Link
-                  href={item.href}
-                  className="text-(--color-text-soft) transition-colors hover:text-(--color-warm-red)"
-                >
+                <Link href={item.href} className={linkClass}>
                   {item.label}
                 </Link>
               ) : (
                 <span
                   aria-current={isLast ? "page" : undefined}
-                  className={
-                    isLast
-                      ? "max-w-[60vw] truncate font-normal text-(--color-text-primary-light) sm:max-w-sm"
-                      : "text-(--color-text-soft)"
-                  }
+                  className={isLast ? currentClass : mutedClass}
                 >
                   {item.label}
                 </span>
               )}
 
               {!isLast && (
-                <ChevronRight
-                  className="h-3.5 w-3.5 shrink-0 text-(--color-text-soft)/60"
-                  aria-hidden="true"
-                />
+                <ChevronRight className={chevronClass} aria-hidden="true" />
               )}
             </li>
           )

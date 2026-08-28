@@ -270,7 +270,7 @@ function LabsCard() {
 
         {/* Skewed trapezoid CTA */}
         <Link
-          href="#"
+          href="/labs"
           className="group mt-1 inline-flex -skew-x-[10deg] items-stretch transition-opacity hover:opacity-90"
         >
           <span
