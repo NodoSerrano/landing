@@ -13,11 +13,17 @@ const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
   ],
   allowedAttributes: {
     a: ["href", "title", "target", "rel"],
-    img: ["src", "alt", "srcset", "sizes", "width", "height"],
+    img: ["src", "alt", "srcset", "sizes", "width", "height", "loading", "decoding"],
     "*": ["class", "id"],
   },
   // Ghost embeds responsive images via protocol-relative / https URLs only.
   allowedSchemes: ["http", "https", "mailto"],
+  transformTags: {
+    // Article images are always below the hero (which is priority) and mostly
+    // below the fold — force them lazy/async so they don't compete with the
+    // above-the-fold render.
+    img: sanitizeHtml.simpleTransform("img", { loading: "lazy", decoding: "async" }),
+  },
 }
 
 export function ArticleBody({ html }: { html: string }) {
