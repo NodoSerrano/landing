@@ -143,23 +143,13 @@ function CardShape() {
 // La región es el viewBox exacto (userSpaceOnUse 1062.53×812): la sombra queda
 // recortada ahí, pero el <svg> ya recorta en el mismo borde, así que ampliarla
 // no cambiaría nada visible.
-function BlobShadowFilter({ id, width, height }: { id: string; width: number; height: number }) {
+// Single feDropShadow. iOS Safari CPU-rasterises SVG <filter>s; the old
+// double-blur (stdDeviation 24) + overlay-blend recipe froze this section for
+// seconds when it scrolled into view on iPhone.
+function BlobShadowFilter({ id }: { id: string }) {
   return (
-    <filter id={id} x="0" y="0" width={width} height={height} filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-      <feFlood floodOpacity="0" result="BackgroundImageFix" />
-      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-      <feOffset dx="13" dy="13" />
-      <feGaussianBlur stdDeviation="24" />
-      <feComposite in2="hardAlpha" operator="out" />
-      <feColorMatrix type="matrix" values="0 0 0 0 0.0278291 0 0 0 0 0.0580852 0 0 0 0 0.134615 0 0 0 0.24 0" />
-      <feBlend mode="overlay" in2="BackgroundImageFix" result="effect1_dropShadow" />
-      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-      <feOffset dx="-13" dy="-13" />
-      <feGaussianBlur stdDeviation="24" />
-      <feComposite in2="hardAlpha" operator="out" />
-      <feColorMatrix type="matrix" values="0 0 0 0 0.224066 0 0 0 0 0.230651 0 0 0 0 0.355769 0 0 0 0.21 0" />
-      <feBlend mode="overlay" in2="effect1_dropShadow" result="effect2_dropShadow" />
-      <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow" result="shape" />
+    <filter id={id} x="-15%" y="-15%" width="130%" height="130%" colorInterpolationFilters="sRGB">
+      <feDropShadow dx="10" dy="10" stdDeviation="12" floodColor="#070f22" floodOpacity="0.16" />
     </filter>
   )
 }
@@ -186,7 +176,7 @@ function BlobBackground() {
           />
         </g>
         <defs>
-          <BlobShadowFilter id="labs-blob-shadow-m" width={1062.53} height={812} />
+          <BlobShadowFilter id="labs-blob-shadow-m" />
         </defs>
       </svg>
 

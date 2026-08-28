@@ -23,21 +23,11 @@ function CurvedContainer() {
       className="pointer-events-none absolute left-1/2 top-1/2 -z-10 w-[140%] max-w-[1920px] max-[1199px]:w-[1680px] aspect-[2482/2320] translate-x-[calc(-50%+40px)] -translate-y-1/2"
     >
       <defs>
+        {/* Single feDropShadow. The prior recipe (outer + inner shadows,
+            14 primitives) was CPU-rasterised by iOS Safari and froze the
+            section for seconds on scroll. */}
         <filter id="events-blob-shadow" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
-          <feDropShadow dx="5" dy="5" stdDeviation="7" floodColor="#000000" floodOpacity="0.68" result="drop1" />
-          <feDropShadow in="drop1" dx="-4" dy="-4" stdDeviation="5" floodColor="#ffffff" floodOpacity="0.04" result="shape" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlphaInner1" />
-          <feOffset dx="-1" dy="-1" />
-          <feGaussianBlur stdDeviation="1.5" />
-          <feComposite in2="hardAlphaInner1" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" />
-          <feBlend in2="shape" mode="normal" result="withInner1" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlphaInner2" />
-          <feOffset dx="1" dy="1" />
-          <feGaussianBlur stdDeviation="1" />
-          <feComposite in2="hardAlphaInner2" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0" />
-          <feBlend in2="withInner1" mode="normal" />
+          <feDropShadow dx="5" dy="6" stdDeviation="8" floodColor="#000000" floodOpacity="0.5" />
         </filter>
         <linearGradient id="events-grad-vec1" x1="1502.32" y1="1752.88" x2="733.569" y2="710.056" gradientUnits="userSpaceOnUse">
           <stop stopColor="#FF9728" />

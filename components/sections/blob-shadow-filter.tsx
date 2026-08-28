@@ -21,19 +21,12 @@
  */
 export function blobShadowFilterMarkup(id: string, { yScale = 1 } = {}) {
   const y = (n: number) => +(n / yScale).toFixed(2)
-  // Sombra paper-cut suave: blur largo + alpha bajo para que el apilado de
-  // blobs crema no se lea como un telón duro contra el fondo. Calibrado en el
-  // pase de suavizado: alphas ~0.05-0.07 y stdDeviation 16-18. Lo consumen los
-  // decos de Somos mobile (somos.tsx) y Somos desktop (somos-desktop.tsx).
-  return `<filter id="${id}" x="-14%" y="-14%" width="128%" height="128%" color-interpolation-filters="sRGB">
-    <feDropShadow dx="4" dy="${y(5)}" stdDeviation="18 ${y(18)}" flood-color="#070f22" flood-opacity="0.07" result="drop1"/>
-    <feDropShadow in="drop1" dx="-2" dy="${y(-3)}" stdDeviation="16 ${y(16)}" flood-color="#393b5b" flood-opacity="0.05" result="shape"/>
-    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-    <feOffset dx="-1" dy="${y(-1)}"/>
-    <feGaussianBlur stdDeviation="2.5 ${y(2.5)}"/>
-    <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-    <feColorMatrix type="matrix" values="0 0 0 0 0.027 0 0 0 0 0.058 0 0 0 0 0.134 0 0 0 0.07 0"/>
-    <feBlend in2="shape" mode="normal"/>
+  // Single feDropShadow. The previous 8-primitive double-shadow recipe was
+  // rasterised on the CPU by iOS Safari and, stacked ~9x across the Somos
+  // decoration, froze the section for several seconds on scroll. One soft
+  // drop-shadow reads close enough and costs a fraction.
+  return `<filter id="${id}" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
+    <feDropShadow dx="4" dy="${y(5)}" stdDeviation="10 ${y(10)}" flood-color="#070f22" flood-opacity="0.12"/>
   </filter>`
 }
 

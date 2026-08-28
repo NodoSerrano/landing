@@ -79,8 +79,8 @@ function CurvedContainer() {
           height="140%"
           colorInterpolationFilters="sRGB"
         >
-          <feDropShadow dx="7" dy="7" stdDeviation="7" floodColor="#070F22" floodOpacity="0.1" />
-          <feDropShadow dx="-6" dy="-6" stdDeviation="6" floodColor="#393B5B" floodOpacity="0.1" />
+          {/* Single feDropShadow — iOS Safari CPU-rasterises SVG filters. */}
+          <feDropShadow dx="6" dy="6" stdDeviation="8" floodColor="#070F22" floodOpacity="0.14" />
         </filter>
       </defs>
       <path

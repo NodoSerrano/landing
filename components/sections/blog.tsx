@@ -24,13 +24,12 @@ function CurvedContainer() {
       className="pointer-events-none absolute left-1/2 top-1/2 -z-10 w-[140%] max-w-[1720px] max-[1199px]:w-[1680px] aspect-[1676/1436] -translate-x-1/2 -translate-y-1/2"
     >
       <defs>
+        {/* Single feDropShadow each — iOS Safari CPU-rasterises SVG filters. */}
         <filter id="blog-blob-shadow" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
-          <feDropShadow dx="7" dy="7" stdDeviation="7" floodColor="#070F22" floodOpacity="0.2" />
-          <feDropShadow dx="-6" dy="-6" stdDeviation="6" floodColor="#393B5B" floodOpacity="0.2" />
+          <feDropShadow dx="6" dy="6" stdDeviation="8" floodColor="#070F22" floodOpacity="0.28" />
         </filter>
         <filter id="blog-blob-glow" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
-          <feDropShadow dx="6" dy="6" stdDeviation="6" floodColor="#FF69B3" floodOpacity="0.35" />
-          <feDropShadow dx="-6" dy="-6" stdDeviation="6" floodColor="#775E4E" floodOpacity="0.15" />
+          <feDropShadow dx="0" dy="0" stdDeviation="8" floodColor="#FF69B3" floodOpacity="0.4" />
         </filter>
         <linearGradient id="blog-grad-line1" x1="281.799" y1="904.916" x2="1500.23" y2="548.945" gradientUnits="userSpaceOnUse">
           <stop stopColor="#FF9728" />

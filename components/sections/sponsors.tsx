@@ -71,9 +71,9 @@ function CurvedContainer() {
       className="pointer-events-none absolute left-1/2 top-1/2 -z-10 w-[140%] max-w-[1720px] max-[1199px]:w-[1680px] aspect-[2010/1400] -translate-x-1/2 -translate-y-1/2"
     >
       <defs>
+        {/* Single feDropShadow — iOS Safari CPU-rasterises SVG filters. */}
         <filter id="sponsors-blob-shadow" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
-          <feDropShadow dx="7" dy="7" stdDeviation="7" floodColor="#070F22" floodOpacity="0.2" />
-          <feDropShadow dx="-6" dy="-6" stdDeviation="6" floodColor="#393B5B" floodOpacity="0.2" />
+          <feDropShadow dx="6" dy="6" stdDeviation="8" floodColor="#070F22" floodOpacity="0.28" />
         </filter>
         <linearGradient id="sponsors-grad-outline" x1="349.237" y1="1120.54" x2="1473.8" y2="440.041" gradientUnits="userSpaceOnUse">
           <stop stopColor="#FF9728" />
