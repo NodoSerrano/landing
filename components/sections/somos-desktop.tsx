@@ -76,7 +76,7 @@ type PhotoSpec = {
 const PHOTOS: PhotoSpec[] = [
   // Top-right (Figma Group 40, mask Vector 126 / 76:15)
   {
-    src: "/somos/hackerspace.jpg",
+    src: "/somos/hackerspace.webp",
     alt: "Hackerspace Nodo Serrano",
     left: "67.5%",
     top: "0%",
@@ -90,7 +90,7 @@ const PHOTOS: PhotoSpec[] = [
   },
   // Left (Figma Group 41, mask Vector 133 / 76:34)
   {
-    src: "/somos/hub.jpg",
+    src: "/somos/hub.webp",
     alt: "Hub Nodo Serrano",
     left: "3.594%",
     top: "11.975%",
@@ -104,7 +104,7 @@ const PHOTOS: PhotoSpec[] = [
   },
   // Bottom-center (Figma Group 42, mask Vector 133 / 76:38)
   {
-    src: "/somos/comunidad.jpg",
+    src: "/somos/comunidad.webp",
     alt: "Comunidad Nodo Serrano",
     left: "49.766%",
     top: "79.096%",

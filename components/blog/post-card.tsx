@@ -17,7 +17,7 @@ export function PostCard({ post }: { post: GhostPost }) {
     >
       <div className="relative h-48 w-full shrink-0 overflow-hidden">
         <Image
-          src={post.feature_image || "/images/cowork.jpeg"}
+          src={post.feature_image || "/images/cowork.webp"}
           alt={post.title}
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"

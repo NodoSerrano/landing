@@ -104,7 +104,7 @@ function FeaturedPostCard({
     >
       <div className="relative h-56 w-full shrink-0 overflow-hidden md:h-full md:w-[57%]">
         <Image
-          src={post.feature_image || "/images/cowork.jpeg"}
+          src={post.feature_image || "/images/cowork.webp"}
           alt={post.title}
           fill
           sizes="(min-width: 768px) 57vw, 100vw"

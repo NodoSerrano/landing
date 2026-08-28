@@ -45,7 +45,7 @@ export const features: Feature[] = [
     title: "Cowork",
     description:
       "Vení a trabajar al nodo, sea por el día o por unos meses, y disfrutá del acceso a todo lo que ofrece desde adentro.",
-    src: "/images/cowork.jpeg",
+    src: "/images/cowork.webp",
   },
   {
     title: "After Office",
