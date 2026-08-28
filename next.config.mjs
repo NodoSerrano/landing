@@ -1,61 +1,30 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // The repo has ~20 pre-existing type errors (mostly framer-motion `ease`
+  // string variance). Left as-is so builds don't block; run `pnpm lint` /
+  // `npx tsc --noEmit` locally.
   typescript: {
     ignoreBuildErrors: true,
   },
+
+  // Blog feature images are served by Ghost; everything else is a local file
+  // in /public. next/image needs the remote hosts allow-listed.
   images: {
-    // Ghost feature images (blog cards + article hero) are the only remote
-    // sources that pass through next/image; article-body <img> tags are raw
-    // Ghost HTML and bypass it. Everything else is a local file in /public.
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
-      { protocol: 'https', hostname: 'blog.nodoserrano.org', pathname: '/content/images/**' },
-      // Ghost's built-in Unsplash picker stores feature images on this host.
+      { protocol: 'https', hostname: 'blog.nodoserrano.org' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
     ],
   },
-  experimental: {
-    optimizePackageImports: ['framer-motion', 'lucide-react'],
-  },
-  async headers() {
-    // Client-side route transitions (e.g. header nav links) don't reload the
-    // document, so whichever page's CSP loaded first keeps governing the tab.
-    // Applying one policy to the whole site (rather than just /blog) avoids
-    // that mismatch and covers features used on both blog and non-blog pages
-    // (Ghost API fetch, Google Maps + Luma iframes).
-    const connectSrc = [
-      "'self'",
-      'https://blog.nodoserrano.org',
-      ...(process.env.NODE_ENV !== 'production' ? ['ws://localhost:*', 'ws://127.0.0.1:*'] : []),
-    ].join(' ')
 
+  async headers() {
     return [
       {
         source: '/:path*',
         headers: [
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin',
-          },
-          {
-            key: 'Content-Security-Policy',
-            value: `default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src ${connectSrc}; frame-src 'self' https://www.google.com https://luma.com; frame-ancestors 'none';`,
-          },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
         ],
       },
     ]
