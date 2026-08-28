@@ -68,7 +68,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <FadeIn className="flex flex-col gap-6">
               <div className="relative h-64 w-full overflow-hidden rounded-[24px] rounded-tr-none border border-(--color-warm-yellow) md:h-96">
                 <Image
-                  src={post.feature_image || "/images/cowork.jpeg"}
+                  src={post.feature_image || "/images/cowork.webp"}
                   alt={post.title}
                   fill
                   sizes="100vw"

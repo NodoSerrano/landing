@@ -23,16 +23,18 @@ export default function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/downloads/hero-image.png"
+          src="/downloads/hero-image.webp"
           alt="Nodo Serrano background"
           fill
+          sizes="100vw"
           className="object-cover object-center md:hidden"
           priority
         />
         <Image
-          src="/downloads/hero-desktop.png"
+          src="/downloads/hero-desktop.webp"
           alt="Nodo Serrano background"
           fill
+          sizes="100vw"
           className="hidden object-cover object-center md:block"
           priority
         />

@@ -1,10 +1,9 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { getGhostPosts, type GhostPost } from "@/lib/ghost"
+import type { GhostPost } from "@/lib/ghost"
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
@@ -59,22 +58,8 @@ function CurvedContainer() {
   )
 }
 
-function FeaturedPostCard({
-  post,
-  loading,
-  error,
-}: {
-  post: GhostPost | null
-  loading: boolean
-  error: string | null
-}) {
-  if (loading) {
-    return (
-      <div className="h-[290px] w-full animate-pulse rounded-[24px] rounded-tr-none bg-(--color-bg-elev-dark)/40" />
-    )
-  }
-
-  if (error || !post) {
+function FeaturedPostCard({ post }: { post: GhostPost | null }) {
+  if (!post) {
     return (
       <div
         className="flex h-[290px] w-full flex-col items-center justify-center gap-2 rounded-[24px] rounded-tr-none border border-(--color-warm-yellow) bg-(--color-bg-elev-dark) px-6 text-center"
@@ -104,7 +89,7 @@ function FeaturedPostCard({
     >
       <div className="relative h-56 w-full shrink-0 overflow-hidden md:h-full md:w-[57%]">
         <Image
-          src={post.feature_image || "/images/cowork.jpeg"}
+          src={post.feature_image || "/images/cowork.webp"}
           alt={post.title}
           fill
           sizes="(min-width: 768px) 57vw, 100vw"
@@ -132,33 +117,7 @@ function FeaturedPostCard({
   )
 }
 
-export default function Blog() {
-  const [post, setPost] = useState<GhostPost | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    async function fetchLatestPost() {
-      try {
-        const data = await getGhostPosts({ limit: 1 })
-
-        if (!data.posts || data.posts.length === 0) {
-          setError("No posts available")
-          return
-        }
-
-        setPost(data.posts[0])
-      } catch (err) {
-        console.error("Error fetching Ghost blog post:", err)
-        setError(err instanceof Error ? err.message : "Failed to load blog post")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchLatestPost()
-  }, [])
-
+export default function Blog({ post }: { post: GhostPost | null }) {
   return (
     // overflow-clip + padding/negative-margin: same technique as events.tsx —
     // required to keep mobile's viewport-meta negotiation from being hijacked
@@ -190,7 +149,7 @@ export default function Blog() {
             </motion.div>
 
             <motion.div variants={fadeInUp} className="w-full">
-              <FeaturedPostCard post={post} loading={loading} error={error} />
+              <FeaturedPostCard post={post} />
             </motion.div>
 
             <motion.div variants={fadeInUp}>

@@ -7,7 +7,18 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    // Ghost feature images (blog cards + article hero) are the only remote
+    // sources that pass through next/image; article-body <img> tags are raw
+    // Ghost HTML and bypass it. Everything else is a local file in /public.
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'blog.nodoserrano.org', pathname: '/content/images/**' },
+      // Ghost's built-in Unsplash picker stores feature images on this host.
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+    ],
+  },
+  experimental: {
+    optimizePackageImports: ['framer-motion', 'lucide-react'],
   },
   async headers() {
     // Client-side route transitions (e.g. header nav links) don't reload the
