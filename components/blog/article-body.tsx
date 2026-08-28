@@ -1,15 +1,27 @@
-import DOMPurify from "isomorphic-dompurify"
+import sanitizeHtml from "sanitize-html"
+
+// Ghost returns already-sanitised HTML, but we re-sanitise as defence in depth.
+// Using sanitize-html (a pure-JS parser) rather than DOMPurify keeps jsdom out
+// of the serverless bundle — jsdom failing to boot in the Lambda is what made
+// the article route 500 in production while /blog stayed fine.
+const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
+  allowedTags: [
+    "p", "h1", "h2", "h3", "h4", "h5", "h6",
+    "ul", "ol", "li", "strong", "em", "b", "i", "u", "s",
+    "code", "pre", "a", "blockquote", "img", "figure", "figcaption",
+    "hr", "br", "div", "span", "table", "thead", "tbody", "tr", "th", "td",
+  ],
+  allowedAttributes: {
+    a: ["href", "title", "target", "rel"],
+    img: ["src", "alt", "srcset", "sizes", "width", "height"],
+    "*": ["class", "id"],
+  },
+  // Ghost embeds responsive images via protocol-relative / https URLs only.
+  allowedSchemes: ["http", "https", "mailto"],
+}
 
 export function ArticleBody({ html }: { html: string }) {
-  const sanitizedHtml = DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: [
-      "p", "h1", "h2", "h3", "h4", "h5", "h6",
-      "ul", "ol", "li", "strong", "em", "b", "i", "u", "s",
-      "code", "pre", "a", "blockquote", "img", "figure", "figcaption",
-      "hr", "br", "div", "span", "table", "thead", "tbody", "tr", "th", "td",
-    ],
-    ALLOWED_ATTR: ["href", "title", "target", "rel", "class", "id", "src", "alt", "srcset", "sizes", "width", "height"],
-  })
+  const sanitizedHtml = sanitizeHtml(html, SANITIZE_OPTIONS)
 
   return (
     <div className="flex flex-col gap-8">
