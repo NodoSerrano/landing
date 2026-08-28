@@ -39,12 +39,75 @@ const SOCIAL_LINKS = [
   },
 ]
 
+// Figma container (node 445:27, exported as footer-container.svg): the cream
+// panel that curves in from the top of the footer, flat-bottomed so the page
+// ends clean. Same technique as blog.tsx / events.tsx — a blob the exact
+// colour of the page (#F8F4ED) that only reads through its shadow.
+//
+// viewBox is cropped to the path's own bounds (x 17→1425, y 0→939 = the flat
+// bottom) so preserveAspectRatio="none" can stretch the curve edge-to-edge
+// with no dead air. The <svg> then fills the footer box exactly and overflows
+// ~60px each side, so the curve spans the full viewport width and its soft
+// shadow feathers past the edges (clipped by the footer's overflow-clip)
+// instead of fading in short of them. bottom-0 pins the flat bottom flush to
+// the footer's bottom line; top-[120px] pulls the dome's top edge down to a
+// small gap above the heading (rather than stretching it across all of pt-64).
+//
+// Below 1199px the width stops tracking the viewport and locks to 1200px,
+// centred so it spills off both edges (same trick as blog.tsx / events.tsx's
+// max-[1199px]:w-[…]) — otherwise preserveAspectRatio="none" squashes the
+// dome into a tall narrow arch on phones.
+//
+// Shadow: reuses the feDropShadow recipe from blog.tsx's blog-blob-shadow
+// (hand-tuned intensity), not the raw ddii filter values from the Figma
+// export, so the two sections read as the same depth.
+function CurvedContainer() {
+  return (
+    <svg
+      viewBox="17 0 1408 939"
+      preserveAspectRatio="none"
+      fill="none"
+      aria-hidden="true"
+      className="pointer-events-none absolute top-[120px] bottom-0 -left-[60px] -right-[60px] -z-10 max-[1199px]:left-1/2 max-[1199px]:right-auto max-[1199px]:w-[1200px] max-[1199px]:-translate-x-1/2"
+    >
+      <defs>
+        <filter
+          id="footer-blob-shadow"
+          x="-20%"
+          y="-20%"
+          width="140%"
+          height="140%"
+          colorInterpolationFilters="sRGB"
+        >
+          <feDropShadow dx="7" dy="7" stdDeviation="7" floodColor="#070F22" floodOpacity="0.1" />
+          <feDropShadow dx="-6" dy="-6" stdDeviation="6" floodColor="#393B5B" floodOpacity="0.1" />
+        </filter>
+      </defs>
+      <path
+        filter="url(#footer-blob-shadow)"
+        d="M1312.45 681.904C1250.94 612.423 1187.6 508.951 1154.79 406.48C1120.17 298.358 1058.19 153.049 877.292 57.0759C696.394 -38.8976 415.705 60.1888 307.713 118.559C199.721 176.929 55.2757 337.499 159.623 538.943C263.969 740.388 21.4526 911.626 17 939L1425 939C1415.43 875.851 1373.97 751.385 1312.45 681.904Z"
+        fill="#F8F4ED"
+      />
+    </svg>
+  )
+}
+
 export default function Footer() {
   return (
+    // overflow-clip is required (not just body's overflow-x-hidden) — mobile
+    // viewport-meta negotiation gets hijacked by CurvedContainer's fixed
+    // width otherwise (see events.tsx for the full explanation). Unlike the
+    // other sections, footer doesn't grow to contain its curve's bottom
+    // bleed: it's the last thing on the page, nothing below it to blend
+    // into, so letting the clip cut the curve's tail flush at the bottom
+    // just means the page ends cleanly instead of trailing off into extra
+    // scroll space.
     <footer
       id="footer"
-      className="relative isolate z-10 overflow-clip pt-24 pb-8"
+      className="relative isolate z-10 overflow-clip pt-64 pb-8"
     >
+      <CurvedContainer />
+
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -55,7 +118,7 @@ export default function Footer() {
         <motion.div variants={fadeInUp} className="flex w-full flex-col items-center gap-9">
           <div className="flex flex-col items-center gap-1">
             <h2 className="font-display text-h2 font-medium text-(--color-warm-violet)">
-              Vení a conocer tu
+              Vení a conocer la
             </h2>
             <p className="bg-gradient-warm bg-clip-text font-display text-[45px] font-bold leading-[61.6px] tracking-[-1.12px] text-transparent">
               COMUNIDAD
