@@ -105,8 +105,10 @@ export default function Events() {
           >
             <iframe
               src="https://luma.com/embed/calendar/cal-7uziZDmq9SFGggQ/events?lt=dark"
+              title="Calendario de eventos de Nodo Serrano en Luma"
               height="500"
               width="100%"
+              loading="lazy"
               aria-hidden="false"
               tabIndex={0}
               className="overflow-hidden"
