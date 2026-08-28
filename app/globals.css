@@ -1,92 +1,340 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 
-html {
-  scroll-padding-top: 65px;
-  /* to account for sticky header */
+@source '../*.{js,ts,jsx,tsx,mdx}';
+
+@custom-variant dark (&:is(.dark *));
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
 }
 
-body {
-  font-family: 'Spline Sans', Arial, Helvetica, sans-serif;
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-cyan-50: #e0faf8;
+  --color-cyan-100: #b8f2ee;
+  --color-cyan-200: #7ae7e0;
+  --color-cyan-300: #4dd4ca;
+  --color-cyan-400: #2bb8b0;
+  --color-cyan-500: #1e9b94;
+  --color-cyan-600: #187e78;
+  --color-cyan-700: #146360;
+  --color-cyan-800: #104a4a;
+  --color-cyan-900: #0a3335;
+
+  --color-violet-50: #f5f0fc;
+  --color-violet-100: #e8ddf8;
+  --color-violet-200: #d4bff0;
+  --color-violet-300: #b998df;
+  --color-violet-400: #a073cc;
+  --color-violet-500: #8954ba;
+  --color-violet-600: #7340a2;
+  --color-violet-700: #5d3384;
+  --color-violet-800: #482866;
+  --color-violet-900: #321c46;
+
+  --color-blue-50: #ebf4fd;
+  --color-blue-100: #d2e6fb;
+  --color-blue-200: #a4ccf6;
+  --color-blue-300: #6ba8ed;
+  --color-blue-400: #4286e4;
+  --color-blue-500: #2b69d3;
+  --color-blue-600: #2253ba;
+  --color-blue-700: #1c429c;
+  --color-blue-800: #163379;
+  --color-blue-900: #0f2554;
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+/* ============================================================
+   Design tokens — extraídos de Figma "web-nodo-final-a-produccion"
+   (fileKey gQStd2U3Y0TCbZp5cNJeux, canvas Web 2:1640, REST API,
+   lastModified 2026-07-10). Nombres de styles Figma entre paréntesis.
+   `static`: se emiten siempre — hay componentes que los consumen vía
+   var() en runtime (p.ej. el SVG del menú mobile en header.tsx).
+   ============================================================ */
+@theme static {
+
+  /* brand gradient stops (grad-primary (logo) / línea del header) */
+  --color-brand-mint: #4fe6c3;
+  --color-brand-blue: #2e9bff;
+  --color-brand-violet: #c87fe5;
+
+  /* warm gradient stops (grad-warm) */
+  --color-warm-yellow: #ff9728;
+  --color-warm-red: #ff3121;
+  --color-warm-violet: #9e1fd0;
+
+  /* gradiente alternativo del logo (Gradient logo) */
+  --color-logo-mint: #45f3c5;
+  --color-logo-pink: #f763ff;
+  --color-logo-sky: #5bbcff;
+
+  /* accents sueltos (colores sólidos del diseño) */
+  --color-accent-orange: #ff4d21; /* highlights de texto (LO NUEVO, etc.) */
+  --color-accent-violet: #b57fe0;
+  --color-accent-coral: #c70067;
+  --color-accent-teal: #0a8268;
+  --color-accent-brown: #b84e00; /* badge WORKSHOP */
+  --color-logo-blue: #1158b0;
+  --color-logo-violet: #6b3fa8;
+
+  /* surfaces + text (el diseño mezcla secciones light y dark, no es toggle) */
+  --color-bg-light: #f8f4ed;
+  --color-bg-warm-white: #fcfaf7;
+  --color-bg-elev-dark: #1a1614;
+  --color-text-primary-light: #1a1614;
+  --color-text-primary-dark: #f8f4ed;
+  --color-text-secondary-dark: #ff9728;
+  --color-text-muted: #5a5550;
+  --color-text-soft: #8a847c;
+
+  /* type scale desktop (styles: display-xl … micro) — display/h* = Space
+     Grotesk (--font-display), body* = Inter (--font-inter) */
+  --text-display-xl: 4.5rem;
+  --text-display-xl--line-height: 4.95rem;
+  --text-display-xl--letter-spacing: -0.09rem;
+  --text-display-xl--font-weight: 700;
+  --text-display-lg: 3.5rem;
+  --text-display-lg--line-height: 3.85rem;
+  --text-display-lg--letter-spacing: -0.07rem;
+  --text-display-lg--font-weight: 700;
+  --text-h1: 2.75rem;
+  --text-h1--line-height: 3.025rem;
+  --text-h1--font-weight: 700;
+  --text-h2: 2rem;
+  --text-h2--line-height: 2.2rem;
+  --text-h2--font-weight: 500;
+  --text-h3: 1.375rem;
+  --text-h3--line-height: 1.5125rem;
+  --text-h3--font-weight: 500;
+  --text-h4: 1.125rem;
+  --text-h4--line-height: 1.2375rem;
+  --text-h4--font-weight: 400;
+  --text-body-lg: 1.0625rem;
+  --text-body-lg--line-height: 1.16875rem;
+  --text-body: 0.875rem;
+  --text-body--line-height: 0.9625rem;
+  --text-body-sm: 0.8125rem;
+  --text-body-sm--line-height: 0.89375rem;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 0.825rem;
+  --text-caption--letter-spacing: 0.075rem;
+  --text-caption--font-weight: 500;
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 0.75625rem;
+  --text-micro--font-weight: 500;
+
+  /* type scale mobile (styles: mob-*) */
+  --text-mob-display-xl: 2.5rem;
+  --text-mob-display-xl--line-height: 3.75rem;
+  --text-mob-display-xl--letter-spacing: -0.09rem;
+  --text-mob-display-xl--font-weight: 700;
+  --text-mob-display-lg: 2rem;
+  --text-mob-display-lg--line-height: 3.85rem; /* así está en Figma */
+  --text-mob-display-lg--letter-spacing: -0.07rem;
+  --text-mob-display-lg--font-weight: 700;
+  --text-mob-h2: 1.375rem;
+  --text-mob-h2--line-height: 1.875rem;
+  --text-mob-h2--font-weight: 500;
+  --text-mob-h3: 1.125rem;
+  --text-mob-h3--line-height: 1.5125rem;
+  --text-mob-h3--font-weight: 500;
+  --text-mob-h4: 1rem;
+  --text-mob-h4--line-height: 1.2375rem;
+  --text-mob-h4--font-weight: 500;
+  --text-mob-body-lg: 1rem;
+  --text-mob-body-lg--line-height: 1.16875rem;
+
+  /* shadows — nombres de styles Figma entre paréntesis */
+  --shadow-neumorphic: 18px 18px 36px 0px #070f22, -18px -18px 36px 0px #393b5b96; /* Neomorfismo / Neumorf importado */
+  --shadow-neumorphic-pressed: inset -26px -26px 52px 0px #ffffff7d, inset 26px 26px 52px 0px #1d160640; /* Neomorfismo pressed */
+  --shadow-neumorphic-light: 4px 4px 8px 0px #070f22, -4px -4px 8px -2px #393b5b33; /* neomorfismo light mode */
+  --shadow-neumorphic-dark: inset -1px -1px 3px 0px #00000080, inset 1px 1px 2px 0px #ffffff0d,
+    5px 5px 14px 0px #000000ad, -4px -4px 10px 0px #ffffff0a; /* Neumorphic-dark */
+  --shadow-soft-top: 13.86px 13.86px 27.72px 0px #ff69b3b2, -13.86px -13.86px 27.72px 0px #775e4e33; /* capa superior suave */
+  --shadow-btn-warm: 1px 3px 12px 0px #d93188, -4px -4px 10px 0px #ff620066; /* Primary-Button-Red */
+  --shadow-btn-cool: 1px 3px 12px 0px #2e9bff66, -4px -4px 10px 0px #b57fe066; /* Primary-Button-Blue */
+  --shadow-cta-blue: 1px 3px 12.1px 0px #31d3d9; /* CTA azul */
+  /* variante drop-shadow del neumórfico (para filtros SVG, ej. blobs Somos) */
+  --drop-shadow-neumorphic:
+    drop-shadow(18px 18px 36px #070f22) drop-shadow(-18px -18px 36px #393b5b96);
+  /* variante suave — blob de fondo de Community desktop (community.tsx), su
+     único consumidor: CSS y no un <filter> SVG porque Safari dropea el elemento
+     con una región de filtro tan grande */
+  --drop-shadow-neumorphic-soft:
+    drop-shadow(13px 13px 46px #070f2226) drop-shadow(-13px -13px 46px #393b5b1f);
+  /* capas apiladas paper-cut (fotos blob Somos desktop): relieve suave entre
+     capas — blur largo y alpha bajo para que no se lea como un telón duro */
+  --drop-shadow-somos-layer:
+    drop-shadow(5px 6px 34px #070f2216) drop-shadow(-3px -5px 26px #393b5b10);
+  /* cards Somos — neumorfismo light atenuado */
+  --shadow-somos-card: 3px 3px 12px 0px #070f221f, -3px -3px 10px -2px #393b5b0f;
+
+  /* --font-inter-base/--font-space-grotesk las carga next/font en app/layout.tsx */
+  --font-inter: var(--font-inter-base), ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-work-sans:
+    var(--font-work-sans-base), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  body {
+    font-family: var(--font-spline-sans), ui-sans-serif, system-ui, sans-serif;
+  }
+}
+
+@utility max-w-content {
+  max-width: 85rem;
+  /* 1360px */
+}
+
+@utility layer0 {
+  /* Topography Layers */
+  --bg-color: #1a1c20;
+  background: var(--bg-color);
+  /* Darkest - page/section backgrounds */
+}
+
+@utility layer1 {
+  --bg-color: #1e2024;
+  background: var(--bg-color);
+  /* Medium - neumorphism containers */
+}
+
+@utility layer2 {
+  --bg-color: #26282c;
+  background: var(--bg-color);
+  /* Lightest - nested neumorphism containers */
+}
+
+@utility layer3 {
+  --bg-color: #2e3034;
+  background: var(--bg-color);
+  /* Lightest - deeply nested neumorphism containers */
+}
+
+@utility neumorphism-shadow {
+  box-shadow:
+    3px 3px 6px #141517,
+    -3px -3px 6px #303236;
+}
+
+@utility neumorphism-bg-inset {
+  box-shadow:
+    inset 3px 3px 6px #141517,
+    inset -3px -3px 6px #303236;
+}
+
+@utility neumorphism-border {
+  border: 1px solid color-mix(in srgb, var(--bg-color) 70%, white 8%);
+}
+
+/* Glow + sombra de la card Nodo LABS (community.tsx). Como @utility para poder
+   apagarla con lg:filter-none cuando la sombra se mueve a su propia capa. */
+@utility labs-card-glow {
+  filter: drop-shadow(1px 3px 12px rgba(49, 211, 216, 0.5))
+    drop-shadow(-6px -5px 14px rgba(112, 79, 231, 0.5))
+    drop-shadow(12px 14px 22px rgba(7, 14, 34, 0.85));
+}
+
+@utility bg-gradient-brand {
+  /* Gradiente de marca (Figma: grad-primary (logo) — stops 0/46.66/93.25) */
+  background-image: linear-gradient(
+    131deg,
+    var(--color-brand-mint) 0%,
+    var(--color-brand-blue) 46.66%,
+    var(--color-brand-violet) 93.25%
+  );
+}
+
+@utility bg-gradient-warm {
+  /* Figma: grad-warm */
+  background-image: linear-gradient(
+    90deg,
+    var(--color-warm-yellow) 0%,
+    var(--color-warm-red) 50%,
+    var(--color-warm-violet) 100%
+  );
 }
 
 @layer utilities {
-  .max-w-content {
-    max-width: 85rem;
-    /* 1360px */
-  }
-
-  /* Topography Layers */
-  .layer0 {
-    --bg-color: #1a1c20;
-    background: var(--bg-color);
-    /* Darkest - page/section backgrounds */
-  }
-
-  .layer1 {
-    --bg-color: #1e2024;
-    background: var(--bg-color);
-    /* Medium - neumorphism containers */
-  }
-
-  .layer2 {
-    --bg-color: #26282C;
-    background: var(--bg-color);
-    /* Lightest - nested neumorphism containers */
-  }
-
-  .layer3 {
-    --bg-color: #2e3034;
-    background: var(--bg-color);
-    /* Lightest - deeply nested neumorphism containers */
-  }
-
-  .neumorphism-shadow {
-    box-shadow: 3px 3px 6px #141517, -3px -3px 6px #303236;
-  }
-
-  .neumorphism-bg-inset {
-    box-shadow: inset 3px 3px 6px #141517, inset -3px -3px 6px #303236;
-  }
-
-  .neumorphism-border {
-    border: 1px solid color-mix(in srgb, var(--bg-color) 70%, white 8%);
-  }
-
-  /* Sponsors Ticker Animation */
-  .animate-marquee {
-    animation: marquee-scroll-mobile 20s linear infinite;
-  }
-
-  @media (min-width: 768px) {
-    .animate-marquee {
-      animation: marquee-scroll-desktop 20s linear infinite;
-    }
-  }
-
-  .pause-marquee:hover {
-    animation-play-state: paused;
-  }
-
-  @keyframes marquee-scroll-mobile {
-    0% {
-      transform: translateX(0);
-    }
-
-    100% {
-      transform: translateX(-620px);
-    }
-  }
-
-  @keyframes marquee-scroll-desktop {
-    0% {
-      transform: translateX(0);
-    }
-
-    100% {
-      transform: translateX(-1400px);
-    }
+  html {
+    scroll-padding-top: 90px;
+    /* to account for the solid sticky header (~85px: my-2 + py-3 + 45px logo) */
   }
 }
 

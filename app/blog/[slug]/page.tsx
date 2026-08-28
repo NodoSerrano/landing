@@ -1,159 +1,137 @@
-import { notFound } from "next/navigation"
+import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
-import SafeImage from "@/components/safe-image"
+import { notFound } from "next/navigation"
 import { ArrowLeft, Calendar, Clock, User } from "lucide-react"
-import { getPostBySlug, getAllPosts } from "@/lib/blog/markdown"
+import Header from "@/components/layout/header"
+import Footer from "@/components/footer"
+import { FadeIn } from "@/components/motion/fade-in"
+import { ArticleBody } from "@/components/blog/article-body"
+import { Breadcrumb } from "@/components/blog/breadcrumb"
+import { getGhostPostBySlug } from "@/lib/ghost"
 
 interface BlogPostPageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
-export async function generateStaticParams() {
-  try {
-    console.log('[Static Params] Attempting to generate static params for blog posts')
-    const posts = await getAllPosts()
-    console.log(`[Static Params] Found ${posts.length} posts for static generation`)
-    
-    const params = posts.map((post) => ({
-      slug: post.slug,
-    }))
-    
-    console.log('[Static Params] Generated params:', params.map(p => p.slug))
-    return params
-  } catch (error) {
-    console.error('[Static Params] Failed to generate static params:', error)
-    // Return empty array to avoid build failure, pages will be generated on-demand
-    return []
-  }
-}
-
-export async function generateMetadata({ params }: BlogPostPageProps) {
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params
-  const post = await getPostBySlug(slug)
-  
+  const post = await getGhostPostBySlug(slug)
+
   if (!post) {
-    return {
-      title: "Post Not Found | Nodo Serrano",
-    }
+    return { title: "Artículo no encontrado | Nodo Serrano" }
   }
 
   return {
     title: `${post.title} | Nodo Serrano`,
-    description: post.description,
+    description: post.excerpt,
     openGraph: {
       title: post.title,
-      description: post.description,
+      description: post.excerpt,
       type: "article",
-      publishedTime: post.date,
-      authors: [post.author],
-      tags: post.tags,
+      publishedTime: post.published_at,
+      authors: post.authors?.map((author) => author.name),
+      images: post.feature_image ? [{ url: post.feature_image }] : undefined,
     },
   }
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params
-  const post = await getPostBySlug(slug)
+  const post = await getGhostPostBySlug(slug)
 
   if (!post) {
     notFound()
   }
 
-  return (
-    <article className="min-h-screen bg-slate-950">
-      <div className="container mx-auto max-w-4xl px-4 py-12">
-        <Link
-          href="/blog"
-          className="mb-8 inline-flex items-center gap-2 text-sm opacity-80 transition-colors hover:text-cyan-400 hover:opacity-100"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Volver al blog
-        </Link>
+  const formattedDate = new Date(post.published_at).toLocaleDateString("es-AR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
 
-        <header className="mb-12">
-          {post.featured && (
-            <div className="mb-6 inline-block rounded-lg bg-cyan-600 px-4 py-2 text-sm font-medium shadow-lg">
-              ⭐ Artículo destacado
-            </div>
-          )}
-          
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Thumbnail */}
-            <div className="w-full lg:w-64 h-64 flex-shrink-0 rounded-xl overflow-hidden border border-slate-700 shadow-lg">
-              <SafeImage
-                src={post.thumbnailUrl || '/blog/thumbnails/default-placeholder-square.svg'}
-                fallbackSrc="/blog/thumbnails/default-placeholder-square.svg"
-                alt={post.title}
-                width={256}
-                height={256}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            
-            {/* Content */}
-            <div className="flex-1">
-              <h1 className="mb-6 text-4xl font-bold leading-tight md:text-5xl">
+  return (
+    <div className="flex min-h-screen flex-col bg-(--color-bg-light)">
+      <Header alwaysSolid />
+
+      <main className="flex-1 px-4 pt-32 pb-20 md:pt-40">
+        <div className="mx-auto flex w-full max-w-6xl flex-col">
+          <Breadcrumb
+            items={[
+              { label: "Inicio", href: "/" },
+              { label: "Blog", href: "/blog" },
+              { label: post.title },
+            ]}
+          />
+
+          <div className="mt-16 flex flex-col gap-10 md:mt-24">
+            <FadeIn className="flex flex-col gap-6">
+              <div className="relative h-64 w-full overflow-hidden rounded-[24px] rounded-tr-none border border-(--color-warm-yellow) md:h-96">
+                <Image
+                  src={post.feature_image || "/images/cowork.jpeg"}
+                  alt={post.title}
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-warm mix-blend-overlay" />
+              </div>
+
+              <h1 className="font-display text-h1 font-bold leading-tight text-(--color-text-primary-light)">
                 {post.title}
               </h1>
-              
-              <p className="mb-8 text-xl leading-relaxed opacity-80">
-                {post.description}
-              </p>
 
-              <div className="flex flex-wrap items-center gap-6 text-sm opacity-80 mb-6">
+              <div className="flex flex-wrap items-center gap-6 font-inter text-body-sm text-(--color-text-primary-light)">
+                {post.authors && post.authors[0] && (
+                  <div className="flex items-center gap-2">
+                    <User className="h-4 w-4 text-(--color-warm-violet)" />
+                    <span className="font-medium">{post.authors[0].name}</span>
+                  </div>
+                )}
                 <div className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  <span className="font-medium">{post.author}</span>
+                  <Calendar className="h-4 w-4 text-(--color-warm-violet)" />
+                  <time dateTime={post.published_at}>{formattedDate}</time>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  <time dateTime={post.date}>
-                    {new Date(post.date).toLocaleDateString("es-ES", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </time>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4" />
-                  <span>{post.readingTime.text}</span>
+                  <Clock className="h-4 w-4 text-(--color-warm-violet)" />
+                  <span>{post.reading_time} min de lectura</span>
                 </div>
               </div>
 
-              {post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-3">
+              {post.tags && post.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2">
                   {post.tags.map((tag) => (
                     <span
-                      key={tag}
-                      className="rounded-full bg-slate-800/60 border border-slate-700 px-4 py-2 text-sm backdrop-blur-sm transition-colors hover:bg-slate-700/60"
+                      key={tag.slug}
+                      className="rounded-full border border-(--color-warm-yellow) px-3 py-1 font-inter text-body-sm text-(--color-text-primary-light)"
                     >
-                      #{tag}
+                      #{tag.name}
                     </span>
                   ))}
                 </div>
               )}
-            </div>
+            </FadeIn>
+
+            <FadeIn>
+              <ArticleBody html={post.html} />
+            </FadeIn>
+
+            <FadeIn className="flex justify-center">
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-2 rounded-br-[10px] rounded-tl-[10px] border-2 border-(--color-warm-yellow) px-[26px] py-[14px] font-inter text-body text-(--color-text-primary-light) transition-opacity hover:opacity-90"
+                style={{ boxShadow: "var(--shadow-btn-warm)" }}
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Ver más artículos
+              </Link>
+            </FadeIn>
           </div>
-        </header>
-
-        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-8 md:p-12 backdrop-blur-sm shadow-2xl">
-          <div 
-            className="prose prose-lg max-w-none [&_a]:!text-cyan-400 hover:[&_a]:!text-cyan-300 [&_code]:!text-cyan-300 [&_code]:!bg-slate-800 [&_pre]:!bg-slate-800 [&_pre]:!border-slate-700"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
         </div>
+      </main>
 
-        <footer className="mt-12 border-t border-slate-800 pt-8">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 rounded-lg bg-slate-800/60 px-4 py-3 transition-all hover:bg-slate-700/60"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Ver más artículos
-          </Link>
-        </footer>
-      </div>
-    </article>
+      <Footer />
+    </div>
   )
 }

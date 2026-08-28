@@ -4,109 +4,125 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Workflow
 
-**IMPORTANT**: Always work on the `develop` branch and create Pull Requests to `main`.
+**IMPORTANT**: Never commit to `main`. Work on an integration/feature branch and open a Pull Request to `main`.
 
-- `main` branch → Production (auto-deploys to nodoserrano.org via Vercel)
-- `develop` branch → Development work
-- Feature branches → Specific features (branch from `develop`)
+- `main` → Production (auto-deploys to nodoserrano.org via Vercel; region `gru1`)
+- `develop-juan` → current integration branch (most active; the earlier `develop` branch has diverged)
+- `refactor/*` and other feature branches → branched off the integration branch, merged back via PR/merge commits
 
-### Git Workflow
+Remote: `https://github.com/NodoSerrano/landing.git`
+
 ```bash
-# Always start from develop
-git checkout develop
-git pull origin develop
-
-# Create feature branch (optional)
-git checkout -b feature/your-feature-name
-
-# When ready, create PR to main
-# Never commit directly to main
+git checkout develop-juan
+git pull origin develop-juan
+git checkout -b feature/your-feature-name   # optional
+# open PR to main when ready
 ```
 
 ## Project Overview
 
-Nodo Serrano is a Next.js 15 landing page for an Ethereum community in Tandil with email collection functionality.
+Nodo Serrano is a Next.js landing page for an Ethereum community in Tandil. Single-page marketing site (hero, community, "somos", events, blog teaser, sponsors, newsletter) plus a Ghost-backed blog at `/blog`, and a newsletter email-collection flow backed by Neon Postgres.
+
+The site is in Spanish. Design tokens are derived from a Figma file ("web-nodo-final-a-produccion"); a local Figma MCP server is configured in `.mcp.json` (`http://127.0.0.1:3845/mcp`) and must be running for Figma tooling.
 
 ## Key Commands
 
 ```bash
-# Development
-pnpm dev        # Run development server
-pnpm build      # Build for production
-pnpm start      # Start production server
-pnpm lint       # Run ESLint
+pnpm dev            # Dev server (Next 16, Turbopack)
+pnpm build          # Production build
+pnpm start          # Serve production build
+pnpm lint           # eslint .
+pnpm lint:fix       # eslint . --fix
+pnpm format         # prettier --write .
+pnpm format:check   # prettier --check .
 
-# Package management
-pnpm install    # Install dependencies
+pnpm install        # Install dependencies (pnpm; see pnpm-lock.yaml)
 
-# Database
-node database/test-connection.js  # Test database connection
-./setup-database.sh              # Set up database schema
+# Database (newsletter subscribers)
+node database/test-connection.js   # Test Neon connection
+./setup-database.sh                # Initialise schema (database/schema.sql)
 ```
 
 ## Architecture
 
 ### Tech Stack
-- **Framework**: Next.js 15.2.4 with App Router
-- **UI**: React 19 + Framer Motion animations
-- **Styling**: Tailwind CSS + shadcn/ui components
-- **Database**: Neon PostgreSQL (serverless)
-- **Email**: Nodemailer
-- **Validation**: Zod
-- **Package Manager**: pnpm
+- **Framework**: Next.js **16.1.6** (App Router, Turbopack) + React 19
+- **Styling**: Tailwind CSS **v4** (CSS-first config — no `tailwind.config.*`; theme lives in `app/globals.css` via `@theme` / `@theme static`). `@tailwindcss/typography` for article bodies. A few shadcn/ui primitives (`components/ui/*`), `class-variance-authority`, `tailwind-merge`, `clsx`.
+- **Animation**: Framer Motion (`components/motion/fade-in.tsx` and inline `motion.*` in sections)
+- **Fonts** (`next/font/google`, wired in `app/layout.tsx`): Inter, Space Grotesk, Work Sans (new redesign); Spline Sans (legacy, still used by some sections)
+- **Blog CMS**: Ghost Content API v5 (https://blog.nodoserrano.org)
+- **Database**: Neon PostgreSQL (serverless) — `@neondatabase/serverless`
+- **Email**: Nodemailer · **Validation**: Zod · **Package Manager**: pnpm
+
+### Color scheme
+Not a dark cyan/blue theme. The redesign mixes **light and dark sections** (no theme toggle) on a warm off-white base (`--color-bg-light: #f8f4ed`). Brand gradient stops: `--color-brand-mint/blue/violet`. Warm gradient stops: `--color-warm-yellow/red/violet`. Reference tokens by CSS var (e.g. `text-(--color-warm-violet)`); check `app/globals.css` before introducing a new color.
 
 ### Project Structure
-- `/app` - Next.js app router pages and API routes
-  - `page.tsx` - Main landing page with newsletter signup
-  - `actions.ts` - Server actions for form handling
-  - `/api` - API endpoints for subscribers, email, and debugging
-- `/components` - Reusable React components
-  - `/ui` - shadcn/ui base components
-  - Custom components: newsletter form, mobile menu, notifications
-- `/lib` - Core utilities
-  - `db.ts` - Database operations with Neon
-  - `email.ts` - Email sending with Nodemailer
-  - `notification-service.ts` - Webhook and email notifications
+- `/app` — App Router
+  - `layout.tsx` — root layout, fonts, metadata
+  - `page.tsx` — `"use client"` landing page composing `components/sections/*`
+  - `actions.ts` — `subscribeToNewsletter` server action (writes via `lib/db.ts`)
+  - `blog/page.tsx` — blog index (server component, `getGhostPosts`, `?page=` pagination)
+  - `blog/[slug]/page.tsx` — article page (`getGhostPostBySlug`, `generateMetadata`)
+  - `blog/error.tsx` — error boundary for the blog routes
+  - `/api` — `subscribers`, `health`, `admin/subscribers`, `ghost/test`, plus `debug-*` / `test-*` endpoints
+- `/components`
+  - `/sections` — one file per landing-page section (`hero`, `community`, `somos`, `events`, `blog`, `sponsors`, `newsletter`, …)
+  - `/blog` — `post-card`, `article-body`, `breadcrumb`, `pagination-controls`
+  - `/layout/header.tsx` — sticky header + scroll-spy nav; `mobile-menu.tsx`
+  - `/ui` — shadcn primitives (`button`, `input`, `container`)
+  - `/svgs` — inline SVG icon components
+  - `/motion/fade-in.tsx` — shared scroll-reveal wrapper
+- `/lib`
+  - `ghost.ts` — Ghost Content API client (`getGhostPosts`, `getGhostPostBySlug`)
+  - `db.ts` — Neon operations (`addSubscriber`, …)
+  - `email.ts`, `notification-service.ts`, `notification.ts`, `webhook.ts` — email/webhook notifications
+  - `features-data.tsx`, `use-scroll-hash.ts`, `utils.ts` (`cn`)
+  - `luma-api.ts` — **legacy mock**, not wired up; the events section uses a Luma embed iframe instead
+- `/database` — `schema.sql`, `test-connection.js`
+- `/public` — images, logos, favicons
 
 ### Key Features
-1. **Newsletter Subscription**: Server action + database storage + email notifications
-2. **Ghost Blog Integration**: Dynamic blog posts fetched from Ghost CMS (https://blog.nodoserrano.org)
-3. **Responsive Design**: Mobile-first with animated components
-4. **Database**: PostgreSQL with `subscribers` table (email, name, status, created_at)
-5. **Environment Variables**: DATABASE_URL, EMAIL_*, WEBHOOK_URL, GHOST_*
-
-## Development Environment
-
-### Environment Variables
-- **Local Development**: Use `.env.local` with development database
-- **Production**: Set in Vercel dashboard with production database
-- **Required Variables**:
- - `DATABASE_URL` - Neon PostgreSQL connection string
- - `NEXT_PUBLIC_GHOST_URL` - Ghost blog URL (https://blog.nodoserrano.org)
- - `NEXT_PUBLIC_GHOST_CONTENT_API_KEY` - Ghost Content API key
- - `ADMIN_API_KEY` - Optional, for admin endpoints
- - `GHOST_ADMIN_API_KEY` - Optional, for Ghost write operations
-
-### Database Setup
-- Development and production use separate Neon databases
-- Run `./setup-database.sh` to initialize schema
-- Use `/api/health` to verify database connection
-
-## Important Notes
-
-- **Co-authorship**: NEVER include Claude as a co-author in git commits. Do not add "Co-Authored-By: Claude" or any similar attribution.
-- **Git Workflow**: Always work on `develop` branch, create PRs to `main`
-- **Build Configuration**: ESLint and TypeScript errors are ignored during builds (see next.config.mjs)
-- **Path Aliases**: Use `@/` for imports (maps to project root)
-- **Database**: Requires `subscribers` table to be created before use
-- **Ghost Blog**: Uses Ghost Content API to fetch posts dynamically. See `GHOST_INTEGRATION.md` for details.
-- **Styling**: Follow existing Tailwind patterns and color scheme (cyan/blue gradients on dark background)
+1. **Newsletter**: client form (`components/sections/newsletter.tsx`) → `subscribeToNewsletter` server action → `subscribers` table + notifications. Duplicate emails are treated as success.
+2. **Ghost blog**: index + article pages under `/app/blog`; homepage teaser in `components/sections/blog.tsx` fetches Ghost **client-side** (hence the CSP `connect-src` allowance — see below).
+3. **Events**: `components/sections/events.tsx` embeds a Luma calendar iframe (`https://luma.com/embed/calendar/...`).
+4. **Responsive, mostly server-rendered** landing + blog; Framer Motion reveals.
 
 ## Ghost Blog Integration
 
-The landing page integrates with Ghost CMS for blog content:
-- **Component**: `GhostBlogSection` (replaces old `BlogSection`)
-- **API**: Ghost Content API v5
-- **URL**: https://blog.nodoserrano.org
-- **Test Endpoint**: `/api/ghost/test` - Verify Ghost API connection
-- **Documentation**: See `GHOST_INTEGRATION.md` for complete details
+- Client: `lib/ghost.ts` — plain `fetch` against `${NEXT_PUBLIC_GHOST_URL}/ghost/api/content/...` with `?key=NEXT_PUBLIC_GHOST_CONTENT_API_KEY`, `next: { revalidate: 60 }`.
+- **Graceful degradation**: both functions catch non-OK responses and network errors. Missing/invalid key → empty list on `/blog`, `null` → `notFound()` on an article. They no longer throw (previously any Ghost 401/429/5xx surfaced as an unhandled 500).
+- `components/blog/article-body.tsx` sanitises Ghost HTML with `isomorphic-dompurify`. That pulls in `jsdom`; `next.config.mjs` sets `serverExternalPackages: ['isomorphic-dompurify']` so it isn't bundled into the serverless function (bundling breaks its dynamic requires → 500 on article pages).
+- Test endpoint: `/api/ghost/test`.
+- Older doc `GHOST_INTEGRATION.md` predates the `/app/blog` pages (it describes a since-removed `GhostBlogSection` component) — treat as background only.
+
+## Environment Variables
+
+`.env*` is gitignored. Local dev uses `.env.local`; deployed values come from the **Vercel dashboard, scoped per environment (Production / Preview / Development)**.
+
+- `NEXT_PUBLIC_GHOST_URL` — defaults to `https://blog.nodoserrano.org` if unset
+- `NEXT_PUBLIC_GHOST_CONTENT_API_KEY` — Ghost Content API key
+- `GHOST_ADMIN_API_KEY` — optional, for future write operations
+- `DATABASE_URL` — Neon connection string (newsletter; API routes fail loudly without it)
+- `EMAIL_*`, `WEBHOOK_URL` — notification delivery (optional)
+- `ADMIN_API_KEY` — optional, guards `/api/admin/*`
+
+**`NEXT_PUBLIC_*` gotcha**: these are inlined at **build time**. Changing one in Vercel requires a **redeploy** of that branch to take effect, and a stale/wrong key in the **Preview** scope is the known cause of blog failures on branch deployments even when Production is fine.
+
+## Build & Config Notes
+
+- **`next.config.mjs`**:
+  - `eslint.ignoreDuringBuilds` + `typescript.ignoreBuildErrors` — builds do **not** fail on lint/type errors. Run `pnpm lint` yourself. (Next 16 logs a warning that the `eslint` key is no longer supported here; harmless for now.)
+  - `images: { unoptimized: true }` — `next/image` serves originals, so remote Ghost/Luma image URLs work without `remotePatterns`.
+  - `serverExternalPackages: ['isomorphic-dompurify']` — see Ghost section.
+  - `headers()` applies a site-wide CSP. `connect-src` allows `https://blog.nodoserrano.org` (client-side Ghost fetch in the homepage teaser); `frame-src` allows Google Maps + `luma.com`. Adding an external fetch target or iframe means updating this.
+- **Path alias**: `@/*` → project root (`tsconfig.json`).
+- **Deploy**: `vercel.json` sets `pnpm build`, framework `nextjs`, region `gru1`. Pushes to `main` auto-deploy to production; other branches get Preview deployments (behind Vercel SSO / deployment protection).
+
+## Important Notes
+
+- **Co-authorship**: NEVER add "Co-Authored-By: Claude" or any similar attribution to commits.
+- **Never commit to `main`**; PR into it.
+- **Database**: the `subscribers` table (email, name, status, created_at) must exist before newsletter writes work; `./setup-database.sh` creates it. Verify with `/api/health`.
+- **Styling**: follow existing Tailwind v4 patterns and reference design tokens from `app/globals.css` by CSS var; don't add a `tailwind.config` file.
+- **Legacy docs**: `BLOG_GUIDE.md` and `NOTION_INTEGRATION.md` describe an earlier markdown/Notion-based blog that has been replaced by the Ghost integration — do not follow them. `DATABASE_SETUP.md` and `DEPLOYMENT.md` are still broadly accurate. `.cursorrules` exists for Cursor users.
