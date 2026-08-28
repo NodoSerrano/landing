@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // isomorphic-dompurify pulls in jsdom; bundling it into the serverless
+  // function breaks its dynamic requires at runtime (500s on the article page).
+  // Load it from node_modules instead.
+  serverExternalPackages: ['isomorphic-dompurify'],
   eslint: {
     ignoreDuringBuilds: true,
   },
