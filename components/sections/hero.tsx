@@ -26,6 +26,7 @@ export default function Hero() {
           src="/downloads/hero-image.webp"
           alt="Nodo Serrano background"
           fill
+          sizes="100vw"
           className="object-cover object-center md:hidden"
           priority
         />
@@ -33,6 +34,7 @@ export default function Hero() {
           src="/downloads/hero-desktop.webp"
           alt="Nodo Serrano background"
           fill
+          sizes="100vw"
           className="hidden object-cover object-center md:block"
           priority
         />

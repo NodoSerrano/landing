@@ -107,13 +107,13 @@ export default function Somos() {
           {/* Photo collage */}
           <motion.div variants={fadeInUp} className="grid grid-cols-2 grid-rows-2 gap-2">
             <div className="relative row-span-2 aspect-[180/244] overflow-hidden rounded-[8px]">
-              <Image src="/somos/hackerspace.webp" alt="Hackerspace Nodo Serrano" fill className="object-cover" />
+              <Image src="/somos/hackerspace.webp" alt="Hackerspace Nodo Serrano" fill sizes="50vw" className="object-cover" />
             </div>
             <div className="relative aspect-[180/120] overflow-hidden rounded-[8px]">
-              <Image src="/somos/hub.webp" alt="Hub Nodo Serrano" fill className="object-cover" />
+              <Image src="/somos/hub.webp" alt="Hub Nodo Serrano" fill sizes="50vw" className="object-cover" />
             </div>
             <div className="relative aspect-[180/120] overflow-hidden rounded-[8px]">
-              <Image src="/somos/comunidad.webp" alt="Comunidad Nodo Serrano" fill className="object-cover" />
+              <Image src="/somos/comunidad.webp" alt="Comunidad Nodo Serrano" fill sizes="50vw" className="object-cover" />
             </div>
           </motion.div>
 

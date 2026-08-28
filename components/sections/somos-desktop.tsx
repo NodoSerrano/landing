@@ -149,7 +149,7 @@ function BlobPhoto({ photo, index }: { photo: PhotoSpec; index: number }) {
           WebkitMaskSize: "100% 100%",
         }}
       >
-        <Image src={photo.src} alt={photo.alt} fill className="object-cover" />
+        <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 22vw, 50vw" className="object-cover" />
       </div>
       {/* Contorno blob desfasado con gradiente de marca */}
       <svg
