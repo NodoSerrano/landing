@@ -1,6 +1,13 @@
 "use client"
 
 import { useState, useEffect, useRef, useLayoutEffect } from "react"
+
+// The header slides down from above the viewport. Each route renders its own
+// <Header/> (hero, /labs, /blog, /blog/[slug]), so without this guard the
+// intro replays on every client-side navigation. This module-level flag
+// survives client navigations but resets on a full page load, so the slide-in
+// plays only the first time the app mounts.
+let hasHeaderIntroPlayed = false
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
@@ -238,6 +245,13 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
   const pathname = usePathname()
   const router = useRouter()
 
+  // Play the slide-in intro only on the first mount after a full page load;
+  // skip it on client-side route changes (see hasHeaderIntroPlayed above).
+  const [playIntro] = useState(() => !hasHeaderIntroPlayed)
+  useEffect(() => {
+    hasHeaderIntroPlayed = true
+  }, [])
+
   // Derived, not stored: whether the mobile dropdown is actually visible.
   // `mobileMenuOpen` alone isn't enough — if it's opened on mobile and the
   // viewport is then resized past `lg` (e.g. dragging the devtools width),
@@ -351,7 +365,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
   return (
     <motion.header
       className="fixed top-0 inset-x-0 z-50 w-full"
-      initial={{ y: -100 }}
+      initial={playIntro ? { y: -100 } : false}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >

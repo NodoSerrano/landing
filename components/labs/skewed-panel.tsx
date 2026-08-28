@@ -41,6 +41,8 @@ export function SkewedPanel({
   maxTopDrop = 16,
   maxBottomRise = 12,
   maxRightLean = 8,
+  shadow,
+  gradient = "brand",
 }: {
   children: ReactNode
   className?: string
@@ -54,6 +56,11 @@ export function SkewedPanel({
   maxTopDrop?: number
   maxBottomRise?: number
   maxRightLean?: number
+  // CSS `filter` (p.ej. drop-shadow(...)) aplicado al <svg> de la silueta, para
+  // que la sombra siga el trapecio y no un rectángulo.
+  shadow?: string
+  // Gradiente del borde: "brand" (frío) o "warm".
+  gradient?: "brand" | "warm"
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [size, setSize] = useState({ width: 0, height: 0 })
@@ -105,7 +112,7 @@ export function SkewedPanel({
     <div ref={containerRef} className={cn("relative", className)}>
       {path && (
         <svg
-          style={{ width: w, height: h }}
+          style={{ width: w, height: h, filter: shadow }}
           className="pointer-events-none absolute inset-0"
           fill="none"
           aria-hidden="true"
@@ -126,9 +133,19 @@ export function SkewedPanel({
                 y2="0"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stopColor="var(--color-brand-mint)" />
-                <stop offset="0.466597" stopColor="var(--color-brand-blue)" />
-                <stop offset="0.932457" stopColor="var(--color-brand-violet)" />
+                {gradient === "warm" ? (
+                  <>
+                    <stop stopColor="var(--color-warm-yellow)" />
+                    <stop offset="0.5" stopColor="var(--color-warm-red)" />
+                    <stop offset="1" stopColor="var(--color-warm-violet)" />
+                  </>
+                ) : (
+                  <>
+                    <stop stopColor="var(--color-brand-mint)" />
+                    <stop offset="0.466597" stopColor="var(--color-brand-blue)" />
+                    <stop offset="0.932457" stopColor="var(--color-brand-violet)" />
+                  </>
+                )}
               </linearGradient>
             </defs>
           )}

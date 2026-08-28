@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils"
 
 // Encabezado de sección compartido de la página Labs: label chico en
-// mayúsculas + título Space Grotesk + regla de 3px con el gradiente de marca.
-// Mismo patrón que hero.tsx / community.tsx pero factorizado para reuso.
+// mayúsculas + título Space Grotesk + regla de 3px. El color sigue el tono:
+// gradiente warm en secciones claras, gradiente brand (frío) en las oscuras.
 export function SectionHeading({
   label,
   title,
@@ -28,8 +28,8 @@ export function SectionHeading({
         className={cn(
           "font-inter text-caption font-medium uppercase tracking-[0.12em]",
           tone === "dark"
-            ? "text-(--color-warm-yellow)"
-            : "text-(--color-accent-violet)"
+            ? "text-(--color-brand-mint)"
+            : "text-(--color-warm-violet)"
         )}
       >
         {label}
@@ -46,7 +46,12 @@ export function SectionHeading({
         {title}
       </h2>
 
-      <div className="mt-4 h-[3px] w-[120px] rounded-full bg-gradient-brand" />
+      <div
+        className={cn(
+          "mt-4 h-[3px] w-[120px] rounded-full",
+          tone === "dark" ? "bg-gradient-brand" : "bg-gradient-warm"
+        )}
+      />
     </div>
   )
 }

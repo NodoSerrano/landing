@@ -16,7 +16,7 @@ const fadeInUp = {
 
 function StepChip({ n }: { n: number }) {
   return (
-    <span className="flex h-11 w-11 shrink-0 -skew-x-[10deg] items-center justify-center rounded-tl-[10px] rounded-br-[10px] bg-gradient-brand font-display text-h3 font-bold text-(--color-text-primary-dark)">
+    <span className="flex h-11 w-11 shrink-0 -skew-x-[10deg] items-center justify-center rounded-tl-[10px] rounded-br-[10px] bg-gradient-warm font-display text-h3 font-bold text-(--color-text-primary-dark)">
       <span className="skew-x-[10deg]">{n}</span>
     </span>
   )
@@ -47,9 +47,9 @@ export function Process() {
 
         {/* Desktop: stepper horizontal con línea que se dibuja al entrar en vista */}
         <div className="relative mt-16 hidden md:block">
-          <div className="absolute inset-x-0 top-[21px] h-[3px] rounded-full bg-violet-200" />
+          <div className="absolute inset-x-0 top-[21px] h-[3px] rounded-full bg-(--color-warm-yellow)/20" />
           <motion.div
-            className="absolute left-0 top-[21px] h-[3px] w-full origin-left rounded-full bg-gradient-brand"
+            className="absolute left-0 top-[21px] h-[3px] w-full origin-left rounded-full bg-gradient-warm"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -77,7 +77,7 @@ export function Process() {
               {i < processSteps.length - 1 && (
                 <span
                   aria-hidden="true"
-                  className="absolute bottom-[-2rem] left-[21px] top-12 w-[2px] bg-violet-200"
+                  className="absolute bottom-[-2rem] left-[21px] top-12 w-[2px] bg-(--color-warm-yellow)/20"
                 />
               )}
               <StepChip n={i + 1} />
