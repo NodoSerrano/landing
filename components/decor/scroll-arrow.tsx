@@ -17,10 +17,10 @@ export default function ScrollArrow() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed -z-10 -right-[20vw] top-[58vh] w-[72vw] md:-right-[14vw] md:top-1/2 md:w-[46vw] md:-translate-y-1/2 lg:-right-[4vw] lg:w-[38vw] lg:max-w-[460px]"
+      className="pointer-events-none fixed -z-10 bottom-[6vh] left-1/2 w-[72vw] -translate-x-1/2 md:w-[46vw] lg:w-[38vw] lg:max-w-[460px]"
     >
       {/* Capa aparte para el float: si la animación fuera en el wrapper, su
-          transform pisaría el -translate-y-1/2 del posicionamiento. */}
+          transform pisaría el -translate-x-1/2 del centrado. */}
       <div className="animate-arrow-float motion-reduce:animate-none">
         <svg
           className="block h-auto w-full"
