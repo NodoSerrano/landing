@@ -49,7 +49,7 @@ const NAV_SECTION_IDS = Array.from(
 
 const MOBILE_MENU_GRADIENT_ID = "mobile-menu-brand-gradient"
 // Border weight + corner radius matched to the hamburger icon
-// (public/menu-header.svg: stroke-width 3, corner radius ≈6.4).
+// (Figma menu-header export: stroke-width 3, corner radius ≈6.4).
 const MOBILE_MENU_CORNER_RADIUS = 6.4
 const MOBILE_MENU_STROKE_WIDTH = 1
 // Skew ratios derived from the Figma menu container (node 84:259, box 361×483):
@@ -152,7 +152,7 @@ function MobileMenuShape() {
   )
 }
 
-// Hamburger icon (from public/menu-header.svg) with the inner three lines
+// Hamburger icon (from the Figma menu-header export) with the inner three lines
 // inlined so they can morph into an X. Border + gradients + sizes unchanged;
 // only the lines animate on `open`.
 function MenuToggleIcon({ open }: { open: boolean }) {
