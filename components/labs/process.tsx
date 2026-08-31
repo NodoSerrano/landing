@@ -1,18 +1,7 @@
-"use client"
-
-import { motion } from "framer-motion"
 import { Container } from "@/components/ui/container"
 import { processIntro, processSteps } from "@/lib/labs-data"
+import { Reveal } from "@/components/motion/fade-in"
 import { SectionHeading } from "./section-heading"
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" as const },
-  },
-}
 
 function StepChip({ n }: { n: number }) {
   return (
@@ -26,34 +15,23 @@ export function Process() {
   return (
     <section id="proceso" className="py-20 md:py-28">
       <Container>
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-        >
+        <Reveal>
           <SectionHeading label="Proceso" title="Cómo trabajamos" />
-        </motion.div>
+        </Reveal>
 
-        <motion.p
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
+        <Reveal
+          as="p"
           className="mt-8 max-w-[62ch] font-inter text-body-lg leading-relaxed text-(--color-text-primary-light)"
         >
           {processIntro}
-        </motion.p>
+        </Reveal>
 
         {/* Desktop: stepper horizontal con línea que se dibuja al entrar en vista */}
         <div className="relative mt-16 hidden md:block">
           <div className="absolute inset-x-0 top-[21px] h-[3px] rounded-full bg-(--color-warm-yellow)/20" />
-          <motion.div
-            className="absolute left-0 top-[21px] h-[3px] w-full origin-left rounded-full bg-gradient-warm"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: "easeOut" }}
+          <Reveal
+            variant="scale-x"
+            className="absolute left-0 top-[21px] h-[3px] w-full rounded-full bg-gradient-warm"
           />
           <ol className="relative grid grid-cols-3 gap-8">
             {processSteps.map((step, i) => (

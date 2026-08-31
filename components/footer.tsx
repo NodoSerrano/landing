@@ -1,20 +1,9 @@
-"use client"
-
-import { motion } from "framer-motion"
 import MailIcon from "./svgs/mail-icon"
 import TwitterIcon from "./svgs/twitter-icon"
 import InstagramIcon from "./svgs/instagram-icon"
 import MessageIcon from "./svgs/message-icon"
 import MapPinIcon from "./svgs/map-pin-icon"
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-}
-
-const stagger = {
-  visible: { transition: { staggerChildren: 0.1 } },
-}
+import { Reveal } from "@/components/motion/fade-in"
 
 const SOCIAL_LINKS = [
   {
@@ -104,14 +93,8 @@ export default function Footer() {
     >
       <CurvedContainer />
 
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={stagger}
-        className="relative z-10 mx-auto flex w-full max-w-[520px] flex-col items-center gap-12 px-5 text-center"
-      >
-        <motion.div variants={fadeInUp} className="flex w-full flex-col items-center gap-9">
+      <div className="relative z-10 mx-auto flex w-full max-w-[520px] flex-col items-center gap-12 px-5 text-center">
+        <Reveal className="flex w-full flex-col items-center gap-9">
           <div className="flex flex-col items-center gap-1">
             <h2 className="font-display text-h2 font-medium text-(--color-warm-violet)">
               Vení a conocer la
@@ -152,11 +135,11 @@ export default function Footer() {
               </span>
             </span>
           </a>
-        </motion.div>
+        </Reveal>
 
-        <motion.div variants={fadeInUp} className="h-[2px] w-[308px] bg-gradient-warm" />
+        <Reveal delay={100} className="h-[2px] w-[308px] bg-gradient-warm" />
 
-        <motion.div variants={fadeInUp} className="flex w-full flex-col items-center gap-6">
+        <Reveal delay={200} className="flex w-full flex-col items-center gap-6">
           <p className="font-display text-h3 font-medium text-(--color-text-primary-light)">
             Podés contactarnos y seguirnos por aquí
           </p>
@@ -174,15 +157,16 @@ export default function Footer() {
               </a>
             ))}
           </div>
-        </motion.div>
+        </Reveal>
 
-        <motion.p
-          variants={fadeInUp}
+        <Reveal
+          as="p"
+          delay={300}
           className="font-inter text-body-sm text-(--color-text-secondary-dark)"
         >
           © {new Date().getFullYear()} Nodo Serrano. Todos los derechos reservados.
-        </motion.p>
-      </motion.div>
+        </Reveal>
+      </div>
     </footer>
   )
 }

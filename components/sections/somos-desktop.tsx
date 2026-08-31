@@ -1,8 +1,7 @@
-"use client"
-
 import Image from "next/image"
-import { motion } from "framer-motion"
-import { TaglineMark, CardUnderline, fadeInUp } from "./somos-shared"
+import { Reveal } from "@/components/motion/fade-in"
+import { DECO_BLOB_SHADOW } from "./deco-blob-layer"
+import { TaglineMark, CardUnderline } from "./somos-shared"
 
 // ---------------------------------------------------------------------------
 // Composición desktop de la sección Somos (Figma frame 20:427, grupo 225:63).
@@ -125,8 +124,8 @@ function photoMaskUrl(p: PhotoSpec) {
 function BlobPhoto({ photo, index }: { photo: PhotoSpec; index: number }) {
   const gradId = `somos-photo-grad-${index}`
   return (
-    <motion.div
-      variants={fadeInUp}
+    <Reveal
+      delay={(index + 1) * 80}
       className="absolute"
       style={{
         left: photo.left,
@@ -175,63 +174,121 @@ function BlobPhoto({ photo, index }: { photo: PhotoSpec; index: number }) {
           </linearGradient>
         </defs>
       </svg>
-    </motion.div>
+    </Reveal>
   )
 }
 
 // ---------------------------------------------------------------------------
-// Decoración de fondo — SVG compuesto de los vectores del Figma exportados con
-// bounds absolutos y trasladados a un viewBox común cuyo origen es el punto
-// rel(−269, −694) del canvas (unión de los bboxes del grupo 225:63).
-// El viewBox está recortado arriba en rel y=−280 (y local 414) para que la deco
-// asome apenas sobre la sección Community (dentro de su padding inferior) sin
-// pisar su contenido.
-// El blob crema 38:83 NO va acá: es el mismo fondo de Community, y con sombra
-// se leía como una capa suelta a la izquierda en el cambio de sección. El
-// relleno lo da el rectángulo crema de DecoDesktop.
-// Sombra vía CSS `filter` sobre el <svg> (abajo), no un <filter> SVG sobre el
-// <g>: Safari CPU-rasteriza la región del filtro en cada frame scrolleado
-// (medido / vs /labs: stalls de 0.6-1s, ~27fps → 56fps al pasarlo a CSS).
+// Decoración de fondo — export limpio de Figma (svg_containers/somos-container.svg,
+// nodo 489:32): 7 blobs en un viewBox 1573×1256, sin transforms por blob.
+// Un <div><svg> por blob para que cada sombra `_dd` (DECO_BLOB_SHADOW, shared)
+// se componga en GPU y proyecte sobre la capa de atrás — no un <filter> SVG,
+// que Safari CPU-rasteriza en cada frame scrolleado.
 // ---------------------------------------------------------------------------
 
-const DECO_SHADOW = "drop-shadow(4px 5px 10px rgba(7,15,34,0.12))"
-const DECO_SVG = `<g ><g data-l="76-147" transform="translate(552.75 443.64)"><path d="M1221.33 995.845C1220.95 1102.98 1052.58 1156.67 936.655 1150.06C659.926 1185.55 325.101 782.987 272.655 626.217C254.709 572.575 296.103 502.836 261.377 309.669C226.651 116.503 482.514 225.513 700.98 208.461C919.447 191.409 1046.44 450.9 1138.37 547.417C1230.31 643.933 1249.88 740.255 1251.39 814.474C1252.9 888.694 1221.7 888.713 1221.33 995.845Z" fill="url(#sdd-76-147-fill)"/></g><g data-l="76-148" transform="translate(598.18 450.29)"><path d="M1186.01 994.904C1187.91 1101.5 1025.87 1153.66 913.363 1146.22C645.898 1179.46 272.056 679.865 255.559 626.1C210.092 477.932 278.813 497.453 241.065 304.995C203.318 112.537 453.617 222.913 665.002 207.578C876.387 192.244 1004.96 451.383 1096.11 548.103C1187.27 644.823 1208.28 740.808 1211.31 814.667C1214.35 888.525 1184.11 888.312 1186.01 994.904Z" fill="var(--color-bg-light)"/></g><g data-l="73-6" transform="translate(0.00 318.00)"><path d="M1229.06 1005.19C1476.88 987.377 1623.69 897.016 1586.05 829.261C1501.44 676.96 824.828 763.632 653.25 563.181C522.721 410.687 396.906 258.892 265.127 178.29C154.024 110.335 78.8298 346.917 101.547 520.605C111.608 597.528 104.419 722.892 74.1723 814.563C28.4359 953.18 129.681 1089.98 390.638 999.334C776.127 865.433 1125.59 1012.62 1229.06 1005.19Z" fill="var(--color-bg-light)"/></g><g data-l="38-84" transform="translate(11.00 0.00)"><path d="M1385.69 1043.82C1622.2 967.84 1743.41 845.303 1690.8 788.402C1572.55 660.497 935.839 904.905 721.709 750.823C558.808 633.604 400.652 515.948 253.56 468.859C129.549 429.158 112.528 676.771 175.724 840.106C203.712 912.443 226.413 1035.92 218.74 1132.13C207.137 1277.6 337.876 1386.51 569.896 1236.67C912.639 1015.32 1286.95 1075.54 1385.69 1043.82Z" fill="url(#sdd-38-84-fill)"/></g><g data-l="38-85" transform="translate(156.82 431.00)"><path d="M54.3327 596.906C42.9207 655.606 21.5253 805.832 71.0762 829.67C155.141 870.114 796.787 1058.15 1238.85 843.618C1535.21 699.796 1637.8 676.149 1505.78 190.581C1457.35 12.4728 924.196 434.615 505.087 271.03C435.012 243.678 279.439 132.11 144.586 87.0665C9.73403 42.0233 82.7079 313.098 80.5592 384.168C78.4104 455.237 70.3535 514.5 54.3327 596.906Z" fill="var(--color-bg-light)"/></g><g data-l="38-66" transform="translate(205.75 548.59)"><path d="M166.634 909.318C321.555 1003.35 449.012 974.979 557.55 1073.94C666.088 1172.9 861.463 1099.38 1027.83 1051.68C1194.2 1003.97 1268.31 745.34 1329.25 579.96C1390.18 414.58 1388.27 273.186 1166.55 183.705C1076.13 147.214 542.309 200.293 327.728 118.377C163.192 55.5664 79.3654 283.203 63.3625 357.185C46.399 435.606 11.714 815.286 166.634 909.318Z" fill="var(--color-bg-light)"/></g><g data-l="186-37" transform="translate(275.00 677.32)"><path d="M218.749 721.82C369.684 823.637 362.818 820.832 466.504 924.793C570.191 1028.75 772.5 967.688 943.848 930.38C1115.2 893.071 1101.81 612.537 1173.77 452.989C1245.74 293.442 1357.11 183.652 1138.28 82.4116C1049.04 41.1248 490.304 73.0482 313.017 46.1228C135.729 19.1975 31.7793 116.881 10.9773 188.912C-11.0732 265.266 67.8132 620.002 218.749 721.82Z" stroke="url(#sdd-186-37-paint0)" stroke-width="2"/></g><g data-l="45-127" transform="translate(505.00 770.11)"><path d="M128.805 571.861C215.129 623.169 279.931 601.619 342.356 657.514C404.781 713.41 502.348 662.27 586.306 627.705C670.264 593.139 713.374 386.412 735.422 284.556C757.427 182.904 707.402 163.772 587.029 117.737L586.306 117.46C537.003 98.6046 255.914 106.811 163.028 102.797C70.1423 98.7838 46.4623 197.323 42.4684 242.495C38.2349 290.378 42.4807 520.553 128.805 571.861Z" stroke="url(#sdd-45-127-paint0)" stroke-opacity="0.5" stroke-width="2"/></g><g data-l="73-4" transform="translate(258.08 621.00)"><path d="M194.456 798.159C343.021 875.549 457.073 890.437 563.869 975.82C670.665 1061.2 842.287 977.828 989.652 920.862C1137.02 863.896 1086.03 599.867 1127.88 439.662C1169.73 279.457 1253.6 161.408 1044.67 93.1352C959.461 65.2928 466.439 166.053 304.841 162.927C143.243 159.801 64.2945 265.446 55.805 336.299C46.8059 411.405 45.8898 720.77 194.456 798.159Z" fill="var(--color-bg-light)"/></g><g data-l="84-291" transform="translate(273.98 677.00)"><path d="M272.906 760.391C415.264 831.047 409.021 829.433 511.15 907.781C613.279 986.129 778.92 907.723 921.048 853.946C1063.18 800.169 1015.95 555.973 1057.31 407.301C1098.67 258.629 1180.15 148.713 979.661 86.9161C897.901 61.7147 423.016 158.435 267.612 156.652C112.208 154.869 35.5476 253.263 26.8946 318.946C17.7222 388.571 130.548 689.735 272.906 760.391Z" fill="var(--color-bg-light)"/><path d="M272.906 760.391C415.264 831.047 409.021 829.433 511.15 907.781C613.279 986.129 778.92 907.723 921.048 853.946C1063.18 800.169 1015.95 555.973 1057.31 407.301C1098.67 258.629 1180.15 148.713 979.661 86.9161C897.901 61.7147 423.016 158.435 267.612 156.652C112.208 154.869 35.5476 253.263 26.8946 318.946C17.7222 388.571 130.548 689.735 272.906 760.391Z" stroke="url(#sdd-84-291-paint0)" stroke-width="2"/></g><g data-l="73-5" transform="translate(326.26 656.71)"><path d="M254.979 734.091C384.65 805.564 378.986 803.887 472.429 882.3C565.872 960.714 714.333 886.275 841.922 835.647C969.511 785.019 923.173 544.697 958.298 399.439C993.424 254.181 1065.38 147.556 883.327 83.901C809.086 57.9421 381.528 145.698 241.109 141.609C100.689 137.52 32.9149 232.912 26.0864 297.232C18.8481 365.412 125.309 662.619 254.979 734.091Z" fill="var(--color-bg-light)"/></g><g data-l="45-126" transform="translate(661.83 913.38)"><path d="M70.9546 308.149C121.786 334.209 160.72 321.956 197.236 350.755C233.751 379.554 292.613 351.205 343.143 331.811C393.674 312.417 426.001 199.948 433.07 144.859C445.584 47.3491 336.796 98.2429 296.424 85.3015C267.258 75.952 267.755 48.6182 97.4357 59.2579C41.9785 62.7223 26.6787 110.833 23.7121 134.81C20.5674 160.228 20.1234 282.089 70.9546 308.149Z" fill="#FEFBF6"/></g></g><defs><linearGradient id="sdd-76-147-fill" x1="700" y1="1100" x2="550" y2="150" gradientUnits="userSpaceOnUse"><stop stop-color="var(--color-brand-blue)"/><stop offset="0.5" stop-color="var(--color-brand-violet)"/><stop offset="1" stop-color="var(--color-logo-violet)"/></linearGradient><linearGradient id="sdd-38-84-fill" x1="1400" y1="1100" x2="200" y2="550" gradientUnits="userSpaceOnUse"><stop stop-color="var(--color-logo-sky)"/><stop offset="0.45" stop-color="var(--color-brand-blue)"/><stop offset="1" stop-color="var(--color-logo-blue)"/></linearGradient><linearGradient id="sdd-186-37-paint0" x1="39.2838" y1="1007.38" x2="771.934" y2="-190.624" gradientUnits="userSpaceOnUse"><stop stop-color="var(--color-brand-mint)"/><stop offset="0.466597" stop-color="var(--color-brand-blue)"/><stop offset="0.932457" stop-color="var(--color-brand-violet)"/></linearGradient><linearGradient id="sdd-45-127-paint0" x1="113.998" y1="740.738" x2="514.595" y2="-21.8522" gradientUnits="userSpaceOnUse"><stop stop-color="var(--color-brand-mint)"/><stop offset="0.466597" stop-color="var(--color-brand-blue)"/><stop offset="0.932457" stop-color="var(--color-brand-violet)"/></linearGradient><linearGradient id="sdd-84-291-paint0" x1="155.455" y1="1032.72" x2="654.24" y2="-96.9484" gradientUnits="userSpaceOnUse"><stop stop-color="var(--color-brand-mint)"/><stop offset="0.466597" stop-color="var(--color-brand-blue)"/><stop offset="0.932457" stop-color="var(--color-brand-violet)"/></linearGradient></defs>`
+const DECO_VIEWBOX = "0 0 1573 1256"
+
+type DecoStroke = { id: string; x1: number; y1: number; x2: number; y2: number; opacity?: number }
+type DecoBlobSpec = { d: string; fill?: string; stroke?: DecoStroke; opacity?: number }
+
+// Back-to-front (document order). Brand gradient stops mint→blue→violet, same as
+// the export's paint0/1/2 (only the vector coords differ).
+const DECO_BLOBS: DecoBlobSpec[] = [
+  {
+    d: "M1254.47 392.755C1337.4 471.771 1273.34 670.531 1195.4 775.395C1049.14 1063.34 526.345 1084.65 371.706 1019.18C318.792 996.773 290.652 906.394 118.887 797.429C-52.8774 688.465 192.445 526.358 316.419 307.083C440.393 87.8074 721.592 158.152 854.259 142.011C986.926 125.869 1074 178.065 1132.56 231.13C1191.12 284.196 1171.54 313.739 1254.47 392.755Z",
+    fill: "var(--color-accent-violet)",
+  },
+  {
+    d: "M235.971 962.849C400.012 1062.42 534.973 1032.37 649.9 1137.16C764.828 1241.94 971.704 1164.1 1147.87 1113.59C1324.03 1063.08 1402.5 789.217 1467.02 614.101C1531.54 438.986 1529.53 289.268 1294.75 194.519C1199.01 155.88 633.762 212.084 406.548 125.346C232.326 58.8375 143.565 299.875 126.62 378.212C108.658 461.25 71.9308 863.281 235.971 962.849Z",
+    fill: "var(--color-bg-light)",
+  },
+  {
+    d: "M389.766 885.415C540.649 987.198 533.785 984.393 637.436 1088.32C741.088 1192.24 943.328 1131.2 1114.62 1093.9C1285.91 1056.61 1272.52 776.169 1344.46 616.676C1416.4 457.183 1527.73 347.431 1308.98 246.225C1219.77 204.952 661.228 236.865 484.002 209.949C306.775 183.033 202.86 280.682 182.065 352.689C160.022 429.017 238.882 783.632 389.766 885.415Z",
+    stroke: { id: "somos-dd-grad-0", x1: 210.362, y1: 1170.88, x2: 942.762, y2: -26.7173 },
+  },
+  {
+    d: "M529.823 828.163C616.098 879.442 680.862 857.903 743.252 913.767C805.641 969.631 903.151 918.52 987.061 883.975C1070.97 849.429 1114.06 642.82 1136.09 541.023C1158.08 439.429 1108.09 420.309 987.784 374.3L987.061 374.023C937.787 355.178 656.859 363.38 564.026 359.369C471.194 355.358 447.527 453.84 443.536 498.986C439.305 546.842 443.548 776.884 529.823 828.163Z",
+    stroke: { id: "somos-dd-grad-1", x1: 515.024, y1: 996.943, x2: 915.391, y2: 234.791, opacity: 0.5 },
+  },
+  {
+    d: "M348.592 905.523C497.128 982.897 611.157 997.783 717.932 1083.15C824.706 1168.51 996.294 1085.16 1143.63 1028.2C1290.96 971.247 1239.99 707.27 1281.83 547.097C1323.68 386.924 1407.53 268.899 1198.63 200.64C1113.44 172.803 620.521 273.543 458.955 270.418C297.389 267.292 218.457 372.917 209.969 443.755C200.972 518.846 200.056 828.149 348.592 905.523Z",
+    fill: "var(--color-bg-light)",
+  },
+  {
+    d: "M442.844 923.541C585.133 994.163 578.893 992.55 680.972 1070.86C783.051 1149.17 948.61 1070.8 1090.67 1017.05C1232.73 963.3 1185.53 719.223 1226.86 570.624C1268.2 422.025 1349.64 312.163 1149.25 250.396C1067.53 225.207 592.881 321.88 437.553 320.098C282.225 318.316 205.602 416.661 196.953 482.312C187.786 551.904 300.556 852.92 442.844 923.541Z",
+    fill: "var(--color-bg-light)",
+    stroke: { id: "somos-dd-grad-2", x1: 325.451, y1: 1195.74, x2: 823.991, y2: 66.6221 },
+    opacity: 0.5,
+  },
+  {
+    d: "M477.317 877.275C606.978 948.742 601.314 947.064 694.75 1025.47C788.187 1103.88 936.636 1029.45 1064.22 978.822C1191.8 928.198 1145.46 687.894 1180.58 542.647C1215.71 397.399 1287.65 290.782 1105.62 227.132C1031.38 201.175 603.857 288.925 463.447 284.836C323.038 280.748 255.269 376.133 248.441 440.447C241.203 508.623 347.656 805.807 477.317 877.275Z",
+    fill: "var(--color-bg-light)",
+  },
+]
+
+// One blob = one <div><svg><path> so its drop-shadow composites on its own GPU
+// layer and falls on the blobs behind it (see comment block above).
+function DecoBlob({ blob }: { blob: DecoBlobSpec }) {
+  const { d, fill, stroke, opacity } = blob
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0"
+      style={{ filter: DECO_BLOB_SHADOW, opacity }}
+    >
+      <svg
+        viewBox={DECO_VIEWBOX}
+        preserveAspectRatio="xMidYMid slice"
+        fill="none"
+        className="h-full w-full overflow-visible"
+      >
+        {stroke && (
+          <defs>
+            <linearGradient
+              id={stroke.id}
+              gradientUnits="userSpaceOnUse"
+              x1={stroke.x1}
+              y1={stroke.y1}
+              x2={stroke.x2}
+              y2={stroke.y2}
+            >
+              <stop stopColor="var(--color-brand-mint)" />
+              <stop offset="0.466597" stopColor="var(--color-brand-blue)" />
+              <stop offset="0.932457" stopColor="var(--color-brand-violet)" />
+            </linearGradient>
+          </defs>
+        )}
+        <path
+          d={d}
+          fill={fill ?? "none"}
+          stroke={stroke ? `url(#${stroke.id})` : undefined}
+          strokeOpacity={stroke?.opacity}
+          strokeWidth={stroke ? 2 : undefined}
+        />
+      </svg>
+    </div>
+  )
+}
 
 function DecoDesktop() {
   return (
     <>
-      {/* Base crema plana full-bleed: garantiza continuidad sin costuras con la
-          sección Community en cualquier ancho de viewport. Termina a ~72% del
-          canvas; de ahí para abajo el borde lo dan los blobs.
-          El borde inferior recto no se nota porque el body es del mismo crema
-          (--color-bg-light); lo que sí se notaba era la sombra del blob de
-          Community, resuelta en community.tsx. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[-200px] -z-20 h-[calc(72%+200px)] w-screen -translate-x-1/2 bg-(--color-bg-light)"
-      />
-      {/* Vectores del Figma: viewBox recortado arriba en y=414 (rel −280).
-          filter on the <div>, not the <svg>: <svg> has overflow:hidden by
-          default, which clips a drop-shadow cast off a cream-on-cream blob.
-          Same params. */}
+      {/* Blob stack. left/top/width/height define the on-screen footprint; the
+          art inside scales to fill (slice, no distortion). Tune these 4 values
+          visually so the cluster sits behind the SOMOS tagline. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -z-10"
         style={{
-          left: "-21.016%",
-          top: "-29.412%",
-          width: "158.532%",
-          height: "138.933%",
-          filter: DECO_SHADOW,
+          left: "-19%",
+          top: "-18%",
+          width: "145%",
+          height: "135%",
         }}
       >
-        <svg
-          viewBox="0 414 2029.21 1322.64"
-          preserveAspectRatio="none"
-          fill="none"
-          className="h-full w-full overflow-visible"
-          dangerouslySetInnerHTML={{ __html: DECO_SVG }}
-        />
+        {DECO_BLOBS.map((blob, i) => (
+          <DecoBlob key={i} blob={blob} />
+        ))}
       </div>
     </>
   )
@@ -239,19 +296,14 @@ function DecoDesktop() {
 
 export default function SomosDesktop() {
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-120px" }}
-      variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+    <div
       className="relative mx-auto mb-[120px]  hidden w-full max-w-[1280px] lg:block"
       style={{ aspectRatio: "1280 / 952" }}
     >
       <DecoDesktop />
 
       {/* Centro — tagline + SOMOS (el blob crema de fondo está en la deco) */}
-      <motion.div
-        variants={fadeInUp}
+      <Reveal
         className="absolute flex flex-col items-center gap-1 text-center"
         style={{ left: "34.219%", top: "38.235%", width: "28.75%" }}
       >
@@ -266,7 +318,7 @@ export default function SomosDesktop() {
             SOMOS
           </span>
         </h2>
-      </motion.div>
+      </Reveal>
 
       {/* Fotos blob */}
       {PHOTOS.map((photo, i) => (
@@ -274,10 +326,11 @@ export default function SomosDesktop() {
       ))}
 
       {/* Cards */}
-      {CARDS.map((card) => (
-        <motion.article
+      {CARDS.map((card, i) => (
+        <Reveal
+          as="article"
           key={card.title}
-          variants={fadeInUp}
+          delay={(PHOTOS.length + 1 + i) * 80}
           className="absolute w-[28.906%] rounded-[8px] bg-(--color-bg-warm-white) p-3"
           style={{
             left: card.left,
@@ -294,8 +347,8 @@ export default function SomosDesktop() {
           <p className="mt-2 text-body text-(--color-text-primary-light)">
             {card.desc}
           </p>
-        </motion.article>
+        </Reveal>
       ))}
-    </motion.div>
+    </div>
   )
 }
