@@ -134,25 +134,11 @@ function CardShape() {
   )
 }
 
-// Doble drop-shadow neumórfico del blob crema mobile. La estructura es la que
-// exporta Figma; los offsets/blur/alpha están recalibrados hacia abajo (alphas
-// 0.4/0.35 → 0.24/0.21, blur 18 → 24, offsets 18 → 13) porque la sombra original
-// se leía como una banda gris ancha en el borde del blob, en vez de relieve.
-// Mismo criterio que el pase de Somos (blob-shadow-filter.tsx).
-//
-// La región es el viewBox exacto (userSpaceOnUse 1062.53×812): la sombra queda
-// recortada ahí, pero el <svg> ya recorta en el mismo borde, así que ampliarla
-// no cambiaría nada visible.
-// Single feDropShadow. iOS Safari CPU-rasterises SVG <filter>s; the old
-// double-blur (stdDeviation 24) + overlay-blend recipe froze this section for
-// seconds when it scrolled into view on iPhone.
-function BlobShadowFilter({ id }: { id: string }) {
-  return (
-    <filter id={id} x="-15%" y="-15%" width="130%" height="130%" colorInterpolationFilters="sRGB">
-      <feDropShadow dx="10" dy="10" stdDeviation="12" floodColor="#070f22" floodOpacity="0.16" />
-    </filter>
-  )
-}
+// Blob-crema mobile: sombra vía CSS `filter` sobre el <svg>, no un <filter> SVG
+// sobre el <g>. Safari CPU-rasteriza la región del filtro en cada frame que se
+// scrollea (medido en / vs /labs: stalls de 0.6-1s, ~27fps → 56fps al pasarlo
+// a CSS). El drop-shadow CSS es un efecto de capa compuesto en GPU.
+const MOBILE_BLOB_SHADOW = "drop-shadow(10px 10px 12px rgba(7,15,34,0.16))"
 
 // Organic cream blob = section background on the dark page. slice makes it cover
 // the section box; corners stay transparent so the dark page shows through the
@@ -167,17 +153,13 @@ function BlobBackground() {
         preserveAspectRatio="xMidYMid slice"
         fill="none"
         aria-hidden="true"
+        style={{ filter: MOBILE_BLOB_SHADOW }}
         className="pointer-events-none absolute left-0 -top-[145px] h-[calc(100%+145px)] w-full -z-10 md:-top-[205px] md:h-[calc(100%+205px)] lg:hidden"
       >
-        <g filter="url(#labs-blob-shadow-m)">
-          <path
-            d="M965.708 286.578C1037.68 351.271 1007.72 495.547 957.76 568.678C873.003 774.075 565.138 688.392 373.298 746.972C181.459 805.551 -13.6548 614.046 76.807 563.455C227.333 479.274 -2.22957 305.912 72.0614 150.353C146.352 -5.20683 530.21 75.0987 631.275 72.0095C851.97 65.2638 973.081 115.327 938.785 157.427C902.487 201.984 893.739 221.885 965.708 286.578Z"
-            fill="var(--color-bg-light)"
-          />
-        </g>
-        <defs>
-          <BlobShadowFilter id="labs-blob-shadow-m" />
-        </defs>
+        <path
+          d="M965.708 286.578C1037.68 351.271 1007.72 495.547 957.76 568.678C873.003 774.075 565.138 688.392 373.298 746.972C181.459 805.551 -13.6548 614.046 76.807 563.455C227.333 479.274 -2.22957 305.912 72.0614 150.353C146.352 -5.20683 530.21 75.0987 631.275 72.0095C851.97 65.2638 973.081 115.327 938.785 157.427C902.487 201.984 893.739 221.885 965.708 286.578Z"
+          fill="var(--color-bg-light)"
+        />
       </svg>
 
       {/* Desktop (Figma 38:83, near-square). Align top so the organic top edge

@@ -31,6 +31,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
+      data-scroll-behavior="smooth"
       className={`scroll-smooth ${inter.variable} ${spaceGrotesk.variable} ${workSans.variable}`}
     >
       <body className="overflow-x-hidden bg-bg-light text-foreground" suppressHydrationWarning>

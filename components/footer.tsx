@@ -63,32 +63,28 @@ const SOCIAL_LINKS = [
 // export, so the two sections read as the same depth.
 function CurvedContainer() {
   return (
-    <svg
-      viewBox="17 0 1408 939"
-      preserveAspectRatio="none"
-      fill="none"
+    // Shadow via CSS filter on a wrapping <div>, not an SVG <filter> on the
+    // path — Safari CPU-rasterises the filter region on every scrolled frame.
+    // The <div> (not the <svg>) carries it: <svg> has overflow:hidden by
+    // default, which clips a drop-shadow cast off a cream-on-cream blob whose
+    // only visible feature IS that shadow. See blog.tsx for the measurement.
+    <div
       aria-hidden="true"
       className="pointer-events-none absolute top-[120px] bottom-0 -left-[60px] -right-[60px] -z-10 max-[1199px]:left-1/2 max-[1199px]:right-auto max-[1199px]:w-[1200px] max-[1199px]:-translate-x-1/2"
+      style={{ filter: "drop-shadow(6px 6px 8px rgba(7,15,34,0.14))" }}
     >
-      <defs>
-        <filter
-          id="footer-blob-shadow"
-          x="-20%"
-          y="-20%"
-          width="140%"
-          height="140%"
-          colorInterpolationFilters="sRGB"
-        >
-          {/* Single feDropShadow — iOS Safari CPU-rasterises SVG filters. */}
-          <feDropShadow dx="6" dy="6" stdDeviation="8" floodColor="#070F22" floodOpacity="0.14" />
-        </filter>
-      </defs>
-      <path
-        filter="url(#footer-blob-shadow)"
-        d="M1312.45 681.904C1250.94 612.423 1187.6 508.951 1154.79 406.48C1120.17 298.358 1058.19 153.049 877.292 57.0759C696.394 -38.8976 415.705 60.1888 307.713 118.559C199.721 176.929 55.2757 337.499 159.623 538.943C263.969 740.388 21.4526 911.626 17 939L1425 939C1415.43 875.851 1373.97 751.385 1312.45 681.904Z"
-        fill="#F8F4ED"
-      />
-    </svg>
+      <svg
+        viewBox="17 0 1408 939"
+        preserveAspectRatio="none"
+        fill="none"
+        className="h-full w-full overflow-visible"
+      >
+        <path
+          d="M1312.45 681.904C1250.94 612.423 1187.6 508.951 1154.79 406.48C1120.17 298.358 1058.19 153.049 877.292 57.0759C696.394 -38.8976 415.705 60.1888 307.713 118.559C199.721 176.929 55.2757 337.499 159.623 538.943C263.969 740.388 21.4526 911.626 17 939L1425 939C1415.43 875.851 1373.97 751.385 1312.45 681.904Z"
+          fill="#F8F4ED"
+        />
+      </svg>
+    </div>
   )
 }
 
@@ -135,6 +131,7 @@ export default function Footer() {
               src="https://www.google.com/maps?q=San+Martin+864,+Tandil,+Buenos+Aires,+Argentina&output=embed"
               className="h-full w-full border-0"
               loading="lazy"
+              allow="fullscreen"
               referrerPolicy="no-referrer-when-downgrade"
               title="Ubicación de Nodo Serrano"
             />
