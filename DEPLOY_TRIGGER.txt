@@ -1,2 +1,0 @@
-Deploy trigger: Tue Jul 29 2025 19:30:00 GMT
-This file is used to trigger a new deployment on Vercel.

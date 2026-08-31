@@ -65,25 +65,23 @@ Not a dark cyan/blue theme. The redesign mixes **light and dark sections** (no t
   - `blog/page.tsx` — blog index (server component, `getGhostPosts`, `?page=` pagination)
   - `blog/[slug]/page.tsx` — article page (`getGhostPostBySlug`, `generateMetadata`)
   - `blog/error.tsx` — error boundary for the blog routes
-  - `/api` — `subscribers`, `health`, `admin/subscribers`, `ghost/test`, plus `debug-*` / `test-*` endpoints
+  - `/api` — `subscribers`, `health`, `admin/subscribers`
 - `/components`
   - `/sections` — one file per landing-page section (`hero`, `community`, `somos`, `events`, `blog`, `sponsors`, `newsletter`, …)
   - `/blog` — `post-card`, `article-body`, `breadcrumb`, `pagination-controls`
-  - `/layout/header.tsx` — sticky header + scroll-spy nav; `mobile-menu.tsx`
-  - `/ui` — shadcn primitives (`button`, `input`, `container`)
+  - `/layout/header.tsx` — sticky header + scroll-spy nav (mobile menu lives inline in this file)
+  - `/ui` — one shadcn primitive left (`container`)
   - `/svgs` — inline SVG icon components
   - `/motion/fade-in.tsx` — shared scroll-reveal wrapper
 - `/lib`
   - `ghost.ts` — Ghost Content API client (`getGhostPosts`, `getGhostPostBySlug`)
   - `db.ts` — Neon operations (`addSubscriber`, …)
-  - `email.ts`, `notification-service.ts`, `notification.ts`, `webhook.ts` — email/webhook notifications
-  - `features-data.tsx`, `use-scroll-hash.ts`, `utils.ts` (`cn`)
-  - `luma-api.ts` — **legacy mock**, not wired up; the events section uses a Luma embed iframe instead
+  - `use-scroll-hash.ts`, `labs-data.ts`, `utils.ts` (`cn`)
 - `/database` — `schema.sql`, `test-connection.js`
 - `/public` — images, logos, favicons
 
 ### Key Features
-1. **Newsletter**: client form (`components/sections/newsletter.tsx`) → `subscribeToNewsletter` server action → `subscribers` table + notifications. Duplicate emails are treated as success.
+1. **Newsletter**: client form (`components/sections/newsletter.tsx`) → `subscribeToNewsletter` server action (`app/actions.ts`) → `addSubscriber` (`lib/db.ts`) → `subscribers` table. Duplicate emails are treated as success. No email/webhook notification is sent (that layer was removed).
 2. **Ghost blog**: index + article pages under `/app/blog`; homepage teaser in `components/sections/blog.tsx` fetches Ghost **client-side** (hence the CSP `connect-src` allowance — see below).
 3. **Events**: `components/sections/events.tsx` embeds a Luma calendar iframe (`https://luma.com/embed/calendar/...`).
 4. **Responsive, mostly server-rendered** landing + blog; Framer Motion reveals.
@@ -93,8 +91,6 @@ Not a dark cyan/blue theme. The redesign mixes **light and dark sections** (no t
 - Client: `lib/ghost.ts` — plain `fetch` against `${NEXT_PUBLIC_GHOST_URL}/ghost/api/content/...` with `?key=NEXT_PUBLIC_GHOST_CONTENT_API_KEY`, `next: { revalidate: 60 }`.
 - **Graceful degradation**: both functions catch non-OK responses and network errors. Missing/invalid key → empty list on `/blog`, `null` → `notFound()` on an article. They no longer throw (previously any Ghost 401/429/5xx surfaced as an unhandled 500).
 - `components/blog/article-body.tsx` sanitises Ghost HTML with `isomorphic-dompurify`. That pulls in `jsdom`; `next.config.mjs` sets `serverExternalPackages: ['isomorphic-dompurify']` so it isn't bundled into the serverless function (bundling breaks its dynamic requires → 500 on article pages).
-- Test endpoint: `/api/ghost/test`.
-- Older doc `GHOST_INTEGRATION.md` predates the `/app/blog` pages (it describes a since-removed `GhostBlogSection` component) — treat as background only.
 
 ## Environment Variables
 
@@ -104,7 +100,6 @@ Not a dark cyan/blue theme. The redesign mixes **light and dark sections** (no t
 - `NEXT_PUBLIC_GHOST_CONTENT_API_KEY` — Ghost Content API key
 - `GHOST_ADMIN_API_KEY` — optional, for future write operations
 - `DATABASE_URL` — Neon connection string (newsletter; API routes fail loudly without it)
-- `EMAIL_*`, `WEBHOOK_URL` — notification delivery (optional)
 - `ADMIN_API_KEY` — optional, guards `/api/admin/*`
 
 **`NEXT_PUBLIC_*` gotcha**: these are inlined at **build time**. Changing one in Vercel requires a **redeploy** of that branch to take effect, and a stale/wrong key in the **Preview** scope is the known cause of blog failures on branch deployments even when Production is fine.
@@ -125,4 +120,4 @@ Not a dark cyan/blue theme. The redesign mixes **light and dark sections** (no t
 - **Never commit to `main`**; PR into it.
 - **Database**: the `subscribers` table (email, name, status, created_at) must exist before newsletter writes work; `./setup-database.sh` creates it. Verify with `/api/health`.
 - **Styling**: follow existing Tailwind v4 patterns and reference design tokens from `app/globals.css` by CSS var; don't add a `tailwind.config` file.
-- **Legacy docs**: `BLOG_GUIDE.md` and `NOTION_INTEGRATION.md` describe an earlier markdown/Notion-based blog that has been replaced by the Ghost integration — do not follow them. `DATABASE_SETUP.md` and `DEPLOYMENT.md` are still broadly accurate. `.cursorrules` exists for Cursor users.
+- **Legacy docs**: `DATABASE_SETUP.md` and `DEPLOYMENT.md` are still broadly accurate. `.cursorrules` exists for Cursor users. (The earlier `BLOG_GUIDE.md`, `NOTION_INTEGRATION.md`, and `GHOST_INTEGRATION.md` describing a since-replaced Notion/markdown blog have been removed.)
