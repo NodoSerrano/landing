@@ -71,7 +71,7 @@ export default function Somos() {
   return (
     <section
       id="about"
-      className="font-inter relative isolate z-20 overflow-hidden bg-(--color-bg-light) py-16 md:py-20 lg:overflow-visible lg:bg-transparent lg:py-0"
+      className="font-inter relative isolate z-20 overflow-hidden bg-(--color-bg-light) pb-28 pt-6 md:pb-40 md:pt-10 lg:overflow-visible lg:bg-transparent lg:pb-28 lg:pt-6"
     >
       <Container>
         {/* Desktop (lg+): composición freeform del Figma */}
@@ -86,7 +86,7 @@ export default function Somos() {
             <div className="flex items-center justify-center gap-2">
               <TaglineMark />
               <span className="text-body-lg text-(--color-accent-violet)">
-                Educación·Comunidad·Arte
+                Educación·Comunidad·Ethereum
               </span>
             </div>
             <h2 className="font-display text-[3.5rem] font-bold leading-none">

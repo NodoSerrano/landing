@@ -273,16 +273,6 @@ function DecoBlob({ blob }: { blob: DecoBlobSpec }) {
 function DecoDesktop() {
   return (
     <>
-      {/* Base crema plana full-bleed: garantiza continuidad sin costuras con la
-          sección Community en cualquier ancho de viewport. Termina a ~72% del
-          canvas; de ahí para abajo el borde lo dan los blobs.
-          El borde inferior recto no se nota porque el body es del mismo crema
-          (--color-bg-light); lo que sí se notaba era la sombra del blob de
-          Community, resuelta en community.tsx. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[-200px] -z-20 h-[calc(72%+200px)] w-screen -translate-x-1/2 bg-(--color-bg-light)"
-      />
       {/* Blob stack. left/top/width/height define the on-screen footprint; the
           art inside scales to fill (slice, no distortion). Tune these 4 values
           visually so the cluster sits behind the SOMOS tagline. */}
@@ -290,10 +280,10 @@ function DecoDesktop() {
         aria-hidden="true"
         className="pointer-events-none absolute -z-10"
         style={{
-          left: "-21.016%",
-          top: "-29.412%",
-          width: "158.532%",
-          height: "138.933%",
+          left: "-19%",
+          top: "-18%",
+          width: "145%",
+          height: "135%",
         }}
       >
         {DECO_BLOBS.map((blob, i) => (
