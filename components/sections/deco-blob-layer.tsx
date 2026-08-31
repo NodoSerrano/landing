@@ -17,16 +17,19 @@ export const DECO_BLOB_SHADOW =
 export function DecoLayer({
   viewBox,
   shadow = true,
+  filter,
   children,
 }: {
   viewBox: string
   shadow?: boolean
+  /** Override DECO_BLOB_SHADOW for one section (see events.tsx). */
+  filter?: string
   children: ReactNode
 }) {
   return (
     <div
       className="absolute inset-0"
-      style={shadow ? { filter: DECO_BLOB_SHADOW } : undefined}
+      style={shadow ? { filter: filter ?? DECO_BLOB_SHADOW } : undefined}
     >
       <svg
         viewBox={viewBox}
