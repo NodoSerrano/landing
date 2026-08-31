@@ -134,35 +134,11 @@ function CardShape() {
   )
 }
 
-// Doble drop-shadow neumórfico del blob crema mobile. La estructura es la que
-// exporta Figma; los offsets/blur/alpha están recalibrados hacia abajo (alphas
-// 0.4/0.35 → 0.24/0.21, blur 18 → 24, offsets 18 → 13) porque la sombra original
-// se leía como una banda gris ancha en el borde del blob, en vez de relieve.
-// Mismo criterio que el pase de Somos (blob-shadow-filter.tsx).
-//
-// La región es el viewBox exacto (userSpaceOnUse 1062.53×812): la sombra queda
-// recortada ahí, pero el <svg> ya recorta en el mismo borde, así que ampliarla
-// no cambiaría nada visible.
-function BlobShadowFilter({ id, width, height }: { id: string; width: number; height: number }) {
-  return (
-    <filter id={id} x="0" y="0" width={width} height={height} filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-      <feFlood floodOpacity="0" result="BackgroundImageFix" />
-      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-      <feOffset dx="13" dy="13" />
-      <feGaussianBlur stdDeviation="24" />
-      <feComposite in2="hardAlpha" operator="out" />
-      <feColorMatrix type="matrix" values="0 0 0 0 0.0278291 0 0 0 0 0.0580852 0 0 0 0 0.134615 0 0 0 0.24 0" />
-      <feBlend mode="overlay" in2="BackgroundImageFix" result="effect1_dropShadow" />
-      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-      <feOffset dx="-13" dy="-13" />
-      <feGaussianBlur stdDeviation="24" />
-      <feComposite in2="hardAlpha" operator="out" />
-      <feColorMatrix type="matrix" values="0 0 0 0 0.224066 0 0 0 0 0.230651 0 0 0 0 0.355769 0 0 0 0.21 0" />
-      <feBlend mode="overlay" in2="effect1_dropShadow" result="effect2_dropShadow" />
-      <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow" result="shape" />
-    </filter>
-  )
-}
+// Blob-crema mobile: sombra vía CSS `filter` sobre el <svg>, no un <filter> SVG
+// sobre el <g>. Safari CPU-rasteriza la región del filtro en cada frame que se
+// scrollea (medido en / vs /labs: stalls de 0.6-1s, ~27fps → 56fps al pasarlo
+// a CSS). El drop-shadow CSS es un efecto de capa compuesto en GPU.
+const MOBILE_BLOB_SHADOW = "drop-shadow(10px 10px 12px rgba(7,15,34,0.16))"
 
 // Organic cream blob = section background on the dark page. slice makes it cover
 // the section box; corners stay transparent so the dark page shows through the
@@ -177,17 +153,13 @@ function BlobBackground() {
         preserveAspectRatio="xMidYMid slice"
         fill="none"
         aria-hidden="true"
+        style={{ filter: MOBILE_BLOB_SHADOW }}
         className="pointer-events-none absolute left-0 -top-[145px] h-[calc(100%+145px)] w-full -z-10 md:-top-[205px] md:h-[calc(100%+205px)] lg:hidden"
       >
-        <g filter="url(#labs-blob-shadow-m)">
-          <path
-            d="M965.708 286.578C1037.68 351.271 1007.72 495.547 957.76 568.678C873.003 774.075 565.138 688.392 373.298 746.972C181.459 805.551 -13.6548 614.046 76.807 563.455C227.333 479.274 -2.22957 305.912 72.0614 150.353C146.352 -5.20683 530.21 75.0987 631.275 72.0095C851.97 65.2638 973.081 115.327 938.785 157.427C902.487 201.984 893.739 221.885 965.708 286.578Z"
-            fill="var(--color-bg-light)"
-          />
-        </g>
-        <defs>
-          <BlobShadowFilter id="labs-blob-shadow-m" width={1062.53} height={812} />
-        </defs>
+        <path
+          d="M965.708 286.578C1037.68 351.271 1007.72 495.547 957.76 568.678C873.003 774.075 565.138 688.392 373.298 746.972C181.459 805.551 -13.6548 614.046 76.807 563.455C227.333 479.274 -2.22957 305.912 72.0614 150.353C146.352 -5.20683 530.21 75.0987 631.275 72.0095C851.97 65.2638 973.081 115.327 938.785 157.427C902.487 201.984 893.739 221.885 965.708 286.578Z"
+          fill="var(--color-bg-light)"
+        />
       </svg>
 
       {/* Desktop (Figma 38:83, near-square). Align top so the organic top edge

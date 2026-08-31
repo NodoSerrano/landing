@@ -13,7 +13,12 @@ import { getGhostPosts } from "@/lib/ghost";
 export default async function Home() {
   // Fetch the latest post server-side (ISR, revalidate 60 in lib/ghost) so the
   // blog teaser renders with the page instead of a client-side fetch waterfall.
-  const { posts } = await getGhostPosts({ limit: 1 });
+  // Card-only fields — the teaser never renders the post body, and pulling
+  // `html` would bloat the HTML document.
+  const { posts } = await getGhostPosts({
+    limit: 1,
+    fields: ["id", "title", "slug", "feature_image", "excerpt", "published_at", "reading_time"],
+  });
   const latestPost = posts[0] ?? null;
 
   return (

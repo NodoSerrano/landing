@@ -11,9 +11,10 @@ import { cn } from "@/lib/utils"
 // curva del lado oscuro — no un halo rectangular. La sombra sigue el contorno
 // porque ES el contorno (criterio de los blobs del home).
 //
-// Filtro con región en objectBoundingBox (%) → Safari no lo dropea, a
-// diferencia de userSpaceOnUse sobre un canvas grande (ver
-// components/sections/blob-shadow-filter.tsx).
+// Filtro con región en objectBoundingBox (%) sobre un viewBox chico → barato.
+// Los blobs grandes de la home hacían lo contrario (feDropShadow sobre paths de
+// ~2000u escalados a 140vw) y Safari los CPU-rasterizaba en cada frame
+// scrolleado; ahí la sombra se movió a `filter` CSS sobre el <svg>.
 //
 // Cada CREST recorre la banda y≈14–112 sobre un viewBox de 120 de alto con un
 // perfil distinto (lóbulo hondo, pellizco alto, meseta, rolido, S larga…). Los

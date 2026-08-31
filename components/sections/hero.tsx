@@ -55,13 +55,16 @@ export default function Hero() {
         </picture>
       </div>
 
-      {/* Gradient Overlay — small desktop-only backdrop blur softens the low-res bg image */}
+      {/* Gradient Overlay. The linear gradients carry the dark tint on every
+          screen; the huge blur circles + infinite animate-pulse are desktop
+          only — on mobile they were continuous compositor work that starved
+          the scroll-reveal animations on iOS. */}
       <div className="absolute inset-0 z-1 md:backdrop-blur-[6px]">
         <div className="absolute inset-0 bg-linear-to-br from-(--color-bg-elev-dark)/85 via-violet-900/40 to-(--color-bg-elev-dark)/85" />
         <div className="absolute inset-0 bg-linear-to-tr from-cyan-500/10 via-transparent to-blue-500/10" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full filter blur-[128px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full filter blur-[128px] animate-pulse animation-delay-2000" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full filter blur-[200px]" />
+        <div className="hidden md:block absolute top-0 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full filter blur-[128px] animate-pulse" />
+        <div className="hidden md:block absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full filter blur-[128px] animate-pulse animation-delay-2000" />
+        <div className="hidden md:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full filter blur-[200px]" />
       </div>
 
       {/* Header — sits inside Hero, fixed position, shares the hero background */}

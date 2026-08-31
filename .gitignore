@@ -31,3 +31,5 @@ next-env.d.ts
 
 # local planning docs (not tracked)
 docs/plans/
+
+svg_containers/
