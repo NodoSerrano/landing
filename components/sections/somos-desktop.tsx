@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { Reveal } from "@/components/motion/fade-in"
+import { DECO_BLOB_SHADOW } from "./deco-blob-layer"
 import { TaglineMark, CardUnderline } from "./somos-shared"
 
 // ---------------------------------------------------------------------------
@@ -180,18 +181,10 @@ function BlobPhoto({ photo, index }: { photo: PhotoSpec; index: number }) {
 // ---------------------------------------------------------------------------
 // Decoración de fondo — export limpio de Figma (svg_containers/somos-container.svg,
 // nodo 489:32): 7 blobs en un viewBox 1573×1256, sin transforms por blob.
-//
-// Sombra: el export trae un <filter> `_dd` por blob (drop navy #070F22 +18/+18 +
-// drop slate #393B5B −18/−18, blur 18, blend overlay). Safari CPU-rasteriza esos
-// filtros en cada frame scrolleado, así que se recrean como `drop-shadow()` CSS
-// —efecto de capa compuesto en GPU— con un <div><svg> por blob: el `filter` CSS
-// va en el <div> (Safari lo ignora sobre hijos de <svg>) y cada capa proyecta
-// su sombra sobre la de atrás. `overlay` no existe en drop-shadow, así que el
-// alfa está bajado respecto del original.
+// Un <div><svg> por blob para que cada sombra `_dd` (DECO_BLOB_SHADOW, shared)
+// se componga en GPU y proyecte sobre la capa de atrás — no un <filter> SVG,
+// que Safari CPU-rasteriza en cada frame scrolleado.
 // ---------------------------------------------------------------------------
-
-const DECO_BLOB_SHADOW =
-  "drop-shadow(16px 16px 28px rgba(7,15,34,0.26)) drop-shadow(-14px -14px 22px rgba(57,59,91,0.16))"
 
 const DECO_VIEWBOX = "0 0 1573 1256"
 
