@@ -102,6 +102,13 @@ function CurvedContainer() {
 
 const CAROUSEL_GAP_PX = 24
 
+// Glow via CSS `filter` on the <svg>, not an SVG <filter> on the path — same
+// reason as CurvedContainer above: iOS Safari CPU-rasterises SVG filter regions.
+// Offsets/blur are the old user-space values scaled by 42/69 (render px per
+// viewBox unit). overflow-visible so the glow isn't clipped at the 42px box.
+const ARROW_GLOW =
+  "drop-shadow(0.6px 1.8px 3.7px #D93188) drop-shadow(-2.4px -2.4px 3px rgba(255,98,0,0.4))"
+
 function ArrowIcon({ direction }: { direction: "left" | "right" }) {
   return (
     <svg
@@ -109,20 +116,10 @@ function ArrowIcon({ direction }: { direction: "left" | "right" }) {
       width="42"
       height="42"
       aria-hidden="true"
-      className={direction === "left" ? "rotate-180" : undefined}
+      style={{ filter: ARROW_GLOW }}
+      className={`overflow-visible${direction === "left" ? " rotate-180" : ""}`}
     >
       <defs>
-        <filter
-          id={`sponsors-arrow-glow-${direction}`}
-          x="-40%"
-          y="-40%"
-          width="180%"
-          height="180%"
-          colorInterpolationFilters="sRGB"
-        >
-          <feDropShadow dx="1" dy="3" stdDeviation="6" floodColor="#D93188" floodOpacity="1" />
-          <feDropShadow dx="-4" dy="-4" stdDeviation="5" floodColor="#FF6200" floodOpacity="0.4" />
-        </filter>
         <linearGradient id={`sponsors-arrow-grad-${direction}`} x1="14" y1="34.5" x2="56" y2="34.5" gradientUnits="userSpaceOnUse">
           <stop stopColor="#FF9728" />
           <stop offset="0.5" stopColor="#FF3121" />
@@ -130,7 +127,6 @@ function ArrowIcon({ direction }: { direction: "left" | "right" }) {
         </linearGradient>
       </defs>
       <path
-        filter={`url(#sponsors-arrow-glow-${direction})`}
         d="M23.5 14L56 16V55H14L23.5 14Z"
         fill={`url(#sponsors-arrow-grad-${direction})`}
       />
