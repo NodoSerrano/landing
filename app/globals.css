@@ -394,3 +394,179 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Scroll-reveal — replaces framer-motion's `whileInView` fade-up across every
+   section. A ~1 KB IntersectionObserver (components/motion/fade-in.tsx) flips
+   data-reveal out -> in once the element enters the viewport; the transition
+   lives here so the elements stay server-rendered and no animation library
+   ships. Matches the old variant: opacity 0 + translateY(24px), 0.5s ease-out.
+   --------------------------------------------------------------------------- */
+[data-reveal] {
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s ease-out;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal="out"] {
+  opacity: 0;
+  transform: translateY(24px);
+}
+[data-reveal-variant="scale-x"] {
+  transition: transform 1s ease-out;
+}
+[data-reveal="out"][data-reveal-variant="scale-x"] {
+  opacity: 1;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* Header slide-in — plays once per full page load (see hasHeaderIntroPlayed). */
+@keyframes header-slide-in {
+  from {
+    transform: translateY(-100px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.header-intro {
+  animation: header-slide-in 0.5s ease-out;
+}
+
+/* Hamburger <-> X morph (components/layout/header.tsx MenuToggleIcon). The three
+   <line>s sit at y = 15.25 / 23 / 30.75 in a 50x46 viewBox; each is translated to
+   the icon centre (25,23) then rotated about it. Replaces three motion.line. */
+.menu-line {
+  transform-box: view-box;
+  transform-origin: 25px 23px;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+/* Order matters: translateY runs first (line reaches the centre, y=23), then
+   rotate spins it about transform-origin, which the midpoint now sits on — so
+   the two arms cross exactly at (25,23). Swapping the order shifts the X. */
+.menu-line--top {
+  transform: rotate(45deg) translateY(7.75px);
+}
+.menu-line--mid {
+  opacity: 0;
+}
+.menu-line--bottom {
+  transform: rotate(-45deg) translateY(-7.75px);
+}
+
+/* Mobile menu overlay + panel enter/exit + item stagger. data-open is driven by
+   an rAF-gated state so the enter transition runs on mount; the panel stays
+   mounted ~220ms after close for the exit. Replaces AnimatePresence. */
+.mobile-overlay {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.mobile-overlay[data-open="true"] {
+  opacity: 1;
+}
+.mobile-panel {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+.mobile-panel[data-open="true"] {
+  opacity: 1;
+  transform: none;
+}
+.mobile-nav-item {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+.mobile-nav[data-open="true"] .mobile-nav-item {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--i, 0) * 100ms + 100ms);
+}
+
+/* Nav "selected" underline — always rendered, scales in/out on .is-active.
+   Replaces the AnimatePresence + motion.span pairs in the header. */
+.nav-underline {
+  transform: scaleX(0);
+  opacity: 0;
+  transform-origin: left;
+  transition:
+    transform 0.35s ease-out,
+    opacity 0.35s ease-out;
+}
+.nav-underline.is-active {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+/* Newsletter status message — brief slide-in on each new message (key change
+   remounts it). Was AnimatePresence + motion.p. */
+@keyframes newsletter-msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+.newsletter-msg {
+  animation: newsletter-msg-in 0.2s ease-out;
+}
+
+/* FloatingLogo — two halves drift in opposite directions, forever. Was two
+   motion.div with animate={{ y: [...] }} repeat: Infinity. */
+@keyframes floating-logo-up {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(calc(-1 * var(--float-y, 2px)));
+  }
+}
+@keyframes floating-logo-down {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(var(--float-y, 2px));
+  }
+}
+.floating-logo-top {
+  animation: floating-logo-up 2s ease-in-out 0.5s infinite;
+}
+.floating-logo-bottom {
+  animation: floating-logo-down 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    transition: none;
+  }
+  [data-reveal="out"] {
+    opacity: 1;
+    transform: none;
+  }
+  [data-reveal="out"][data-reveal-variant="scale-x"] {
+    transform: none;
+  }
+  .header-intro,
+  .floating-logo-top,
+  .floating-logo-bottom,
+  .newsletter-msg {
+    animation: none;
+  }
+  .menu-line,
+  .mobile-overlay,
+  .mobile-panel,
+  .mobile-nav-item,
+  .nav-underline {
+    transition: none;
+  }
+}

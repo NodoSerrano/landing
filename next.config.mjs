@@ -7,6 +7,12 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
 
+  // Tree-shake icon barrels to per-icon imports so a handful of lucide glyphs
+  // don't drag the whole set into a chunk.
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
+  },
+
   // Blog feature images are served by Ghost; everything else is a local file
   // in /public. next/image needs the remote hosts allow-listed.
   images: {

@@ -1,18 +1,7 @@
-"use client"
-
-import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import type { GhostPost } from "@/lib/ghost"
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-}
-
-const stagger = {
-  visible: { transition: { staggerChildren: 0.1 } },
-}
+import { Reveal } from "@/components/motion/fade-in"
 
 function CurvedContainer() {
   return (
@@ -125,15 +114,9 @@ export default function Blog({ post }: { post: GhostPost | null }) {
       <div className="relative">
         <CurvedContainer />
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={stagger}
-          className="relative z-10 mx-auto w-full max-w-[720px] px-5 pt-24 md:max-w-[860px] md:pt-32"
-        >
+        <div className="relative z-10 mx-auto w-full max-w-[720px] px-5 pt-24 md:max-w-[860px] md:pt-32">
           <div className="flex flex-col items-center gap-10 md:gap-12">
-            <motion.div variants={fadeInUp} className="flex flex-col items-center gap-2 text-center">
+            <Reveal className="flex flex-col items-center gap-2 text-center">
               <h2 className="font-display text-h1 font-bold">
                 <span className="text-(--color-text-primary-light)">Nuestro</span>{" "}
                 <span className="inline-block rounded-[4px] bg-gradient-warm px-3 py-1 text-(--color-text-primary-dark)">
@@ -143,13 +126,13 @@ export default function Blog({ post }: { post: GhostPost | null }) {
               <p className="font-display text-h3 font-medium text-(--color-warm-violet)">
                 Pensamientos, notas y experimentos
               </p>
-            </motion.div>
+            </Reveal>
 
-            <motion.div variants={fadeInUp} className="w-full">
+            <Reveal delay={100} className="w-full">
               <FeaturedPostCard post={post} />
-            </motion.div>
+            </Reveal>
 
-            <motion.div variants={fadeInUp}>
+            <Reveal delay={200}>
               <Link
                 href="/blog"
                 className="inline-flex items-center justify-center rounded-br-[10px] rounded-tl-[10px] border-2 border-(--color-warm-yellow) px-[26px] py-[14px] font-inter text-body text-(--color-text-primary-light) transition-opacity hover:opacity-90"
@@ -157,9 +140,9 @@ export default function Blog({ post }: { post: GhostPost | null }) {
               >
                 Visitar el blog
               </Link>
-            </motion.div>
+            </Reveal>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

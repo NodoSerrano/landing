@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef, useLayoutEffect } from "react"
+import { useState, useEffect, useRef, useLayoutEffect, type CSSProperties } from "react"
 
 // The header slides down from above the viewport. Each route renders its own
 // <Header/> (hero, /labs, /blog, /blog/[slug]), so without this guard the
@@ -10,7 +10,6 @@ import { useState, useEffect, useRef, useLayoutEffect } from "react"
 let hasHeaderIntroPlayed = false
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { motion, AnimatePresence } from "framer-motion"
 import FloatingLogo from "@/components/FloatingLogo"
 
 // Mobile dropdown items. Same labels/order as desktop, plus a trailing
@@ -153,16 +152,15 @@ function MobileMenuShape() {
 }
 
 // Hamburger icon (from the Figma menu-header export) with the inner three lines
-// inlined so they can morph into an X. Border + gradients + sizes unchanged;
-// only the lines animate on `open`.
+// inlined so they can morph into an X. The three <line>s carry their hamburger
+// coordinates; `.menu-line--*` classes (globals.css) transform them into the X
+// with a CSS transition — was three framer motion.line.
 function MenuToggleIcon({ open }: { open: boolean }) {
   const lineProps = {
     stroke: "url(#menu-toggle-lines)",
     strokeWidth: 3,
     strokeLinecap: "round" as const,
   }
-  const transition = { duration: 0.2 }
-  // X centered at (25, 23) with equal-length arms (matching the lines' length).
   return (
     <svg width="49" height="45" viewBox="0 0 50 46" fill="none" aria-hidden="true">
       <path
@@ -171,31 +169,29 @@ function MenuToggleIcon({ open }: { open: boolean }) {
         stroke="url(#menu-toggle-border)"
         strokeWidth={2}
       />
-      <motion.line
+      <line
         {...lineProps}
-        initial={false}
-        animate={
-          open
-            ? { x1: 16.5, y1: 14.5, x2: 33.5, y2: 31.5 }
-            : { x1: 13, y1: 15.25, x2: 37, y2: 15.25 }
-        }
-        transition={transition}
+        x1={13}
+        y1={15.25}
+        x2={37}
+        y2={15.25}
+        className={open ? "menu-line menu-line--top" : "menu-line"}
       />
-      <motion.line
+      <line
         {...lineProps}
-        initial={false}
-        animate={{ x1: 13, y1: 23, x2: 37, y2: 23, opacity: open ? 0 : 1 }}
-        transition={transition}
+        x1={13}
+        y1={23}
+        x2={37}
+        y2={23}
+        className={open ? "menu-line menu-line--mid" : "menu-line"}
       />
-      <motion.line
+      <line
         {...lineProps}
-        initial={false}
-        animate={
-          open
-            ? { x1: 16.5, y1: 31.5, x2: 33.5, y2: 14.5 }
-            : { x1: 13, y1: 30.75, x2: 37, y2: 30.75 }
-        }
-        transition={transition}
+        x1={13}
+        y1={30.75}
+        x2={37}
+        y2={30.75}
+        className={open ? "menu-line menu-line--bottom" : "menu-line"}
       />
       <defs>
         <linearGradient
@@ -232,6 +228,19 @@ function MenuToggleIcon({ open }: { open: boolean }) {
 // same threshold, not just the `mobileMenuOpen` click state (see below).
 const LG_BREAKPOINT_QUERY = "(min-width: 1024px)"
 
+// How long the mobile panel/overlay stay mounted after close, so their exit
+// transition can run. Must match the .mobile-* transition durations in
+// globals.css (0.2s) plus a little slack.
+const MOBILE_MENU_EXIT_MS = 220
+
+// Solid toolbar skin: dark fill (padding-box) + brand-gradient hairline
+// (border-box). Lives on an always-mounted layer whose opacity is transitioned,
+// so the transparent -> solid change on scroll fades instead of snapping
+// (a gradient background can't itself be transitioned).
+const SOLID_BAR_BG =
+  "linear-gradient(var(--color-bg-elev-dark), var(--color-bg-elev-dark)) padding-box, " +
+  "linear-gradient(90deg, rgba(79,230,195,0.4) 0%, rgba(46,155,255,0.4) 50%, rgba(200,127,229,0.4) 100%) border-box"
+
 export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean } = {}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isDesktop, setIsDesktop] = useState(false)
@@ -260,6 +269,22 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
   // to undo it. Gating on the real breakpoint keeps this correct regardless
   // of how the viewport got there.
   const mobileMenuActive = mobileMenuOpen && !isDesktop
+
+  // Mount/visibility split for the panel + overlay enter/exit (replaces
+  // AnimatePresence). `menuRender` keeps them in the DOM through the exit;
+  // `menuVisible` is flipped one frame after mount so the enter transition runs.
+  const [menuRender, setMenuRender] = useState(false)
+  const [menuVisible, setMenuVisible] = useState(false)
+  useEffect(() => {
+    if (mobileMenuActive) {
+      setMenuRender(true)
+      const raf = requestAnimationFrame(() => setMenuVisible(true))
+      return () => cancelAnimationFrame(raf)
+    }
+    setMenuVisible(false)
+    const t = setTimeout(() => setMenuRender(false), MOBILE_MENU_EXIT_MS)
+    return () => clearTimeout(t)
+  }, [mobileMenuActive])
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -305,7 +330,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
     }
     document.addEventListener("keydown", handleKeyDown)
     return () => document.removeEventListener("keydown", handleKeyDown)
-  }, [mobileMenuActive])
+  }, [mobileMenuActive, menuRender])
 
   // Scroll-spy: on the home page, mark whichever section is crossing the
   // vertical centre of the viewport as active. Off the home page there is no
@@ -363,20 +388,17 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
   }
 
   return (
-    <motion.header
-      className="fixed top-0 inset-x-0 z-50 w-full"
-      initial={playIntro ? { y: -100 } : false}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+    <header
+      className={`fixed top-0 inset-x-0 z-50 w-full${playIntro ? " header-intro" : ""}`}
     >
       {/* Legibility scrim for the transparent state: keeps the white logo/nav
-          readable regardless of what the hero renders behind them. */}
-      {!isSolid && !mobileMenuActive && (
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-28 bg-gradient-to-b from-black/25 to-transparent"
-        />
-      )}
+          readable over the hero. Always mounted, opacity-faded in step with the
+          solid skin below so the two don't pop against each other on scroll. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-28 bg-gradient-to-b from-black/25 to-transparent transition-opacity duration-300"
+        style={{ opacity: !isSolid && !mobileMenuActive ? 1 : 0 }}
+      />
 
       {/* Permanent horizontal gutter so the bar never touches the viewport edge —
           kept separate from the toolbar's own mx-auto/max-w-6xl (which only
@@ -385,18 +407,16 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
       <div className="px-4">
         <div
           ref={toolbarRef}
-          className={`relative z-20 mx-auto my-2 flex items-center justify-between gap-4 rounded-2xl border border-transparent ${isSolid ? "px-3" : "px-0"}  py-3 transition-all duration-300 md:px-4 lg:max-w-6xl ${isSolid && !mobileMenuOpen ? "backdrop-blur-xl" : ""
-            }`}
-          style={
-            isSolid && !mobileMenuOpen
-              ? {
-                background:
-                  "linear-gradient(var(--color-bg-elev-dark), var(--color-bg-elev-dark)) padding-box, " +
-                  "linear-gradient(90deg, rgba(79,230,195,0.4) 0%, rgba(46,155,255,0.4) 50%, rgba(200,127,229,0.4) 100%) border-box",
-              }
-              : undefined
-          }
+          className={`relative z-20 mx-auto my-2 flex items-center justify-between gap-4 rounded-2xl ${isSolid ? "px-3" : "px-0"}  py-3 transition-[padding] duration-300 md:px-4 lg:max-w-6xl`}
         >
+          {/* Solid skin — always mounted; opacity fades in on scroll so the
+              transparent -> solid change is smooth (see SOLID_BAR_BG). */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10 rounded-2xl border border-transparent transition-opacity duration-300 [backdrop-filter:blur(24px)]"
+            style={{ background: SOLID_BAR_BG, opacity: isSolid && !mobileMenuOpen ? 1 : 0 }}
+          />
+
           {/* Logo / Brand — animated two-part gem + wordmark */}
           <Link
             href="/"
@@ -418,22 +438,16 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
             <nav aria-label="Navegación principal" className="flex items-center gap-6 xl:gap-10">
               {DESKTOP_NAV_ITEMS.map(({ label, href }) => {
                 const active = isNavItemActive(href)
+                // Selected underline — always rendered, scales in/out on .is-active
+                // (CSS transition, was AnimatePresence + motion.span).
                 const underline = (
-                  <AnimatePresence>
-                    {active && (
-                      <motion.span
-                        className="absolute -bottom-1.5 left-0 right-0 h-[2px] rounded-full bg-gradient-brand"
-                        initial={{ opacity: 0, scaleX: 0 }}
-                        animate={{ opacity: 1, scaleX: 1 }}
-                        exit={{ opacity: 0, scaleX: 0 }}
-                        style={{ transformOrigin: "left" }}
-                        transition={{ duration: 0.35, ease: "easeOut" }}
-                      />
-                    )}
-                  </AnimatePresence>
+                  <span
+                    aria-hidden="true"
+                    className={`nav-underline pointer-events-none absolute -bottom-1.5 left-0 right-0 h-[2px] rounded-full bg-gradient-brand${active ? " is-active" : ""}`}
+                  />
                 )
-                // Hover preview of the active underline (fainter, no motion lib) —
-                // only when the item isn't already active, to avoid double-drawing.
+                // Hover preview of the active underline (fainter) — only when the
+                // item isn't already active, to avoid double-drawing.
                 const hoverUnderline = !active && (
                   <span
                     aria-hidden="true"
@@ -487,35 +501,26 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
-      <AnimatePresence>
-        {mobileMenuActive && (
-          <motion.div
-            key="mobile-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+      {/* Mobile Menu Dropdown — overlay + panel stay mounted through the exit
+          transition (menuRender); menuVisible drives the CSS enter/exit. */}
+      {menuRender && (
+        <>
+          <div
+            data-open={menuVisible}
             onClick={() => setMobileMenuOpen(false)}
             aria-hidden="true"
-            className="lg:hidden absolute inset-0 z-0 bg-gradient-to-t from-black/85 via-black/55 to-black/15 backdrop-blur-sm"
+            className="mobile-overlay lg:hidden absolute inset-0 z-0 bg-gradient-to-t from-black/85 via-black/55 to-black/15 backdrop-blur-sm"
           />
-        )}
-        {mobileMenuActive && (
-          <motion.div
-            key="mobile-panel"
+          <div
             ref={menuPanelRef}
             id="mobile-menu"
             role="dialog"
             aria-modal="true"
             aria-label="Menú principal"
             tabIndex={-1}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
+            data-open={menuVisible}
             onClick={() => setMobileMenuOpen(false)}
-            className={`${isSolid ? "mx-3" : "mx-0"} lg:hidden relative z-10 cursor-pointer px-4 pt-2 pb-4 outline-none`}
+            className={`mobile-panel ${isSolid ? "mx-3" : "mx-0"} lg:hidden relative z-10 cursor-pointer px-4 pt-2 pb-4 outline-none`}
             style={{ height: `calc(100dvh - ${toolbarHeight}px)` }}
           >
             <div
@@ -523,25 +528,17 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               className="relative cursor-default px-6 py-24"
             >
               <MobileMenuShape />
-              <motion.nav
-                className="relative flex flex-col items-center gap-4"
-                initial="closed"
-                animate="open"
-                variants={{
-                  open: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
-                  closed: {},
-                }}
+              <nav
+                data-open={menuVisible}
+                className="mobile-nav relative flex flex-col items-center gap-4"
               >
-                {NAV_ITEMS.map(({ label, href, cta }) => {
+                {NAV_ITEMS.map(({ label, href, cta }, i) => {
                   const active = isNavItemActive(href)
-                  const itemVariants = {
-                    open: { opacity: 1, y: 0 },
-                    closed: { opacity: 0, y: -10 },
-                  }
+                  const itemStyle = { "--i": i } as CSSProperties
 
                   if (cta) {
                     return (
-                      <motion.div key={label} className="w-full" variants={itemVariants}>
+                      <div key={label} className="mobile-nav-item w-full" style={itemStyle}>
                         <button
                           onClick={() => scrollToSection(href)}
                           className="block w-full cursor-pointer rounded-[8px] bg-gradient-brand p-[1.5px]"
@@ -552,28 +549,20 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                             </span>
                           </span>
                         </button>
-                      </motion.div>
+                      </div>
                     )
                   }
 
                   const className =
                     "relative font-work-sans text-[18px] leading-[33.3px] font-normal text-(--color-text-primary-dark) hover:opacity-70 text-center cursor-pointer"
                   const underline = (
-                    <AnimatePresence>
-                      {active && (
-                        <motion.span
-                          className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-gradient-brand"
-                          initial={{ opacity: 0, scaleX: 0 }}
-                          animate={{ opacity: 1, scaleX: 1 }}
-                          exit={{ opacity: 0, scaleX: 0 }}
-                          style={{ transformOrigin: "left" }}
-                          transition={{ duration: 0.35, ease: "easeOut" }}
-                        />
-                      )}
-                    </AnimatePresence>
+                    <span
+                      aria-hidden="true"
+                      className={`nav-underline absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-gradient-brand${active ? " is-active" : ""}`}
+                    />
                   )
                   return (
-                    <motion.div key={label} variants={itemVariants}>
+                    <div key={label} className="mobile-nav-item" style={itemStyle}>
                       {href.startsWith("/") ? (
                         <Link
                           href={href}
@@ -590,14 +579,14 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                           {underline}
                         </button>
                       )}
-                    </motion.div>
+                    </div>
                   )
                 })}
-              </motion.nav>
+              </nav>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
+          </div>
+        </>
+      )}
+    </header>
   )
 }

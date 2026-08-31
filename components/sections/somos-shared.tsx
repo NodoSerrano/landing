@@ -1,16 +1,5 @@
-"use client"
-
 // Piezas compartidas entre las vistas mobile (somos.tsx) y desktop
 // (somos-desktop.tsx) de la sección Somos.
-
-export const fadeInUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" as const },
-  },
-}
 
 // Tagline arrow mark (Figma "EthDiamond" → 2 triángulos) — flecha apuntando a la
 // derecha, gradiente de marca mint→blue→violet. Paths normalizados del export.

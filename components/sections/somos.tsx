@@ -1,10 +1,8 @@
-"use client"
-
 import Image from "next/image"
-import { motion } from "framer-motion"
 import { Container } from "@/components/ui/container"
+import { Reveal } from "@/components/motion/fade-in"
 import SomosDesktop from "./somos-desktop"
-import { fadeInUp, TaglineMark, CardUnderline } from "./somos-shared"
+import { TaglineMark, CardUnderline } from "./somos-shared"
 
 // Card data (Figma frame 225:65 — Frame 32). Order top→bottom as in the design.
 const CARDS = [
@@ -80,17 +78,11 @@ export default function Somos() {
         <SomosDesktop />
 
         {/* Mobile / tablet */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
-          className="relative mx-auto flex w-full  flex-col gap-9 md:max-w-none lg:hidden"
-        >
+        <div className="relative mx-auto flex w-full  flex-col gap-9 md:max-w-none lg:hidden">
           <Decorations />
 
           {/* Header — centrado */}
-          <motion.div variants={fadeInUp} className="flex flex-col items-center gap-3 text-center">
+          <Reveal className="flex flex-col items-center gap-3 text-center">
             <div className="flex items-center justify-center gap-2">
               <TaglineMark />
               <span className="text-body-lg text-(--color-accent-violet)">
@@ -102,10 +94,10 @@ export default function Somos() {
                 SOMOS
               </span>
             </h2>
-          </motion.div>
+          </Reveal>
 
           {/* Photo collage */}
-          <motion.div variants={fadeInUp} className="grid grid-cols-2 grid-rows-2 gap-2">
+          <Reveal delay={80} className="grid grid-cols-2 grid-rows-2 gap-2">
             <div className="relative row-span-2 aspect-[180/244] overflow-hidden rounded-[8px]">
               <Image src="/somos/hackerspace.webp" alt="Hackerspace Nodo Serrano" fill sizes="50vw" className="object-cover" />
             </div>
@@ -115,16 +107,16 @@ export default function Somos() {
             <div className="relative aspect-[180/120] overflow-hidden rounded-[8px]">
               <Image src="/somos/comunidad.webp" alt="Comunidad Nodo Serrano" fill sizes="50vw" className="object-cover" />
             </div>
-          </motion.div>
+          </Reveal>
 
           {/* Cards */}
           <div className="flex flex-col gap-6">
-            {CARDS.map((card) => (
-              <motion.article
+            {CARDS.map((card, i) => (
+              <Reveal
+                as="article"
                 key={card.title}
-                variants={fadeInUp}
-                className="rounded-[8px] bg-(--color-bg-warm-white) p-3"
-                style={{ boxShadow: "var(--shadow-somos-card)" }}
+                delay={160 + i * 80}
+                className="rounded-[8px] bg-(--color-bg-warm-white) p-3 shadow-(--shadow-somos-card)"
               >
                 <div className="w-fit">
                   <h3 className="font-display text-mob-h2 font-medium text-(--color-text-primary-light)">
@@ -135,10 +127,10 @@ export default function Somos() {
                 <p className="mt-2 max-w-[301px] text-body text-(--color-text-primary-light)">
                   {card.desc}
                 </p>
-              </motion.article>
+              </Reveal>
             ))}
           </div>
-        </motion.div>
+        </div>
       </Container>
     </section>
   )

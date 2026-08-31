@@ -1,8 +1,6 @@
-"use client"
-
 import Image from "next/image"
-import { motion } from "framer-motion"
-import { TaglineMark, CardUnderline, fadeInUp } from "./somos-shared"
+import { Reveal } from "@/components/motion/fade-in"
+import { TaglineMark, CardUnderline } from "./somos-shared"
 
 // ---------------------------------------------------------------------------
 // Composición desktop de la sección Somos (Figma frame 20:427, grupo 225:63).
@@ -125,8 +123,8 @@ function photoMaskUrl(p: PhotoSpec) {
 function BlobPhoto({ photo, index }: { photo: PhotoSpec; index: number }) {
   const gradId = `somos-photo-grad-${index}`
   return (
-    <motion.div
-      variants={fadeInUp}
+    <Reveal
+      delay={(index + 1) * 80}
       className="absolute"
       style={{
         left: photo.left,
@@ -175,7 +173,7 @@ function BlobPhoto({ photo, index }: { photo: PhotoSpec; index: number }) {
           </linearGradient>
         </defs>
       </svg>
-    </motion.div>
+    </Reveal>
   )
 }
 
@@ -239,19 +237,14 @@ function DecoDesktop() {
 
 export default function SomosDesktop() {
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-120px" }}
-      variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+    <div
       className="relative mx-auto mb-[120px]  hidden w-full max-w-[1280px] lg:block"
       style={{ aspectRatio: "1280 / 952" }}
     >
       <DecoDesktop />
 
       {/* Centro — tagline + SOMOS (el blob crema de fondo está en la deco) */}
-      <motion.div
-        variants={fadeInUp}
+      <Reveal
         className="absolute flex flex-col items-center gap-1 text-center"
         style={{ left: "34.219%", top: "38.235%", width: "28.75%" }}
       >
@@ -266,7 +259,7 @@ export default function SomosDesktop() {
             SOMOS
           </span>
         </h2>
-      </motion.div>
+      </Reveal>
 
       {/* Fotos blob */}
       {PHOTOS.map((photo, i) => (
@@ -274,10 +267,11 @@ export default function SomosDesktop() {
       ))}
 
       {/* Cards */}
-      {CARDS.map((card) => (
-        <motion.article
+      {CARDS.map((card, i) => (
+        <Reveal
+          as="article"
           key={card.title}
-          variants={fadeInUp}
+          delay={(PHOTOS.length + 1 + i) * 80}
           className="absolute w-[28.906%] rounded-[8px] bg-(--color-bg-warm-white) p-3"
           style={{
             left: card.left,
@@ -294,8 +288,8 @@ export default function SomosDesktop() {
           <p className="mt-2 text-body text-(--color-text-primary-light)">
             {card.desc}
           </p>
-        </motion.article>
+        </Reveal>
       ))}
-    </motion.div>
+    </div>
   )
 }

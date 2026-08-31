@@ -1,15 +1,4 @@
-"use client"
-
-import { motion } from "framer-motion"
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-}
-
-const stagger = {
-  visible: { transition: { staggerChildren: 0.1 } },
-}
+import { Reveal } from "@/components/motion/fade-in"
 
 function CurvedContainer() {
   return (
@@ -64,18 +53,9 @@ export default function Events() {
     >
       <CurvedContainer />
 
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={stagger}
-        className="relative z-10 mx-auto w-full max-w-[720px] md:py-16"
-      >
+      <div className="relative z-10 mx-auto w-full max-w-[720px] md:py-16">
         <div className="flex flex-col items-center gap-10 md:gap-12 pt-20">
-          <motion.div
-            variants={fadeInUp}
-            className="flex flex-col items-center gap-2 text-center"
-          >
+          <Reveal className="flex flex-col items-center gap-2 text-center">
             <h2 className="font-display text-h1 font-bold">
               <span className="inline-block rounded-[4px] bg-gradient-warm px-3 py-1 text-(--color-text-primary-dark)">
                 EVENTOS
@@ -84,12 +64,9 @@ export default function Events() {
             <p className="font-display text-h3 font-medium text-(--color-text-secondary-dark)">
               Lo que se viene
             </p>
-          </motion.div>
+          </Reveal>
 
-          <motion.div
-            variants={fadeInUp}
-            className="w-full max-w-3xl"
-          >
+          <Reveal delay={100} className="w-full max-w-3xl">
             <iframe
               src="https://luma.com/embed/calendar/cal-7uziZDmq9SFGggQ/events?lt=dark"
               title="Calendario de eventos de Nodo Serrano en Luma"
@@ -102,9 +79,9 @@ export default function Events() {
               className="overflow-hidden"
               style={{ overflow: "hidden" }}
             />
-          </motion.div>
+          </Reveal>
         </div>
-      </motion.div>
+      </div>
     </section>
   )
 }

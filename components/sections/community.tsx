@@ -2,18 +2,9 @@
 
 import { useLayoutEffect, useRef, useState } from "react"
 import Link from "next/link"
-import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import { Container } from "@/components/ui/container"
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" as const },
-  },
-}
+import { Reveal } from "@/components/motion/fade-in"
 
 // Card trapezoid (Figma node 206:58): the card is not a rectangle — the right
 // side is taller (top edge rises toward the right, bottom edge drops toward the
@@ -276,13 +267,7 @@ export default function Community() {
       <BlobBackground />
 
       <Container className="flex flex-1 flex-col">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="relative flex w-full flex-1 flex-col items-center pb-12 md:pb-10"
-        >
+        <Reveal className="relative flex w-full flex-1 flex-col items-center pb-12 md:pb-10">
           {/* Card straddles the hero/section transition line (its center on the blob's top edge) */}
           <div className="-mt-[190px] flex w-full justify-center md:-mt-[235px]">
             <LabsCard />
@@ -317,7 +302,7 @@ export default function Community() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </Reveal>
       </Container>
     </section>
   )

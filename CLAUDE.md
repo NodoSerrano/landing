@@ -48,7 +48,7 @@ node database/test-connection.js   # Test Neon connection
 ### Tech Stack
 - **Framework**: Next.js **16.1.6** (App Router, Turbopack) + React 19
 - **Styling**: Tailwind CSS **v4** (CSS-first config — no `tailwind.config.*`; theme lives in `app/globals.css` via `@theme` / `@theme static`). `@tailwindcss/typography` for article bodies. A few shadcn/ui primitives (`components/ui/*`), `class-variance-authority`, `tailwind-merge`, `clsx`.
-- **Animation**: Framer Motion (`components/motion/fade-in.tsx` and inline `motion.*` in sections)
+- **Animation**: no library. Scroll reveals are a CSS-transition + `IntersectionObserver` primitive — `Reveal` (aliased `FadeIn`) in `components/motion/fade-in.tsx`, driven by `[data-reveal]` rules in `app/globals.css`. Header menu / logo float / nav underline are hand-rolled CSS (keyframes + `data-*` state in globals.css). Framer Motion was removed (perf/drop-framer-motion) — don't reintroduce `motion.*`; add a CSS keyframe or extend `Reveal`.
 - **Fonts** (`next/font/google`, wired in `app/layout.tsx`): Inter, Space Grotesk, Work Sans (new redesign); Spline Sans (legacy, still used by some sections)
 - **Blog CMS**: Ghost Content API v5 (https://blog.nodoserrano.org)
 - **Database**: Neon PostgreSQL (serverless) — `@neondatabase/serverless`
@@ -84,7 +84,7 @@ Not a dark cyan/blue theme. The redesign mixes **light and dark sections** (no t
 1. **Newsletter**: client form (`components/sections/newsletter.tsx`) → `subscribeToNewsletter` server action (`app/actions.ts`) → `addSubscriber` (`lib/db.ts`) → `subscribers` table. Duplicate emails are treated as success. No email/webhook notification is sent (that layer was removed).
 2. **Ghost blog**: index + article pages under `/app/blog`; homepage teaser in `components/sections/blog.tsx` fetches Ghost **client-side** (hence the CSP `connect-src` allowance — see below).
 3. **Events**: `components/sections/events.tsx` embeds a Luma calendar iframe (`https://luma.com/embed/calendar/...`).
-4. **Responsive, mostly server-rendered** landing + blog; Framer Motion reveals.
+4. **Responsive, mostly server-rendered** landing + blog; CSS `IntersectionObserver` scroll reveals (`Reveal`).
 
 ## Ghost Blog Integration
 
