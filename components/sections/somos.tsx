@@ -79,7 +79,7 @@ export default function Somos() {
 
         {/* Mobile / tablet */}
         <div className="relative mx-auto flex w-full  flex-col gap-9 md:max-w-none lg:hidden">
-          {/* <Decorations /> */}
+          <Decorations />
 
           {/* Header — centrado */}
           <Reveal className="flex flex-col items-center gap-3 text-center">

@@ -86,7 +86,10 @@ export default function Events() {
             </p>
           </Reveal>
 
-          <Reveal delay={100} className="w-full max-w-3xl">
+          {/* min-h reserves the iframe box: iOS renders a loading="lazy" iframe
+              at 0px until it loads, then snaps to height="500" — a shove that
+              lands right as Events scrolls in. */}
+          <Reveal delay={100} className="w-full max-w-3xl min-h-[500px]">
             <iframe
               src="https://luma.com/embed/calendar/cal-7uziZDmq9SFGggQ/events?lt=dark"
               title="Calendario de eventos de Nodo Serrano en Luma"
