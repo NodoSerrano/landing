@@ -5,7 +5,7 @@ import { Reveal } from "@/components/motion/fade-in"
 export default function Hero() {
   return (
     <section
-      className="font-inter relative w-full min-h-[80vh] md:min-h-[85vh] flex flex-col overflow-hidden"
+      className="font-inter relative w-full h-[80svh] md:h-[85svh] flex flex-col overflow-hidden"
     >
       {/* Preload the mobile hero crop only — it's the LCP element on phones and
           this is the throttled-mobile metric Lighthouse scores. Desktop gets

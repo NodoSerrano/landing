@@ -333,7 +333,8 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
   }, [mobileMenuActive, menuRender])
 
   // Scroll-spy: on the home page, mark whichever section is crossing the
-  // vertical centre of the viewport as active. Off the home page there is no
+  // vertical centre of the viewport as active and keep the URL hash in sync
+  // (replaceState — no scroll, no history entry). Off the home page there is no
   // active section (route links handle their own selected state).
   useEffect(() => {
     if (pathname !== "/") {
@@ -348,7 +349,10 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) setActiveSection(entry.target.id)
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id)
+            window.history.replaceState(null, "", `#${entry.target.id}`)
+          }
         }
       },
       // Collapse the root to a thin band at the centre so exactly one section
@@ -455,7 +459,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                   />
                 )
                 const className =
-                  "group relative font-work-sans text-body font-normal text-(--color-text-primary-dark) transition-opacity hover:opacity-90"
+                  "group relative font-inter text-body font-normal text-(--color-text-primary-dark) transition-opacity hover:opacity-90"
                 return href.startsWith("/") ? (
                   // prefetch disabled: the header is always in view, so Next
                   // was eagerly pulling the /labs + /blog route bundles (a
@@ -554,7 +558,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                   }
 
                   const className =
-                    "relative font-work-sans text-[18px] leading-[33.3px] font-normal text-(--color-text-primary-dark) hover:opacity-70 text-center cursor-pointer"
+                    "relative font-inter text-[18px] leading-[33.3px] font-normal text-(--color-text-primary-dark) hover:opacity-70 text-center cursor-pointer"
                   const underline = (
                     <span
                       aria-hidden="true"
