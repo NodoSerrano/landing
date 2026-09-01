@@ -1,15 +1,11 @@
 import type React from "react"
-import { Inter, Space_Grotesk, Work_Sans } from "next/font/google"
+import { Inter, Space_Grotesk } from "next/font/google"
 import "./globals.css"
 
-// Only Inter + Space Grotesk render above the fold (hero copy + headings), so
-// those are the only two we let next/font preload. Inter is also the body
-// default (globals.css). Work Sans (desktop nav, hidden behind the hamburger
-// on mobile) loads without a preload hint to keep the LCP image from queuing
-// behind it.
+// Two families only: Inter (body + nav) and Space Grotesk (headings, font-display).
+// Both render above the fold and are preloaded by next/font.
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter-base", display: "swap" })
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk", display: "swap" })
-const workSans = Work_Sans({ subsets: ["latin"], variable: "--font-work-sans-base", display: "swap", preload: false })
 
 export const metadata = {
   title: "Nodo Serrano",
@@ -29,12 +25,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="es"
-      data-scroll-behavior="smooth"
-      className={`scroll-smooth ${inter.variable} ${spaceGrotesk.variable} ${workSans.variable}`}
-    >
-      <body className="overflow-x-hidden bg-bg-light text-foreground" suppressHydrationWarning>
+    <html lang="es" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+      <body className="bg-bg-light text-foreground" suppressHydrationWarning>
         {children}
       </body>
     </html>

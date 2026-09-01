@@ -333,8 +333,14 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
   }, [mobileMenuActive, menuRender])
 
   // Scroll-spy: on the home page, mark whichever section is crossing the
-  // vertical centre of the viewport as active. Off the home page there is no
-  // active section (route links handle their own selected state).
+  // vertical centre of the viewport as active (drives the nav underline). Off
+  // the home page there is no active section (route links handle their own
+  // selected state).
+  //
+  // Deliberately does NOT sync the URL hash while scrolling: on iOS Safari a
+  // fragment change (history.replaceState / location.hash) reveals the bottom
+  // toolbar, so scrolling past #about/#events/#sponsors/#signup made the browser
+  // chrome slide in. Deep links still work (ScrollHashManager scrolls on mount).
   useEffect(() => {
     if (pathname !== "/") {
       setActiveSection(null)
@@ -455,7 +461,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                   />
                 )
                 const className =
-                  "group relative font-work-sans text-body font-normal text-(--color-text-primary-dark) transition-opacity hover:opacity-90"
+                  "group relative font-inter text-body font-normal text-(--color-text-primary-dark) transition-opacity hover:opacity-90"
                 return href.startsWith("/") ? (
                   // prefetch disabled: the header is always in view, so Next
                   // was eagerly pulling the /labs + /blog route bundles (a
@@ -554,7 +560,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                   }
 
                   const className =
-                    "relative font-work-sans text-[18px] leading-[33.3px] font-normal text-(--color-text-primary-dark) hover:opacity-70 text-center cursor-pointer"
+                    "relative font-inter text-[18px] leading-[33.3px] font-normal text-(--color-text-primary-dark) hover:opacity-70 text-center cursor-pointer"
                   const underline = (
                     <span
                       aria-hidden="true"
