@@ -333,9 +333,14 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
   }, [mobileMenuActive, menuRender])
 
   // Scroll-spy: on the home page, mark whichever section is crossing the
-  // vertical centre of the viewport as active and keep the URL hash in sync
-  // (replaceState — no scroll, no history entry). Off the home page there is no
-  // active section (route links handle their own selected state).
+  // vertical centre of the viewport as active (drives the nav underline). Off
+  // the home page there is no active section (route links handle their own
+  // selected state).
+  //
+  // Deliberately does NOT sync the URL hash while scrolling: on iOS Safari a
+  // fragment change (history.replaceState / location.hash) reveals the bottom
+  // toolbar, so scrolling past #about/#events/#sponsors/#signup made the browser
+  // chrome slide in. Deep links still work (ScrollHashManager scrolls on mount).
   useEffect(() => {
     if (pathname !== "/") {
       setActiveSection(null)
@@ -349,10 +354,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id)
-            window.history.replaceState(null, "", `#${entry.target.id}`)
-          }
+          if (entry.isIntersecting) setActiveSection(entry.target.id)
         }
       },
       // Collapse the root to a thin band at the centre so exactly one section
