@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${inter.variable} ${spaceGrotesk.variable}`}>
-      <body className="overflow-x-hidden bg-bg-light text-foreground" suppressHydrationWarning>
+      <body className="bg-bg-light text-foreground" suppressHydrationWarning>
         {children}
       </body>
     </html>
