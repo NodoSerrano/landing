@@ -6,8 +6,8 @@ import { SkewedPanel } from "./skewed-panel"
 
 export function About() {
   return (
-    <section id="nosotros" className="py-20 md:py-28">
-      <Container>
+    <section id="nosotros" className="px-4 py-20 md:px-5 md:py-28">
+      <Container className="max-w-6xl! px-0">
         <div className="grid gap-12 lg:grid-cols-[1fr_360px] lg:gap-16">
           {/* Texto */}
           <FadeIn className="flex flex-col">
@@ -31,7 +31,7 @@ export function About() {
               maxTopDrop={24}
               maxBottomRise={17}
               maxRightLean={12}
-              contentClassName="px-7 py-8"
+              contentClassName="px-7 py-12"
             >
               <h3 className="font-display text-h3 font-bold text-(--color-text-primary-light)">
                 Datos rápidos

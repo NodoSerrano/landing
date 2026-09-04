@@ -25,7 +25,7 @@ export default async function BlogPage({
     <div className="flex min-h-screen flex-col bg-(--color-bg-light)">
       <Header alwaysSolid />
 
-      <main className="flex-1 px-4 pt-32 pb-20 md:pt-40">
+      <main className="flex-1 px-4 pt-32 pb-20 md:px-5 md:pt-40">
         <div className="mx-auto flex w-full max-w-6xl flex-col">
           <Breadcrumb
             items={[{ label: "Inicio", href: "/" }, { label: "Blog" }]}

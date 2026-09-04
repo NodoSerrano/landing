@@ -8,7 +8,7 @@ export function Contact() {
   return (
     <section
       id="contacto"
-      className="relative bg-(--color-bg-elev-dark) px-4 py-24 md:py-36"
+      className="relative bg-(--color-bg-elev-dark) px-4 py-24 md:px-5 md:py-36"
     >
       <OrganicEdge side="top" variant={5} />
       <OrganicEdge side="bottom" variant={3} flipX />
