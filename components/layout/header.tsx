@@ -11,6 +11,7 @@ let hasHeaderIntroPlayed = false
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import FloatingLogo from "@/components/FloatingLogo"
+import { scrollToSection } from "@/lib/scroll-to-section"
 
 // Mobile dropdown items. Same labels/order as desktop, plus a trailing
 // SUSCRIBITE that renders as the boxed gradient button (`cta`).
@@ -376,7 +377,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
     return pathname === "/" && activeSection === id
   }
 
-  const scrollToSection = (sectionId: string) => {
+  const handleNavClick = (sectionId: string) => {
     const id = sectionId.replace("#", "")
     setMobileMenuOpen(false)
     if (!id) return
@@ -384,13 +385,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
       router.push(`/#${id}`)
       return
     }
-    // These sections are short enough to sit nicely centered; every other
-    // section keeps the default top-alignment.
-    const centeredSections = new Set(["events", "sponsors"])
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-      block: centeredSections.has(id) ? "center" : "start",
-    })
+    scrollToSection(id)
   }
 
   return (
@@ -410,7 +405,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
           kept separate from the toolbar's own mx-auto/max-w-6xl (which only
           centers/caps it once there's enough room), and separate from the
           mobile overlay below (which needs the true full-bleed viewport). */}
-      <div className="px-4">
+      <div className="px-4 md:px-5">
         <div
           ref={toolbarRef}
           className={`relative z-20 mx-auto my-2 flex items-center justify-between gap-4 rounded-2xl ${isSolid ? "px-3" : "px-0"}  py-3 transition-[padding] duration-300 md:px-4 lg:max-w-6xl`}
@@ -474,7 +469,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                 ) : (
                   <button
                     key={label}
-                    onClick={() => scrollToSection(href)}
+                    onClick={() => handleNavClick(href)}
                     className={`${className} cursor-pointer`}
                   >
                     {label}
@@ -486,7 +481,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
             </nav>
 
             <button
-              onClick={() => scrollToSection("#signup")}
+              onClick={() => handleNavClick("#signup")}
               className="rounded-tl-[10px] rounded-br-[10px] bg-gradient-brand px-6 py-3 text-body text-(--color-text-primary-dark) hover:opacity-90 transition-opacity cursor-pointer"
             >
               SUSCRIBITE
@@ -546,7 +541,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                     return (
                       <div key={label} className="mobile-nav-item w-full" style={itemStyle}>
                         <button
-                          onClick={() => scrollToSection(href)}
+                          onClick={() => handleNavClick(href)}
                           className="block w-full cursor-pointer rounded-[8px] bg-gradient-brand p-[1.5px]"
                         >
                           <span className="block rounded-[7px] bg-(--color-bg-elev-dark) px-4 py-1.5 text-center text-[18px] font-bold">
@@ -580,7 +575,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                           {underline}
                         </Link>
                       ) : (
-                        <button onClick={() => scrollToSection(href)} className={className}>
+                        <button onClick={() => handleNavClick(href)} className={className}>
                           {label}
                           {underline}
                         </button>

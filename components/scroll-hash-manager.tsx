@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { scrollToSection } from "@/lib/scroll-to-section";
 
 // Landing-page mount side effect: scroll to the URL fragment on first load.
 // Arriving at "/#section" via client-side routing doesn't trigger the browser's
@@ -10,7 +11,7 @@ export function ScrollHashManager() {
   useEffect(() => {
     const id = window.location.hash.replace("#", "");
     if (!id) return;
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    scrollToSection(id);
   }, []);
 
   return null;
