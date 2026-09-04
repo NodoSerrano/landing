@@ -6,8 +6,8 @@ import { CardKeyline } from "./card-keyline"
 
 export function Values() {
   return (
-    <section id="valores" className="py-20 md:py-28">
-      <Container>
+    <section id="valores" className="px-4 py-20 md:px-5 md:py-28">
+      <Container className="max-w-6xl! px-0">
         <FadeIn>
           <SectionHeading label="Valores" title="Nuestros valores" />
         </FadeIn>

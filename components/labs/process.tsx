@@ -13,8 +13,8 @@ function StepChip({ n }: { n: number }) {
 
 export function Process() {
   return (
-    <section id="proceso" className="py-20 md:py-28">
-      <Container>
+    <section id="proceso" className="px-4 py-20 md:px-5 md:py-28">
+      <Container className="max-w-6xl! px-0">
         <Reveal>
           <SectionHeading label="Proceso" title="Cómo trabajamos" />
         </Reveal>

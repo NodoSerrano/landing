@@ -10,13 +10,13 @@ export function Capabilities() {
   return (
     <section
       id="capacidades"
-      className="relative bg-(--color-bg-elev-dark) py-24 md:py-36"
+      className="relative bg-(--color-bg-elev-dark) px-4 py-24 md:px-5 md:py-36"
     >
       {/* Bordes orgánicos crema contra las secciones claras de arriba y abajo */}
       <OrganicEdge side="top" variant={1} />
       <OrganicEdge side="bottom" variant={2} flipX />
 
-      <Container className="relative z-20">
+      <Container className="relative z-20 max-w-6xl! px-0">
         <FadeIn>
           <SectionHeading label="Capacidades" title="Qué hacemos" tone="dark" />
         </FadeIn>

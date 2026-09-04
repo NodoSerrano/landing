@@ -7,7 +7,7 @@ import { OrganicEdge } from "./section-edge"
 
 export function LabsHero() {
   return (
-    <section className="relative isolate flex min-h-[78vh] flex-col overflow-hidden bg-(--color-bg-elev-dark)">
+    <section className="relative isolate flex min-h-[78vh] flex-col overflow-hidden bg-(--color-bg-elev-dark) px-4 md:px-5">
       {/* Malla de gradiente frío — mismo lenguaje que el hero del home, sin foto */}
       <div aria-hidden="true" className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-linear-to-br from-(--color-bg-elev-dark) via-violet-900/40 to-(--color-bg-elev-dark)" />
@@ -17,7 +17,7 @@ export function LabsHero() {
         <div className="absolute -bottom-32 left-1/3 h-[30rem] w-[30rem] rounded-full bg-blue-500/20 blur-[150px]" />
       </div>
 
-      <Container className="flex flex-1 flex-col pt-32 pb-32 md:pt-40 md:pb-44">
+      <Container className="max-w-6xl! px-0 flex flex-1 flex-col pt-32 pb-32 md:pt-40 md:pb-44">
         <div className="flex flex-1 items-center">
           <FadeIn className="flex max-w-3xl flex-col">
             {/* Lockup Nodo LABS */}
