@@ -267,15 +267,18 @@ export default function Community() {
       <BlobBackground />
 
       <Container className="flex flex-1 flex-col">
-        <Reveal className="relative flex w-full flex-1 flex-col items-center pb-12 md:pb-10">
-          {/* Card straddles the hero/section transition line (its center on the blob's top edge) */}
+        <div className="relative flex w-full flex-1 flex-col items-center pb-12 md:pb-10">
+          {/* Card straddles the hero/section transition line (its center on the blob's top edge).
+              Delayed past the hero's own reveals (up to 800ms) so it visibly follows them in. */}
           <div className="-mt-[190px] flex w-full justify-center md:-mt-[235px]">
-            <LabsCard />
+            <Reveal delay={900} className="flex w-full justify-center">
+              <LabsCard />
+            </Reveal>
           </div>
 
           {/* Text block (Figma node 14:138) — vertically centered in the cream area */}
           <div className="flex flex-1 items-center">
-            <div className="flex max-w-[340px] flex-col items-center text-center md:max-w-[600px]">
+            <Reveal className="flex max-w-[340px] flex-col items-center text-center md:max-w-[600px]">
               <h2 className="font-display text-mob-h2 font-medium text-(--color-text-primary-light) md:text-h2">
                 Integramos el primer semillero dedicado a Ethereum en Tandil.
               </h2>
@@ -300,9 +303,9 @@ export default function Community() {
                   .
                 </p>
               </div>
-            </div>
+            </Reveal>
           </div>
-        </Reveal>
+        </div>
       </Container>
     </section>
   )

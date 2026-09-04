@@ -85,16 +85,16 @@ export default function Hero() {
             >
               Investigación y educación con foco en Ethereum Ecosystem
             </Reveal>
-          </div>
 
-          {/* Location */}
-          <Reveal
-            delay={800}
-            className="flex items-end justify-start gap-2 text-(--color-text-primary-dark)"
-          >
-            <LocationFilledIcon className="h-3.5 w-3.5 md:h-[25px] md:w-[25px] mb-0.5 md:mb-0" />
-            <span className="text-body-lg md:text-h3 font-normal">Tandil</span>
-          </Reveal>
+            {/* Location — part of the same first-wave reveal as the headings above */}
+            <Reveal
+              delay={700}
+              className="flex items-end justify-start gap-2 text-(--color-text-primary-dark)"
+            >
+              <LocationFilledIcon className="h-3.5 w-3.5 md:h-[25px] md:w-[25px] mb-0.5 md:mb-0" />
+              <span className="text-body-lg md:text-h3 font-normal">Tandil</span>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>
